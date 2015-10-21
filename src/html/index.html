@@ -3,16 +3,21 @@
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
 		<link rel="stylesheet" href="css/components.css"/>
+		<link rel="stylesheet" href="css/studentviews.css"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="js/class.js"></script>
+		<script src="js/stdobjs.js"></script>
+		<script src="js/studentobjs.js"></script>
+		<script src="js/index.js"></script>
 		<title>Project Cuttlefish</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationbar" aria-expanded="false">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
@@ -20,26 +25,45 @@
 					</button>
 					<a class="navbar-brand" href="#">Project Cuttlefish | Student</a>
 				</div>
-
+				
 				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav navbar-page-buttons">
-						<li class='navbar-page-button-schedule' title="What classes you have">
+				<div class="collapse navbar-collapse" id="navigationbar">
+					<ul class="nav navbar-nav">
+						<li class='active navbar-page-button-schedule' title="What classes you have">
 							<a href="#schedule">Schedule</a>
 						</li>
+						<li class='navbar-dropdown-classlist'>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Classes <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+							</ul>
+						</li>
 						<li class='navbar-page-button-assignments' title="What homework you have">
-							<a href="#assignments">Assignments <span class="badge badge-left badge-red">999</span><span class="badge badge-right">30</span></a>
+							<a href="#assignments">Assignments <span class="badge badge-left badge-red">50</span><span class="badge badge-right badge-blue">30</span></a>
 						</li>
 						<li class='navbar-page-button-' title="Clubs">
 							<a href="clubs">Clubs</a>
 						</li>
 					</ul>
-					<ul class="nav navbar-nav navbar-right nav-pills navbar-username-stuff">
-						<li><a data-toggle="modal" data-target="#logInModal">Log In</a></li>
-						<li><a data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
-					</ul>
 				</div>
 			</div>
 		</nav>
+		<div class="pagewrapper fullsize">
+			<div class="jumbotron view view-student view-student-schedule fullsize">
+				<div class="page-header">
+					<h1>Schedule</h1>
+				</div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Period</th>
+							<th>Class</th>
+							<th>Teacher</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</body>
 </html>
