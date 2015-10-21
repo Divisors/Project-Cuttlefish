@@ -2,26 +2,43 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="css/components.css"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<title>Project Cuttlefish</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
 			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
+					<a class="navbar-brand" href="#">Project Cuttlefish | Student</a>
 				</div>
-				<a class="navbar-brand" href="#">Project Cuttlefish</a>
-			</div>
-			
-			<div class="collapse navbar-collapse" id="navbar-collapse-1">
-				
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-page-buttons">
+						<li class='navbar-page-button-schedule' title="What classes you have">
+							<a href="#schedule">Schedule</a>
+						</li>
+						<li class='navbar-page-button-assignments' title="What homework you have">
+							<a href="#assignments">Assignments <span class="badge badge-left badge-red">999</span><span class="badge badge-right">30</span></a>
+						</li>
+						<li class='navbar-page-button-' title="Clubs">
+							<a href="clubs">Clubs</a>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right nav-pills navbar-username-stuff">
+						<li><a data-toggle="modal" data-target="#logInModal">Log In</a></li>
+						<li><a data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
+					</ul>
+				</div>
 			</div>
 		</nav>
 	</body>
