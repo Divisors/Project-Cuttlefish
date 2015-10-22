@@ -19,14 +19,18 @@ var schedule = [
 $(function() {
 	$.material.init();
 	//setup navbar
-	$('.navbar-page-button-schedule a:not(.virtual)').on('click',function(e,a) {
-		if (a)
-			return;
-		console.log('intercepted',a);
-		e.preventDefault();
+	$('.navbar-page-button-schedule').on('touch.click',function(e) {
+		console.info('tc');
+		try {
+			window.history.replaceState(null, null, $(this).attr('href'));
+		}catch(e){
+			window.location = $(this).attr('href');
+		}
+	}).on('touch.press', function(e){
+		console.info('ctx');
 		$('.navbar-page-button-schedule a.virtual').click();
-	}).on('touch.hold contextmenu', function(e){
-		$(this).trigger('click',true);
+	}).on('contextmenu', function(e) {
+		e.preventDefault();
 	});
 	var schedule = new ClassScheduleView(schedule);
 	$(window).on('hashchange',function() {
