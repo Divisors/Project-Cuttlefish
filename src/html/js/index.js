@@ -18,10 +18,19 @@ var schedule = [
 ];
 $(function() {
 	$.material.init();
+	//setup navbar
+	$('.navbar-page-button-schedule a:not(.virtual)').on('click',function(e,a) {
+		if (a)
+			return;
+		console.log('intercepted',a);
+		e.preventDefault();
+		$('.navbar-page-button-schedule a.virtual').click();
+	}).on('touch.hold contextmenu', function(e){
+		$(this).trigger('click',true);
+	});
 	var schedule = new ClassScheduleView(schedule);
 	$(window).on('hashchange',function() {
 		var hash = window.location.hash;
-		console.log('hash: '+hash);
 		if (hash.length <= 1) {
 			$('[data-active-hash=\'\'],[data-active-hash=\'#\']').addClass('hash-active');
 			$('.hash-active:not([data-active-hash=\'\']):not([data-active-hash=\'#\'])').removeClass('hash-active');

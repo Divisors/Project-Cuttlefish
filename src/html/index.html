@@ -10,7 +10,6 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
 		
-		<script src="js/touchable.js"></script>
 		
 		<!-- Material Design for Bootstrap -->
 		<link href="md-css/roboto.min.css" rel="stylesheet">
@@ -51,16 +50,20 @@
 				<div class="collapse navbar-collapse" id="navigationbar">
 					<ul class="nav navbar-nav">
 						<li class='navbar-page-button-schedule dropdown' data-active-hash='#schedule' title="Schedule">
-							<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-triggers="hover context" href="#schedule">Schedule</a>
+							<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#schedule">Schedule</a>
+							<a class="virtual" href="#schedule" data-nav-action="replace"></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="#class-1">Class 1</a></li>
+								<li><a href="#class-2">Class 2</a></li>
+								<li><a href="#class-3">Class 3</a></li>
+								<li><a href="#class-list">All Classes</a></li>
 							</ul>
 						</li>
 						<li class='navbar-page-button-assignments' data-active-hash='#assignments' title="Assignments">
 							<a href="#assignments">Assignments <span class="badge badge-left badge-red">50</span><span class="badge badge-right badge-blue">30</span></a>
 						</li>
-						<li class='navbar-page-button-clubs' title="Clubs">
-							<a href="clubs">Clubs</a>
+						<li class='navbar-page-button-clubs' data-active-hash='#clubs' title="Clubs">
+							<a href="#clubs">Clubs</a>
 						</li>
 					</ul>
 				</div>
