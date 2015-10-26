@@ -16,6 +16,16 @@ var schedule = [
 		teacher: 'Ms. Jones'
 	}
 ];
+var assignments = [
+	{
+		name: 'Test assignment',
+		className: 'Class 1',
+		type: 'Homework',
+		assigned: '10/23/2015',
+		due: '10/27/2015',
+		status: 'Overdue'
+	}
+];
 $(function() {
 	$.material.init();
 	//setup navbar
@@ -50,7 +60,9 @@ $(function() {
 				}
 			});
 	});
-	var schedule = new ClassScheduleView(schedule);
+	var scheduleView = new StudentScheduleView(schedule);
+	var assignmentsView = new StudentAssignmentView(assignments);
+	var views = [scheduleView, assignmentsView];
 	$(window).on('hashchange',function() {
 		var hash = window.location.hash;
 		if (hash.length <= 1) {
@@ -62,9 +74,15 @@ $(function() {
 			$('.hash-active:not([data-active-hash=\''+hash+'\']').removeClass('hash-active');
 			hash = hash.substring(1);
 		}
+		views.forEach(function(view) {
+			view.disable();
+		});
 		switch(hash) {
 			case "schedule":
-				schedule.init().then(function(){schedule.enable();});
+				scheduleView.init().then(function(){scheduleView.enable();});
+				break;
+			case "assignments":
+				assignmentsView.init().then(function(){assignmentsView.enable();});
 				break;
 		}
 	}).trigger('hashchange');//to initialize w/ current hash
