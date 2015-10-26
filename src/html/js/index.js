@@ -19,18 +19,36 @@ var schedule = [
 $(function() {
 	$.material.init();
 	//setup navbar
-	$('.navbar-page-button-schedule').on('touch.click',function(e) {
-		console.info('tc');
+	$('.navbar-page-button-schedule').on('pointer.short',function(e) {
 		try {
 			window.history.replaceState(null, null, $(this).attr('href'));
 		}catch(e){
+			//fallback if it doesn't support the History API
 			window.location = $(this).attr('href');
 		}
-	}).on('touch.press', function(e){
-		console.info('ctx');
-		$('.navbar-page-button-schedule a.virtual').click();
-	}).on('contextmenu', function(e) {
-		e.preventDefault();
+	}).on('pointer.long', function(e){
+		var $this = $(this)
+		$this
+			.attr('aria-expanded','true')
+			.focus()
+			.removeClass('open dropdown-item-selected')
+			.focus(function() {
+				$this.removeClass('open');
+			}).blur(function(e) {
+				if (e.relatedTarget !== null && $(e.relatedTarget).is('.navbar-page-button-schedule [data-nofocus="true"], .navbar-page-button-schedule [data-nofocus="true"] *')) {
+					//cancel close because a child element not an item was focused
+					$this.addClass('open');//force open (cancel close from blur)
+					$(e.relatedTarget).one('focus', function() {//when the child is focused, switch focus back to me
+						$this.focus();
+					});
+				} else if (e.relatedTarget !== null && $(e.relatedTarget).is('.navbar-page-button-schedule *')) {
+					//close because one of the items was clicked
+					$this.addClass('dropdown-item-selected').removeClass('open');
+				} else {
+					//close because something was clicked outside of the dropdown
+					$this.removeClass('open dropdown-item-selected');
+				}
+			});
 	});
 	var schedule = new ClassScheduleView(schedule);
 	$(window).on('hashchange',function() {
