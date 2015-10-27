@@ -15,3 +15,17 @@ var View = Class.extend({
 		return Promise.resolve();
 	}
 });
+var LoginView = View.extend({
+	enable: function(parent) {
+		return new Promise(function(yay,nay) {
+			$('.view-login').addClass('active');
+			yay();
+		});
+	},
+	disable: function(parent) {
+		return new Promise(function(yay,nay) {
+			$('.view-login').removeClass('active');
+			yay();
+		});
+	}
+});

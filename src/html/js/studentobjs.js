@@ -7,9 +7,6 @@ var StudentScheduleView = View.extend({
 	construct: function(schedule) {
 		this.schedule = schedule;
 	},
-	init: function(parent) {
-		return this._super.apply(this, arguments);
-	},
 	enable: function(parent) {
 		return new Promise(function(yay, nay) {
 			var table = ($('.view.view-student.view-student-schedule').addClass('active')).find('table>tbody').empty();
@@ -32,9 +29,6 @@ var StudentScheduleView = View.extend({
 var StudentAssignmentView = View.extend({
 	construct: function(assignments) {
 		this.assignments = assignments;
-	},
-	init: function(parent) {
-		return this._super.apply(this, arguments);
 	},
 	enable: function(parent) {
 		return new Promise(function(yay, nay) {

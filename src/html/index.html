@@ -70,21 +70,18 @@
 		</nav>
 		<div class="pagewrapper fullsize">
 			<div class="container view view-student view-teacher view-login fullsize active">
-				<div class="page-header">
-					
+				<div class="page-header centered">
+					<h1>Project Cuttlefish Login</h1>
 				</div>
-					<form class="jumbotron form-horizontal">
+					<form class="jumbotron form-horizontal" method="post" onsubmit="return false;">
 						<fieldset>
 							<div class="form-group form-group-username">
 								<input type="text" class="form-control floating-label" id="inputUsername" name="username" placeholder="Username"/>
 							</div>
 							<div class="form-group form-group-password">
-								<input type="password" class="form-control floating-label" id="inputPassword" placeholder="Password">
+								<input type="password" name="password" class="form-control floating-label" id="inputPassword" placeholder="Password">
 							</div>
-							<div class="form-group form-group-buttons">
-								<button class="btn btn-default">Cancel</button>
-								<button class="btn btn-primary">Submit</button>
-							</div>
+							<button class="btn btn-primary pull-right">Sign In</button>
 						</fieldset>
 					</form>
 			</div>

@@ -5,6 +5,10 @@ html, body {
 body {
 	padding-top: 60px;
 }
+/*bugfix*/
+.form-control {
+	transition-duration: .3s;
+}
 
 .badge-right {
   -webkit-border-top-left-radius: 0px;
@@ -69,7 +73,7 @@ body {
 	height: 0px;
 	display: none !important;
 }
-@media screen and (min-device-width: 768px) {
+@media screen and (min-width: 768px) {
 	li.dropdown ul.dropdown-menu.fold-out {
 		-webkit-transform: perspective(400) rotate3d(1,0,0,-90deg);
 		-webkit-transform-origin:50% 0;
@@ -97,11 +101,30 @@ body {
 		-o-transition-delay: 500ms;
 	}
 }
-@media screen and (max-device-width: 768px) {
+@media screen and (max-width: 768px) {
 	li.dropdown ul.dropdown-menu.fold-out {
-		display: none;
+		background-color: transparent;
+		border: 0;
+		box-shadow: none;
+		display: block;
+		float: none;
+		margin-top: 0;
+		max-height: 0px;
+		overflow: hidden;
+		padding: 0px;
+		position: static;
+		transition: 1s;
+		width: auto;
+		-webkit-box-shadow: none;
 	}
 	li.dropdown:focus ul.dropdown-menu.fold-out, li.dropdown.open ul.dropdown-menu.fold-out {
-		display: block;
+		max-height: 1000px;
 	}
+	li.dropdown ul.dropdown-menu.fold-out>li>a, li.dropdown ul.dropdown-menu.fold-out>li>a {
+		color: inherit;
+		line-height: 20px;
+	}
+}
+.centered {
+	text-align: center;
 }

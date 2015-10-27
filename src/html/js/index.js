@@ -30,6 +30,7 @@ $(function() {
 	$.material.init();
 	//setup navbar
 	$('.navbar-page-button-schedule').on('pointer.short',function(e) {
+		console.info('short');
 		try {
 			window.history.replaceState(null, null, $(this).attr('href'));
 		}catch(e){
@@ -37,6 +38,7 @@ $(function() {
 			window.location = $(this).attr('href');
 		}
 	}).on('pointer.long', function(e){
+		console.info('long');
 		var $this = $(this)
 		$this
 			.attr('aria-expanded','true')
@@ -60,9 +62,17 @@ $(function() {
 				}
 			});
 	});
+	$('.navbar.navbar-default .navbar-collapse').on('pointer.short', function(e) {
+		console.log(e.target);
+		if ($(window).width()<768)
+			setTimeout(function() {
+				$('.navbar-toggle:not(.collapsed)').click();
+			}, 500);
+	});
 	var scheduleView = new StudentScheduleView(schedule);
 	var assignmentsView = new StudentAssignmentView(assignments);
-	var views = [scheduleView, assignmentsView];
+	var loginView = new LoginView();
+	var views = [loginView, scheduleView, assignmentsView];
 	$(window).on('hashchange',function() {
 		var hash = window.location.hash;
 		if (hash.length <= 1) {
@@ -84,6 +94,9 @@ $(function() {
 			case "assignments":
 				assignmentsView.init().then(function(){assignmentsView.enable();});
 				break;
+			case "login":
+			case null:
+				loginView.init().then(function(){loginView.enable();});
 		}
 	}).trigger('hashchange');//to initialize w/ current hash
 });
