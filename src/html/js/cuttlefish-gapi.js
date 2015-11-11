@@ -1,0 +1,3 @@
+Cuttlefish.gapiext = (function() {
+	
+});
