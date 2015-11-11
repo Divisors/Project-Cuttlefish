@@ -4,6 +4,8 @@ html, body {
 }
 body {
 	padding-top: 60px;
+	overflow-x: hidden;
+	overflow-y: hidden;
 }
 /*bugfix*/
 .form-control {
@@ -51,7 +53,7 @@ body {
 	width: 100%;
 	height: 100%;
 }
-.pagewrapper>:not(.active) {
+.pagewrapper>:not(.view) {
 	display: none !important;
 }
 .down50 {
@@ -84,7 +86,6 @@ body {
 		max-height: 0px;
 		overflow: hidden;
 		display: block;
-		
 	}
 	li.dropdown:focus ul.dropdown-menu.fold-out, li.dropdown.open ul.dropdown-menu.fold-out {
 		max-height: 1000px;
@@ -127,4 +128,8 @@ body {
 }
 .centered {
 	text-align: center;
+}
+li.divider.bold {
+	margin: 0px;
+	background-color: rgb(200, 200, 200);
 }

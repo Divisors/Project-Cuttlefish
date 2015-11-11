@@ -30,7 +30,6 @@ $(function() {
 	$.material.init();
 	//setup navbar
 	$('.navbar-page-button-schedule').on('pointer.short',function(e) {
-		console.info('short');
 		try {
 			window.history.replaceState(null, null, $(this).attr('href'));
 		}catch(e){
@@ -38,7 +37,6 @@ $(function() {
 			window.location = $(this).attr('href');
 		}
 	}).on('pointer.long', function(e){
-		console.info('long');
 		var $this = $(this)
 		$this
 			.attr('aria-expanded','true')
@@ -72,10 +70,11 @@ $(function() {
 	var scheduleView = new StudentScheduleView(schedule);
 	var assignmentsView = new StudentAssignmentView(assignments);
 	var loginView = new LoginView();
-	var views = [loginView, scheduleView, assignmentsView];
-	$(window).on('hashchange',function() {
+	window.views = [loginView, scheduleView, assignmentsView];
+	$(window).on('popstate',function() {
 		var hash = window.location.hash;
 		if (hash.length <= 1) {
+		console.log('popstate',hash);
 			$('[data-active-hash=\'\'],[data-active-hash=\'#\']').addClass('hash-active');
 			$('.hash-active:not([data-active-hash=\'\']):not([data-active-hash=\'#\'])').removeClass('hash-active');
 			hash = null;
@@ -98,5 +97,5 @@ $(function() {
 			case null:
 				loginView.init().then(function(){loginView.enable();});
 		}
-	}).trigger('hashchange');//to initialize w/ current hash
+	}).trigger('popstate');//to initialize w/ current hash
 });

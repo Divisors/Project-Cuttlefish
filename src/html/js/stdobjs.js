@@ -1,6 +1,8 @@
 var View = Class.extend({
 	construct: function() {
-		
+	},
+	getElement: function() {
+		return $('pc-view[name="'+this.name+'"]');
 	},
 	init: function(parent) {
 		return Promise.resolve();
