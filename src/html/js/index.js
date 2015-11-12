@@ -27,7 +27,6 @@ var assignments = [
 	}
 ];
 $(function() {
-	$.material.init();
 	//setup navbar
 	$('.navbar-page-button-schedule').on('pointer.short',function(e) {
 		try {

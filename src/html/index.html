@@ -5,28 +5,15 @@
 		<!-- jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		
-		<!-- BootStrap -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-		
-		
-		<!-- Material Design for Bootstrap -->
-		<link href="md-css/roboto.min.css" rel="stylesheet"/>
-        <link href="md-css/material.min.css" rel="stylesheet"/>
-        <link href="md-css/ripples.min.css" rel="stylesheet"/>
-		<script src="md-js/ripples.min.js"></script>
-        <script src="md-js/material.min.js"></script>
-		
 		<!-- Polymer imports -->
 		<script src="webcomponentsjs/webcomponents-lite.js"></script>
 		
 		<!-- Our CSS -->
-		<link rel="stylesheet" href="css/components.css"/>
-		<link rel="stylesheet" href="css/studentviews.css"/>
 		<link rel="stylesheet" href="css/transitions.css"/>
 		
 		<!-- Our JS -->
 		<script src="js/class.js"></script>
+		<script src="js/loader.js"></script>
 		<script src="js/stdobjs.js"></script>
 		<script src="js/studentobjs.js"></script>
 		<script src="js/touch.js"></script>
@@ -34,96 +21,11 @@
 		<script src="js/index.js"></script>
 		
 		<!-- Components -->
-		<link rel="import" href="components/bootstrap/bs-navbar.html"/>
-		<link rel="import" href="components/bootstrap/bs-page-header.html"/>
-		<link rel="import" href="components/bootstrap/bs-pager.html"/>
-		<link rel="import" href="components/pc-view.html"/>
-		
-		
+		<link rel="import" href="components/pc/pc-loader.html"/>
 		<title>Project Cuttlefish</title>
+		<pc-loader target='["pc-stage","paper-drawer-panel"]'></pc-loader>
 	</head>
-	<body>
-		<bs-navbar>
-			<a class="navbar-brand" data-active-hash='#' href="#">Project Cuttlefish | Student</a>
-			<ul class="nav navbar-nav">
-				<li class='navbar-page-button-schedule dropdown dropdown-slow-close' tabindex="-1" data-active-hash='#schedule' aria-expanded="false" aria-haspopup="true" href="#schedule" title="Schedule">
-					<a class="dropdown-toggle" role="button" data-nofocus="true" data-no-menu='true' href="#schedule">Schedule</a>
-					<ul class="dropdown-menu fold-out" role="menu">
-						<li><a href="#class-1">Class 1</a></li>
-						<li><a href="#class-2">Class 2</a></li>
-						<li><a href="#class-3">Class 3</a></li>
-						<li role="separator" class="divider bold"></li>
-						<li><a href="#class-list">All Classes</a></li>
-					</ul>
-				</li>
-				<li class='navbar-page-button-assignments' data-active-hash='#assignments' title="Assignments">
-					<a href="#assignments" role="button">Assignments <span class="badge badge-left badge-red">50</span><span class="badge badge-right badge-blue">30</span></a>
-				</li>
-				<li class='navbar-page-button-clubs' data-active-hash='#clubs' title="Clubs">
-					<a href="#clubs" role="button">Clubs</a>
-				</li>
-			</ul>
-		</bs-navbar>
-		<div class="pagewrapper fullsize" role="main">
-			<pc-view student teacher name='login' data-active='#' class='active'>
-				<div class="page-header centered">
-					<h1>Project Cuttlefish Login</h1>
-				</div>
-				<form class="jumbotron form-horizontal" method="post" onsubmit="return false;">
-					<fieldset>
-						<div class="form-group form-group-username">
-							<input type="text" class="form-control floating-label" id="inputUsername" name="username" placeholder="Username"/>
-						</div>
-						<div class="form-group form-group-password">
-							<input type="password" name="password" class="form-control floating-label" id="inputPassword" placeholder="Password">
-						</div>
-						<button class="btn btn-primary pull-right">Sign In</button>
-					</fieldset>
-				</form>
-			</pc-view>
-			<pc-view student name="student.schedule" data-active="schedule">
-				<bs-page-header>
-					<h1>Schedule</h1>
-				</bs-page-header>
-				<div class="jumbotron">
-					<bs-pager>
-						Monday, whatever
-					</bs-pager>
-					<table class="table table-striped table-hover">
-						<thead>
-							<tr>
-								<th>Time</th>
-								<th>Period</th>
-								<th>Class</th>
-								<th>Teacher</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-				</div>
-			</pc-view>
-			<pc-view student name="student.assignments" data-active="assignments">
-				<bs-page-header>
-					<h1>Assignments</h1>
-				</bs-page-header>
-				<div class="jumbotron">
-					<table class="table table-striped table-hover">
-						<thead>
-							<tr>
-								<th>Class</th>
-								<th>Type</th>
-								<th>Name</th>
-								<th>Assigned</th>
-								<th>Due</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-				</div>
-			</pc-view>
-		</div>
+	<body unresolved>
+		<pc-stage></pc-stage>
 	</body>
 </html>
