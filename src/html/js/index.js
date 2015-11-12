@@ -1,29 +1,45 @@
 var schedule = [
 	{
-		name: 'Class 1',
+		name: 'Math',
 		block: '1',
 		id: 123456,
 		from: '7:30',
 		to: '8:00',
-		teacher: 'Mr. Smith'
+		teacher: 'Ms. Sweeney'
 	},
 	{
-		name: 'Class 2',
+		name: 'Chemistry',
 		block: '2',
 		id: 789012,
 		from: '8:03',
 		to: '11:50',
-		teacher: 'Ms. Jones'
+		teacher: 'Ms. Dormer'
 	}
 ];
 var assignments = [
 	{
-		name: 'Test assignment',
-		className: 'Class 1',
-		type: 'Homework',
-		assigned: '10/23/2015',
-		due: '10/27/2015',
+		name: 'Worksheet 1.3',
+		className: 'Math',
+		type: 'Worksheet',
+		assigned: '11/11/15',
+		due: '11/13/15',
 		status: 'Overdue'
+	},
+	{
+		name: 'P.180-182 #1-43 (odd)',
+		className: 'Math',
+		type: 'Homework',
+		assigned: '11/12/15',
+		due: '11/13/15',
+		status: 'Assigned'
+	},
+	{
+		name: 'Essay',
+		className: 'Chemistry',
+		type: 'Paper',
+		assigned: '11/10/15',
+		due: '11/13/15',
+		status: 'Submitted'
 	}
 ];
 $(function() {
