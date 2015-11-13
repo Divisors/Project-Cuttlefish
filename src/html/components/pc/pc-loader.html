@@ -18,7 +18,6 @@
 			// Element Lifecycle
 			ready: function(e) {
 				var $this = $(this);
-				console.log(e, $this);
 				var toLoad = $this.attr('target');
 				if (toLoad.charAt(0)=='[')
 					toLoad = JSON.parse(toLoad);
