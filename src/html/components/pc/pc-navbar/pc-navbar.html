@@ -1,84 +1,30 @@
 <link rel="import" href="/components/polymer/polymer.html"/>
 <pc-loader target='["paper-toolbar","paper-ripple","paper-button","paper-icon-button"]'></pc-loader>
 <dom-module id="pc-navbar">
-	<style>
-		:host {
-			background-color: rgb(0, 150, 136);
-			display: block;
-			width: 100%;
-			height: 100%;
-			position: absolute;
-			top: 0;
-			right: 0;
-			left: 0;
-			border: 0;
-			z-index: 1030;
-			min-height: 50px;
-			margin-bottom: 20px;
-			-webkit-tap-highlight-color: transparent;
-			box-sizing: border-box;
-			font-family: RobotoDraft, Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-			font-weight: 300;
-			font-size: 14px;
-			line-height: 1.428;
-			-webkit-touch-callout: none;
-			-webkit-user-select: none;
-			-khtml-user-select: none;
-			-moz-user-select: none;
-			-ms-user-select: none;
-			user-select: none;
-			font-size: 24px;
-		}
-		:host::before {
-			display: table;
-			content: " ";
-			box-sizing: border-box;
-		}
-		#wide-navbar-items {
-			padding-right: 15px;
-			padding-left: 15px;
-			margin-right: auto;
-			margin-left: auto;
-			display: block;
-		}
-		paper-button { 
-			display: block;
-			font-weight: 400;
-			color: #FFF;
-			text-align: center;
-			padding: 4px;
-			text-decoration: none;
-			text-transform: none !important;
-			margin: 0;
-			padding-top: calc(height/2);
-		}
-		paper-toolbar {
-			--paper-toolbar-background: #009688;
-		}
-		paper-toolbar * {
-			margin: 4px;
-		}
-	</style>
+	<link rel="import" type="css" href="pc-navbar.css"/>
 	<template>
-		<div id="wide-navbar-items">
-			<content></content>
-			<paper-button href="#">{{brand}}</paper-button>
-			<paper-button href="#schedule">Schedule</paper-button>
+		<div id="container">
+			<div id="navbar-header">
+				<span class="navbar-menu-button"><content select=".navbar-header-item"></content></span>
+				<paper-button class="navbar-brand" href="#">{{brand}}</paper-button>
+			</div>
+			<div id="titlebar">
+				<span>{{title}}</span>
+			</div>
+			<ul id="navbar-itemlist">
+				<paper-button href="#schedule">Schedule</paper-button>
+				<paper-button href="#assignments">Assignments</paper-button>
+			</ul>
 		</div>
-	</template>\
+	</template>
 	<script>
 		Polymer({
 			is: 'pc-navbar',
-			extends: 'nav',
 			properties: {},
-			echo(arg) {
-				console.log('echo',arg);
-				return arg;
-			},
 			ready: function() {
 				window.navbar=this;
 				console.log('hi!');
 			}
 		});
-</script>
+	</script>
 </dom-module>
