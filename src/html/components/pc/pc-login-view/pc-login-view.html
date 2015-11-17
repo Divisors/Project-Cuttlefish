@@ -1,0 +1,52 @@
+<link rel="import" href="/components/polymer/polymer.html"/>
+<pc-loader target='["paper-input"]'></pc-loader>
+<link rel="import" href="/components/paper/paper-input/paper-input-container.html">
+<link rel="import" href="/components/paper/paper-input/paper-input-error.html">
+<link rel="import" href="/components/paper/paper-input/paper-input-char-counter.html">
+<link rel="import" href="/components/paper/paper-input/paper-textarea.html">
+<link rel="import" href="/components/iron/iron-input/iron-input.html">
+<link rel="import" href="/components/iron/iron-icon/iron-icon.html">
+<link rel="import" href="/components/iron/iron-icons/iron-icons.html">
+<link rel="import" href="/components/paper/paper-icon-button/paper-icon-button.html">
+<dom-module id="pc-login-view">
+	<style>
+		:host {
+			width: 100%;
+			min-height: 100%;
+		}
+		:host>form {
+			margin: 4em auto;
+			padding: 2em 2em em 2em;
+			background: #FAFAFA;
+			border: 1px solid #EBEBEB;
+			box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+			width: 380px;
+			padding: 32px;
+			padding-top: 48px;
+			border-radius: 2px;
+		}
+		:host>form>.form-group {
+			margin: 0;
+			margin-bottom: 45px;
+		}
+		:host paper-input {
+			transition-duration: .3s;
+		}
+	</style>
+	<template>
+		<form onsubmit="return false" method="POST">
+			<div class="form-group">
+				<paper-input label="Username"></paper-input>
+			</div>
+		</form>
+	</template>
+	<script>
+		Polymer({
+			is: 'pc-login-view',
+			properties: {},
+			ready: function() {
+				
+			}
+		});
+	</script>
+</dom-module>
