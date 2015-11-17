@@ -1,37 +1,51 @@
 <link rel="import" href="/components/polymer/polymer.html"/>
-<pc-loader target='["iron-menu-behavior"]'></pc-loader>
+<pc-loader target='["iron-icon"]'></pc-loader>
 <dom-module id="pc-sidebar">
 	<style>
-		.content ::content > .iron-selected {
-			color: white;
-			background-color: var(--google-blue-500);
-		}
-		::host {
+		:host {
 			width: 100%;
 			display: inline-block;
+			padding-top: 50px;
+			padding-left: 0px;
 		}
-		.content ::content a {
-			display: block;
-			padding: 15px 20px;
-			color: #333;
-			text-decoration: none;
+		:host>paper-button {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			font-size: 16px;
+			font-weight: 400 !important;
+			line-height: 24px;
+			min-height: 48px;
+			padding-top: 0;
+			padding-bottom: 0;
+			padding-right: 16px;
+			padding-left: 16px;
+			width: 100%;
+			margin-left: 0;
+			border-radius: 0;
+			text-transform: none !important;
+			background-color: #FFF;
+			transition: background-color 0.5s ease;
 		}
-		.content ::content a[disabled] {
-			color: #CCC;
+		:host>paper-button>iron-icon {
+			padding-right: 32px;
+		}
+		:host>paper-button[selected] {
+			background-color: #CCC;
 		}
 	</style>
 	<template>
-		<div class="content">
-			<content></content>
-		</div>
+		<paper-button> <iron-icon icon="schedule"></iron-icon> Schedule </paper-button>
+		<paper-button> <iron-icon icon="class"></iron-icon> Assignments </paper-button>
+		<paper-button> <iron-icon icon="perm-contact-calendar"></iron-icon> Calendar </paper-button>
+		<paper-button> <iron-icon icon="grade"></iron-icon> Grades </paper-button>
+		<paper-button> <iron-icon icon="dns"></iron-icon> Settings </paper-button>
+		<paper-button> <iron-icon icon="code"></iron-icon> Source </paper-button>
 	</template>
 	<script>
 		Polymer({
 			is: 'pc-sidebar',
 			properties: {},
-			behaviors: [
-				Polymer.IronMenuBehavior
-			],
 			ready: function() {
 				window.sidebar=this;
 				console.log('hi!');
