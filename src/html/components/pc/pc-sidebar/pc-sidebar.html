@@ -1,0 +1,41 @@
+<link rel="import" href="/components/polymer/polymer.html"/>
+<pc-loader target='["iron-menu-behavior"]'></pc-loader>
+<dom-module id="pc-sidebar">
+	<style>
+		.content ::content > .iron-selected {
+			color: white;
+			background-color: var(--google-blue-500);
+		}
+		::host {
+			width: 100%;
+			display: inline-block;
+		}
+		.content ::content a {
+			display: block;
+			padding: 15px 20px;
+			color: #333;
+			text-decoration: none;
+		}
+		.content ::content a[disabled] {
+			color: #CCC;
+		}
+	</style>
+	<template>
+		<div class="content">
+			<content></content>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'pc-sidebar',
+			properties: {},
+			behaviors: [
+				Polymer.IronMenuBehavior
+			],
+			ready: function() {
+				window.sidebar=this;
+				console.log('hi!');
+			}
+		});
+	</script>
+</dom-module>

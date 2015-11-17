@@ -7,7 +7,6 @@
 	right: 0;
 	left: 0;
 	border: 0;
-	z-index: 1030;
 	min-height: 50px;
 	margin-bottom: 20px;
 	-webkit-tap-highlight-color: transparent;
@@ -17,6 +16,7 @@
 	font-size: 14px;
 	line-height: 1.428;
 	-webkit-touch-callout: none;
+	/*Disallow user selection (annoying) */
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
@@ -87,7 +87,16 @@ paper-toolbar * {
 	}
 }
 @media all and (max-width: 768px) {
-	#navbar-itemlist {
+	#navbar-itemlist, .navbar-brand {
 		display: none;
+	}
+	#titlebar {
+		width: 100%;
+		text-align: center;
+	}
+	#titlebar span {
+		display: inline-block;
+		margin: none;
+		padding: 5px 10px;
 	}
 }

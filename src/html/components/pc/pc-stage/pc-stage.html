@@ -1,5 +1,5 @@
 <link rel="import" href="/components/polymer/polymer.html">
-<pc-loader target='["paper-card","paper-ripple","paper-scroll-header-panel","paper-toolbar","paper-listbox","paper-item","pc-navbar"]'></pc-loader>
+<pc-loader target='["pc-sidebar","paper-card","paper-ripple","paper-scroll-header-panel","paper-toolbar","paper-listbox","paper-item","pc-navbar"]'></pc-loader>
 <link rel="import" href="/components/paper/paper-card/paper-card.html">
 <dom-module id="pc-stage">
 
@@ -27,6 +27,7 @@
 	}
 	paper-toolbar {
 		--paper-toolbar-background: #009688;
+		height: 50px;
 	}
 	pc-navbar, paper-header-panel[main] {
 		width: 100%;
@@ -35,15 +36,15 @@
 
 <template>
 	<paper-drawer-panel force-narrow>
-		<paper-header-panel drawer>
+		<paper-scroll-header-panel drawer>
 			<paper-toolbar>
 				<div>Application</div>
 			</paper-toolbar>
-			<paper-listbox role="listbox">
-				<paper-item role="option" tabindex="0" aria-disabled="false">Classes</paper-item>
-				<paper-item role="option" tabindex="1" aria-disabled="false">Schedule</paper-item>
-			</paper-listbox>
-		</paper-header-panel>
+			<pc-sidebar>
+				<a href="javascript:void(0)">Foo</a>
+				<a href="javascript:void(0)">Bar</a>
+			</pc-sidebar>
+		</paper-scroll-header-panel>
 		<paper-header-panel main>
 			<pc-navbar brand$="{{brand}}" title$="{{title}}" class="paper-toolbar">
 				<paper-icon-button class="navbar-header-item" icon="menu" style="color: white;" paper-drawer-toggle></paper-icon-button>
