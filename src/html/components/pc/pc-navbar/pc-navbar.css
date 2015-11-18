@@ -7,7 +7,7 @@
 	right: 0;
 	left: 0;
 	border: 0;
-	min-height: 50px;
+	min-height: 44px;
 	margin-bottom: 20px;
 	-webkit-tap-highlight-color: transparent;
 	box-sizing: border-box;
@@ -29,16 +29,20 @@
 	content: " ";
 	box-sizing: border-box;
 }
-#container {
+.navbar-container {
 	padding-right: 15px;
 	padding-left: 15px;
 	margin-right: auto;
 	margin-left: auto;
 	display: block;
+	height: 100%;
 }
-#navbar-header {
+.navbar-header {
 	display: block;
 	float: left;
+	height: 100%;
+	min-height: 44px;
+	min-width: 44px;
 }
 .navbar-brand {
 	margin-left: -15px;
@@ -48,7 +52,7 @@
 	line-height: 30px;
 	padding: 15px;
 }
-paper-button { 
+:host paper-button { 
 	display: block;
 	font-weight: 300 !important;
 	color: #FFF;
@@ -58,45 +62,59 @@ paper-button {
 	text-transform: none !important;
 	margin: 0;
 	padding-top: calc(height/2);
+	border-radius: 0;
 }
-paper-toolbar {
+:host paper-toolbar {
 	--paper-toolbar-background: #009688;
 }
-paper-toolbar * {
+:host paper-toolbar * {
 	margin: 4px;
 }
-@media all and (min-width: 768px) {
-	#navbar-itemlist {
-		float: left;
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		height: 100%;
-	}
-	#navbar-itemlist>* {
-		display: inline-block;
-	}
-	#navbar-itemlist paper-button {
-		padding: 20px 15px 20px 15px;
-		font-size: 14px;
-		line-height: 20px;
-		position: relative;
-	}
-	.navbar-menu-button, #titlebar {
-		display: none;
-	}
+.navbar-titlebar {
+	color: white;
 }
-@media all and (max-width: 768px) {
-	#navbar-itemlist, .navbar-brand {
-		display: none;
-	}
-	#titlebar {
-		width: 100%;
-		text-align: center;
-	}
-	#titlebar span {
-		display: inline-block;
-		margin: none;
-		padding: 5px 10px;
-	}
+:host ::content paper-icon-button {
+	height: 100%;
+	min-width: 44px;
+}
+:host ::content paper-icon-button iron-icon#icon {
+	width: 24px;
+	height: 24px;
+	margin-left: 2px;
+}
+:host:not([mobile]) .navbar-itemlist {
+	float: left;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+.navbar-itemlist>* {
+	display: inline-block;
+}
+.navbar-itemlist>*:not(:first-child) {
+	margin-left: -6px;
+}
+:host:not([mobile]) .navbar-itemlist paper-button {
+	padding: 20px 15px 20px 15px;
+	font-size: 14px;
+	line-height: 20px;
+	position: relative;
+}
+:host:not([mobile]) .navbar-menu-button, :host:not([mobile]) .navbar-titlebar {
+	display: none;
+}
+/* Mobile styles */
+:host[mobile] .navbar-itemlist, :host[mobile] .navbar-brand {
+	display: none;
+}
+:host[mobile] .navbar-titlebar {
+	width: 100%;
+	text-align: center;
+}
+:host[mobile] .navbar-titlebar span {
+	display: inline-block;
+	margin: none;
+	padding: 5px 10px;
 }

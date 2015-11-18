@@ -1,100 +1,77 @@
 <link rel="import" href="/components/polymer/polymer.html">
-<pc-loader target='["pc-login-view","pc-sidebar","paper-card","paper-ripple","paper-scroll-header-panel","paper-toolbar","paper-listbox","paper-item","pc-navbar"]'></pc-loader>
-<link rel="import" href="/components/paper/paper-card/paper-card.html">
+<pc-loader target='["iron-media-query","paper-header-panel","pc-sidebar","pc-navbar","pc-login-view"]'></pc-loader>
 <dom-module id="pc-stage">
-
-<style>
-	:host {
-		width: 100%;
-		min-height: 100%;
-	}
-	:host paper-drawer-panel {
-		background-color: #EEE;
-	}
-	:host #drawerPanel {
-		position: fixed;
-		display: none;
-	}
-	:host #contentPanel {
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		width: 100%;
-	}
-	:host #contentPanel #navbar-brand {
-		color: white !important
-		text-transform: none;
-	}
-	--paper-listbox-background-color {
-		background-color: '#F00';
-	}
-	paper-toolbar {
-		--paper-toolbar-background: #009688;
-		height: 50px;
-	}
-	pc-navbar, paper-header-panel[main] {
-		width: 100%;
-	}
-	.main {
-		width: 100%;
-		position: fixed;
-		padding-top: 60px;
-	}
-</style>
-
-<template>
-	<paper-drawer-panel force-narrow>
-		<paper-scroll-header-panel drawer>
-			<paper-toolbar>
-				<div>Application</div>
-			</paper-toolbar>
-			<pc-sidebar>
-			</pc-sidebar>
-		</paper-scroll-header-panel>
-		<paper-header-panel main>
-			<pc-navbar brand$="{{brand}}" title$="{{title}}" class="paper-toolbar">
-				<paper-icon-button class="navbar-header-item" icon="menu" style="color: white;" paper-drawer-toggle></paper-icon-button>
-			</pc-navbar>
-			<div class="main">
-				<pc-login-view title$={{title}}></pc-login-view>
-			</div>
-		</paper-header-panel>
-	</paper-drawer-panel>
-</template>
-
-<script>
-Polymer({
-
-    is: "pc-stage",
-
-    menuToggle: function() {
-		this.$.paper_drawer_panel.togglePanel();
-    },
+	<link rel="import" type="css" href="pc-stage.css"/>
+	<template>
+		<iron-media-query query="(max-width: 768px)" query-matches="{{mobile}}"></iron-media-query>
+		<div id="drawer" style$="[[_getDrawerStyle(drawerWidth)]]">
+			<pc-sidebar class$="[[_getDrawerClasses(drawerPeeking, mobile)]]" style$="[[_getDrawerStyle(drawerWidth)]]" open$="{{open}}"></pc-sidebar>
+		</div>
+		<div id="mainWrapper">
+			<paper-header-panel id="main">
+				<pc-navbar brand$="{{brand}}" title$="{{title}}" mobile$="[[mobile]]" class="paper-toolbar">
+					<paper-icon-button class="navbar-header-item" icon="menu" style="color: white;" paper-drawer-toggle></paper-icon-button>
+				</pc-navbar>
+				<div main>
+					<pc-login-view title$={{title}}></pc-login-view>
+				</div>
+			</paper-header-panel>
+			<div id="scrim"></div>
+		</div>
+	</template>
 	
-	getDrawerPanel() {
-		return this.$.paper_drawer_panel;
-	},
-
-    properties: {
-		brand: {
-			type: String,
-			value: 'Project Cuttlefish',
-		},
-		title: {
-			type: String,
-			value: 'Home'
-		},
-		narrow: {
-			type: Boolean,
-			value: false,
-			notify: true
-		}
-    },
-
-    ready: function() {
-		window.bar = this;
-	}
-
-});
-</script>
+	<script>
+		Polymer({
+			is: "pc-stage",
+			
+			properties: {
+				brand: {
+					type: String,
+					value: 'Project Cuttlefish',
+				},
+				drawerPeeking: {
+					type: Boolean,
+					readOnly: true,
+					value: false,
+					notify: true
+				},
+				drawerWidth: {
+					type: String,
+					value: '250px'
+				},
+				mobile: {
+					tyle: Boolean,
+					notify: true,
+					reflectToAttribute: true
+				},
+				narrow: {
+					type: Boolean,
+					value: false,
+					notify: true,
+					reflectToAttribute: true
+				},
+				title: {
+					type: String,
+					value: 'Home'
+				},
+				open: {
+					type: Boolean,
+					value: false,
+					notify: true,
+					reflectToAttribute: true
+				}
+			},
+			
+			ready: function() {
+				window.bar = this;
+			},
+			
+			_getDrawerClasses: function(drawerPeeking, mobile) {
+				return (mobile?"mobile ":"") + (drawerPeeking?"peeking":"");
+			},
+			_getDrawerStyle: function(drawerWidth) {
+				return "width: "+drawerWidth;
+			}
+		});
+	</script>
 </dom-module>

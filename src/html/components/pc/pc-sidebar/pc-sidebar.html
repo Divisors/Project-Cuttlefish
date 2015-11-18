@@ -2,13 +2,17 @@
 <pc-loader target='["iron-icon"]'></pc-loader>
 <dom-module id="pc-sidebar">
 	<style>
-		:host {
+		:host .sidebar-items {
 			width: 100%;
 			display: inline-block;
 			padding-top: 50px;
 			padding-left: 0px;
 		}
-		:host>paper-button {
+		paper-toolbar {
+			--paper-toolbar-background: #1abc9c;
+			height: 50px;
+		}
+		:host .sidebar-items>paper-button {
 			display: flex;
 			flex-direction: row;
 			align-items: center;
@@ -27,20 +31,37 @@
 			background-color: #FFF;
 			transition: background-color 0.5s ease;
 		}
-		:host>paper-button>iron-icon {
+		:host .sidebar-items>paper-button>iron-icon {
 			padding-right: 32px;
 		}
-		:host>paper-button[selected] {
+		:host .sidebar-items>paper-button[selected] {
 			background-color: #CCC;
+		}
+		:host paper-scroll-header-panel {
+			height: 100%;
+		}
+		.sidebar-user {
+			font-family: RobotoDraft, Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			font-size: 24px;
+			color: white;
+			line-height: 24px;
 		}
 	</style>
 	<template>
-		<paper-button> <iron-icon icon="schedule"></iron-icon> Schedule </paper-button>
-		<paper-button> <iron-icon icon="class"></iron-icon> Assignments </paper-button>
-		<paper-button> <iron-icon icon="perm-contact-calendar"></iron-icon> Calendar </paper-button>
-		<paper-button> <iron-icon icon="grade"></iron-icon> Grades </paper-button>
-		<paper-button> <iron-icon icon="dns"></iron-icon> Settings </paper-button>
-		<paper-button> <iron-icon icon="code"></iron-icon> Source </paper-button>
+		<paper-scroll-header-panel>
+			<paper-toolbar>
+				<div class="sidebar-user"><iron-icon icon="social:person-outline"></iron-icon>Liam Feehery</div> <!-- TODO add user info stuff -->
+			</paper-toolbar>
+			<div class="sidebar-items">
+				<paper-button><iron-icon icon="dashboard"></iron-icon> Home </paper-button>
+				<paper-button><iron-icon icon="schedule"></iron-icon> Schedule </paper-button>
+				<paper-button><iron-icon icon="class"></iron-icon> Assignments </paper-button>
+				<paper-button><iron-icon icon="perm-contact-calendar"></iron-icon> Calendar </paper-button>
+				<paper-button><iron-icon icon="grade"></iron-icon> Grades </paper-button>
+				<paper-button><iron-icon icon="dns"></iron-icon> Settings </paper-button>
+				<paper-button><iron-icon icon="code"></iron-icon> Source </paper-button>
+			</div>
+		</paper-scroll-header-panel>
 	</template>
 	<script>
 		Polymer({
