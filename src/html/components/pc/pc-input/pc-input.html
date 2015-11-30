@@ -1,15 +1,99 @@
 <link rel="import" href="/components/polymer/polymer.html">
 <dom-module id="pc-input">
-<style>
-</style>
+	<style>
+		input {
+		    background-image: linear-gradient(#009688,#009688),linear-gradient(#d2d2d2,#d2d2d2);
+			background-size: 0 2px,100% 1px;
+			background-repeat: no-repeat;
+			background-position: center bottom,center calc(100% - 1px);
+			background-color: transparent;
+			transition: background 0s ease-out;
+			padding: 0;
+			float: none;
+			box-shadow: none;
+			box-sizing: border-box;
+			border-radius: 0;
+			display: block;
+			width: 100%;
+			height: var(--pc-input-height,34px);
+			font-size: var(--pc-input-font,14px);
+			line-height: 1.428;
+			color: #555;
+			margin: 0;
+			-webkit-appearance: textfield;
+			-webkit-rtl-ordering: logical;
+			-webkit-user-select: text;
+			cursor: auto;
+			text-rendering: auto;
+			letter-spacing: normal;
+			word-spacing: normal;
+			text-transform: none;
+			text-indent: 0px;
+			text-shadow: none;
+			text-align: start;
+			border-color: #66afe9;
+			border-style: none;
+			transition-duration: .3s;
+		}
+		input:focus,input:not(.empty) {
+			outline: none;
+			background-size: 100% 2px,100% 1px;
+		}
+		#floatingLabel {
+			color: #777;
+			font-size: var(--pc-input-big-label-font,18px);
+			position: absolute;
+			left: 0;
+			top: 5px;
+			transition: 0.3s ease all;
+			display: block;
+		}
+		input:focus+#floatingLabel,input:not(.empty)+#floatingLabel {
+			font-size: var(--pc-input-small-label-font,10px);
+			top: var(--pc-input-label-offset,-5px);
+			color: #009688;
+		}
+		:host {
+			position: relative;
+			display: block;
+			font-family: RobotoDraft, Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		}
+		:host paper-button {
+			--paper-button: {
+				color: white;
+			}
+		}
+	</style>
 
-<template>
-</template>
+	<template>
+		<input name="[[name]]" type="[[type]]" value="{{value::input}}" class$="{{_isEmpty(value)}}"></input>
+		<div id="floatingLabel">{{label}}</div>
+		<span class="material-input"></span>
+	</template>
 
-<script>
-Polymer({
-    is: "pc-input",
-
-});
-</script>
+	<script>
+		Polymer({
+			is: "pc-input",
+			properties: {
+				name: String,
+				label: String,
+				type: {
+					type: String,
+					value: "text"
+				},
+				value: {
+					type: String,
+					value: "",
+					notify: true,
+				}
+			},
+			ready: function() {
+				//when the floating label is clicked, focus on the input instead
+				$(this.$$('#floatingLabel')).on('click',function(){$(this.$$('input')).focus()}.bind(this));
+			},
+			_isEmpty(value) {
+				return (value == '')?'empty':'';
+			}
+		});
+	</script>
 </dom-module>

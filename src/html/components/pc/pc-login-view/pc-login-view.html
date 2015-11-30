@@ -8,36 +8,75 @@
 <link rel="import" href="/components/iron/iron-icon/iron-icon.html">
 <link rel="import" href="/components/iron/iron-icons/iron-icons.html">
 <link rel="import" href="/components/paper/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/components/paper/paper-button/paper-button.html">
+<link rel="import" href="/components/pc/pc-input/pc-input.html">
 <dom-module id="pc-login-view">
 	<style>
 		:host {
 			width: 100%;
 			min-height: 100%;
+			display:block;
+			background-color: rgba(149, 165, 166, 1);/*#95a5a6;*/
 		}
 		:host>form {
 			margin: 4em auto;
-			padding: 2em 2em em 2em;
+			box-sizing: border-box;
 			background: #FAFAFA;
 			border: 1px solid #EBEBEB;
 			box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
-			width: 380px;
 			padding: 32px;
 			padding-top: 48px;
 			border-radius: 2px;
+			position: relative;
+			top: 200px;
 		}
 		:host>form>.form-group {
 			margin: 0;
 			margin-bottom: 45px;
 		}
-		:host paper-input {
-			transition-duration: .3s;
+		:host paper-button {
+			width: 100%;
+			background-color: #00aa9a;
+			font-weight: 300 !important;
+			color: #FFF;
+			text-decoration: none;
+			text-transform: none !important;
+			width: 100%;
+			font-family: RobotoDraft, Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			margin: 0;
+		}
+		@media all and (min-width: 768px) {
+			:host>form {
+				box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+					0  6px 30px 5px rgba(0, 0, 0, 0.12),
+					0  8px 10px -5px rgba(0, 0, 0, 0.4);
+				width: 380px;
+			}
+		}
+		@media all and (max-width: 768px) {
+			:host>form {
+				width: 100%;
+			}
+			:host pc-input {
+				--pc-input-small-label-font: 14px;
+				--pc-input-big-label-font: 18px;
+				--pc-input-font: 18px;
+				--pc-input-label-offset: -10px;
+			}
+			:host paper-button {
+				font-size: 18px;
+			}
 		}
 	</style>
 	<template>
 		<form onsubmit="return false" method="POST">
 			<div class="form-group">
-				<paper-input label="Username"></paper-input>
+				<pc-input label="Username"></pc-input>
 			</div>
+			<div class="form-group">
+				<pc-input label="Password" type="password"></pc-input>
+			</div>
+			<paper-button dialog-confirm>Sign In</paper-button>
 		</form>
 	</template>
 	<script>

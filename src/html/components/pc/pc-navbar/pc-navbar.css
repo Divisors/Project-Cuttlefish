@@ -93,6 +93,7 @@ paper-toolbar * {
 	#titlebar {
 		width: 100%;
 		text-align: center;
+		color: white;
 	}
 	#titlebar span {
 		display: inline-block;
