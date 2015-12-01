@@ -1,5 +1,5 @@
 <link rel="import" href="/components/polymer/polymer.html">
-<pc-loader target='["iron-media-query","paper-header-panel","pc-sidebar","pc-navbar","pc-login-view"]'></pc-loader>
+<pc-loader target='["iron-media-query","paper-header-panel","pc-sidebar","pc-navbar","pc-login-view","pc-student-schedule-view"]'></pc-loader>
 <dom-module id="pc-stage">
 	<link rel="import" type="css" href="pc-stage.css"/>
 	<template>
@@ -13,7 +13,8 @@
 					<paper-icon-button class="navbar-header-item" icon="menu" style="color: white;" on-tap="toggleDrawer"></paper-icon-button>
 				</pc-navbar>
 				<div main>
-					<pc-login-view title$={{title}}></pc-login-view>
+					<pc-login-view class="xview" id="login"></pc-login-view>
+					<pc-student-schedule-view class="xview" id="schedule"></pc-student-schedule-view>
 				</div>
 			</paper-header-panel>
 			<div id="scrim" on-tap="closeDrawer"></div>

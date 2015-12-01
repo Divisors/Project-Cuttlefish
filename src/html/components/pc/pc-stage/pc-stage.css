@@ -81,3 +81,6 @@ paper-toolbar {
 :host:not([mobile]) > #mainWrapper > #main [paper-drawer-toggle] {
 	display: none;
 }
+:host .xview:not([active]){
+	display: none;
+}

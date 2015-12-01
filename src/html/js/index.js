@@ -81,6 +81,9 @@ $(function() {
 		views.forEach(function(view) {
 			view.disable();
 		});
+		$('[active]').removeAttr('active');
+		$('.xview#'+hash).attr('active','');
+		console.info($('.xview#'+hash));
 		switch(hash) {
 			case "schedule":
 				scheduleView.init().then(function(){scheduleView.enable();});
