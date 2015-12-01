@@ -1,0 +1,83 @@
+paper-toolbar {
+	--paper-toolbar-background: #009688;
+}
+:host {
+	display: block;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	background-color: #EEE;
+}
+
+:host > #drawer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	background-color: white;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	z-index: 10;
+}
+:host > #drawer > pc-sidebar {
+	height: 100%;
+}
+.transition > #drawer {
+	transition: -webkit-transform ease-in-out 0.3s, width ease-in-out 0.3s, visibility 0.3s;
+	transition: transform ease-in-out 0.3s, width ease-in-out 0.3s, visibility 0.3s;
+}
+:host > #mainWrapper {
+	z-index: 9;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+.transition > #mainWrapper {
+	transition: left ease-in-out 0.3s, padding ease-in-out 0.3s;
+}
+:host[mobile] > #drawer {
+	will-change: transform;
+}
+:host[mobile][open] > #drawer {
+	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
+	border: 0;
+}
+:host[mobile]:not([open]) > #drawer, :host:not([mobile]) > #drawer {
+	-webkit-transform: translateX(-100%);
+	transform: translateX(-100%);
+}
+:host[mobile] > #mainWrapper > #main > [main] {
+	padding: 0;
+}
+:host > #mainWrapper > #scrim {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity ease-in-out 0.38s, visibility ease-in-out 0.38s;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+:host[mobile][open] > #mainWrapper > #scrim,
+:host.dragging > #mainWrapper > #scrim { /* TODO test that this actually works */
+	visibility: visible;
+	opacity: 1;
+}
+:host[mobile] > #mainWrapper > * {
+	margin: 0;
+	min-height: 100%;
+	left: 0;
+	right: 0;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+:host:not([mobile]) > #mainWrapper > #main [paper-drawer-toggle] {
+	display: none;
+}

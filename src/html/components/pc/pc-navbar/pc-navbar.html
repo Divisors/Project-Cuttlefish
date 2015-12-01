@@ -3,17 +3,18 @@
 <dom-module id="pc-navbar">
 	<link rel="import" type="css" href="pc-navbar.css"/>
 	<template>
-		<div id="container">
-			<div id="navbar-header">
-				<span class="navbar-menu-button"><content select=".navbar-header-item"></content></span>
-				<paper-button class="navbar-brand" href="#">{{brand}}</paper-button>
+		<div class="navbar-container mh50">
+			<div class="navbar-header mh50">
+				<span class="navbar-menu-button mh50"><content select=".navbar-header-item"></content></span>
+				<paper-button class="navbar-brand mh50" href="#">{{brand}}</paper-button>
 			</div>
-			<div id="titlebar">
+			<div class="navbar-titlebar">
 				<span>{{title}}</span>
 			</div>
-			<ul id="navbar-itemlist">
+			<ul class="navbar-itemlist">
 				<paper-button href="#schedule" id="schedule">Schedule</paper-button>
 				<paper-button href="#assignments" id="assignments">Assignments</paper-button>
+				<paper-button href="#clubs" id="clubs">Clubs</paper-button>
 				<paper-button href="#grades" id="grades">Grades</paper-button>
 			</ul>
 		</div>
@@ -21,7 +22,18 @@
 	<script>
 		Polymer({
 			is: 'pc-navbar',
-			properties: {},
+			properties: {
+				mobile: {
+					type: Boolean,
+					readOnly: true
+				},
+				brand: {
+					type: String
+				},
+				title: {
+					type: String
+				}
+			},
 			ready: function() {
 				window.navbar=this;
 				console.log('hi!');

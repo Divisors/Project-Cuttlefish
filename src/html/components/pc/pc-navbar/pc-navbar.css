@@ -9,6 +9,7 @@
 	left: 0;
 	line-height: 1.428;
 	margin-bottom: 20px;
+	/*min-height: 44px;*/
 	min-height: 50px;
 	position: absolute;
 	right: 0;
@@ -27,26 +28,55 @@
 	content: " ";
 	box-sizing: border-box;
 }
-#container {
-	display: block;
+.mh50 {
+	min-height: 50px;
+}
+.navbar-container {
+	height: 100%;
 	margin-right: auto;
 	margin-left: auto;
 	padding-right: 15px;
 	padding-left: 15px;
 }
-#navbar-header {
+.navbar-header {
 	display: block;
 	float: left;
+	height: 100%;
+	min-width: 50px;
 }
 .navbar-brand {
 	margin-left: -15px;
 	text-decoration: none;
 	font-size: 18px;
-	height: 60px;
 	line-height: 30px;
 	padding: 15px;
 }
-paper-button { 
+.navbar-titlebar {
+	color: white;
+	text-align: center;
+	width: 100%;
+}
+.navbar-titlebar>span {
+	display: inline-block;
+	margin: none;
+	padding: 5px 10px;
+}
+.navbar-itemlist {
+	float: left;
+	height: 100%;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.navbar-itemlist>* {
+	display: inline-block;
+	margin-right: -6px;
+	font-size: 14px;
+	line-height: 20px;
+	padding: 20px 15px 20px 15px;
+	position: relative;
+}
+:host paper-button { 
 	border-radius: 0;
 	color: #FFF;
 	display: block;
@@ -59,51 +89,31 @@ paper-button {
 	text-transform: none !important;
 	transition: 1s ease all;
 }
-paper-button.hash-active, paper-button:target {
+:host paper-button.hash-active, :host paper-button:target {
 	background-color: #40B0A6;
+	transition-duration: .1s;
 }
-paper-toolbar {
+:host paper-toolbar {
 	--paper-toolbar-background: #009688;
 }
-paper-toolbar * {
+:host paper-toolbar * {
 	margin: 4px;
 }
-@media all and (min-width: 768px) {
-	#navbar-itemlist {
-		float: left;
-		height: 100%;
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-	}
-	#navbar-itemlist>* {
-		display: inline-block;
-	}
-	#navbar-itemlist paper-button {
-		font-size: 14px;
-		line-height: 20px;
-		padding: 20px 15px 20px 15px;
-		position: relative;
-	}
-	#navbar-itemlist paper-button:not(:first-of-type) {
-		margin-left: -6px;
-	}
-	.navbar-menu-button, #titlebar {
-		display: none;
-	}
+:host ::content paper-icon-button {
+	height: 100%;
+	min-width: 50px;
+	min-height: 50px;
+	padding: 12px 13px 12px 13px;
 }
-@media all and (max-width: 768px) {
-	#navbar-itemlist, .navbar-brand {
-		display: none;
-	}
-	#titlebar {
-		color: white;
-		text-align: center;
-		width: 100%;
-	}
-	#titlebar span {
-		display: inline-block;
-		margin: none;
-		padding: 5px 10px;
-	}
+:host ::content paper-icon-button iron-icon#icon {
+	height: 24px;
+	width: 24px;
+}
+/* Hide sidebar/titlebar in desktop mode */
+:host:not([mobile]) .navbar-menu-button, :host:not([mobile]) .navbar-titlebar {
+	display: none;
+}
+/* Hide navbar in mobile mode */
+:host[mobile] .navbar-itemlist, :host[mobile] .navbar-brand {
+	display: none;
 }
