@@ -72,14 +72,10 @@ $(function() {
 	window.views = [loginView, scheduleView, assignmentsView];
 	$(window).on('popstate',function() {
 		var hash = window.location.hash;
-		if (hash.length <= 1) {
 		console.log('popstate',hash);
-			$('[data-active-hash=\'\'],[data-active-hash=\'#\']').addClass('hash-active');
-			$('.hash-active:not([data-active-hash=\'\']):not([data-active-hash=\'#\'])').removeClass('hash-active');
+		if (hash.length <= 1) {
 			hash = null;
 		} else {
-			$('[data-active-hash=\''+hash+'\']').addClass('hash-active');
-			$('.hash-active:not([data-active-hash=\''+hash+'\']').removeClass('hash-active');
 			hash = hash.substring(1);
 		}
 		views.forEach(function(view) {

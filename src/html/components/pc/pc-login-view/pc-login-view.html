@@ -15,7 +15,6 @@
 		:host {
 			width: 100%;
 			min-height: 100%;
-			display:block;
 			background-color: rgba(149, 165, 166, 1);/*#95a5a6;*/
 		}
 		:host>form {
@@ -28,7 +27,7 @@
 			padding-top: 48px;
 			border-radius: 2px;
 			position: relative;
-			top: 200px;
+			top: 75px;
 		}
 		:host>form>.form-group {
 			margin: 0;
@@ -71,10 +70,10 @@
 	<template>
 		<form onsubmit="return false" method="POST">
 			<div class="form-group">
-				<pc-input label="Username"></pc-input>
+				<pc-input label="Username" name="username"></pc-input>
 			</div>
 			<div class="form-group">
-				<pc-input label="Password" type="password"></pc-input>
+				<pc-input label="Password" type="password" name="password"></pc-input>
 			</div>
 			<paper-button dialog-confirm>Sign In</paper-button>
 		</form>

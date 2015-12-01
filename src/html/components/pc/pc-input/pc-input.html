@@ -2,38 +2,35 @@
 <dom-module id="pc-input">
 	<style>
 		input {
-		    background-image: linear-gradient(#009688,#009688),linear-gradient(#d2d2d2,#d2d2d2);
-			background-size: 0 2px,100% 1px;
-			background-repeat: no-repeat;
-			background-position: center bottom,center calc(100% - 1px);
 			background-color: transparent;
-			transition: background 0s ease-out;
-			padding: 0;
-			float: none;
+		    background-image: linear-gradient(#009688,#009688),linear-gradient(#d2d2d2,#d2d2d2);
+			background-position: center bottom,center calc(100% - 1px);
+			background-repeat: no-repeat;
+			background-size: 0 2px,100% 1px;
+			border-radius: 0;
+			border-color: #66afe9;
+			border-style: none;
 			box-shadow: none;
 			box-sizing: border-box;
-			border-radius: 0;
-			display: block;
-			width: 100%;
-			height: var(--pc-input-height,34px);
-			font-size: var(--pc-input-font,14px);
-			line-height: 1.428;
 			color: #555;
-			margin: 0;
-			-webkit-appearance: textfield;
-			-webkit-rtl-ordering: logical;
-			-webkit-user-select: text;
 			cursor: auto;
-			text-rendering: auto;
-			letter-spacing: normal;
-			word-spacing: normal;
+			display: block;
+			float: none;
+			font-size: var(--pc-input-font,14px);
+			height: var(--pc-input-height,34px);
+			line-height: 1.428;
+			margin: 0;
+			padding: 0;
+			transition: background 0s ease-out;
 			text-transform: none;
 			text-indent: 0px;
 			text-shadow: none;
 			text-align: start;
-			border-color: #66afe9;
-			border-style: none;
 			transition-duration: .3s;
+			width: 100%;
+			-webkit-appearance: textfield;
+			-webkit-user-select: text;
+			word-spacing: normal;
 		}
 		input:focus,input:not(.empty) {
 			outline: none;
@@ -41,21 +38,21 @@
 		}
 		#floatingLabel {
 			color: #777;
+			display: block;
 			font-size: var(--pc-input-big-label-font,18px);
-			position: absolute;
 			left: 0;
+			position: absolute;
 			top: 5px;
 			transition: 0.3s ease all;
-			display: block;
 		}
 		input:focus+#floatingLabel,input:not(.empty)+#floatingLabel {
+			color: #009688;
 			font-size: var(--pc-input-small-label-font,10px);
 			top: var(--pc-input-label-offset,-5px);
-			color: #009688;
 		}
 		:host {
-			position: relative;
 			display: block;
+			position: relative;
 			font-family: RobotoDraft, Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 		}
 		:host paper-button {
