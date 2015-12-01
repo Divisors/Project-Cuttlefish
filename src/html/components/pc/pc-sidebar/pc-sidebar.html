@@ -3,33 +3,33 @@
 <dom-module id="pc-sidebar">
 	<style>
 		:host .sidebar-items {
-			width: 100%;
 			display: inline-block;
 			padding-top: 50px;
 			padding-left: 0px;
+			width: 100%;
 		}
 		paper-toolbar {
 			--paper-toolbar-background: #1abc9c;
 			height: 50px;
 		}
 		:host .sidebar-items>paper-button {
+			align-items: center;
+			background-color: #FFF;
+			border-radius: 0;
 			display: flex;
 			flex-direction: row;
-			align-items: center;
 			font-size: 16px;
 			font-weight: 400 !important;
 			line-height: 24px;
+			margin-left: 0;
 			min-height: 48px;
 			padding-top: 0;
 			padding-bottom: 0;
 			padding-right: 16px;
 			padding-left: 16px;
-			width: 100%;
-			margin-left: 0;
-			border-radius: 0;
 			text-transform: none !important;
-			background-color: #FFF;
 			transition: background-color 0.5s ease;
+			width: 100%;
 		}
 		:host .sidebar-items>paper-button>iron-icon {
 			padding-right: 32px;
@@ -50,7 +50,7 @@
 	<template>
 		<paper-scroll-header-panel>
 			<paper-toolbar>
-				<div class="sidebar-user"><iron-icon icon="social:person-outline"></iron-icon>Liam Feehery</div> <!-- TODO add user info stuff -->
+				<div class="sidebar-user"><iron-icon icon="social:person-outline"></iron-icon>[Username]</div> <!-- TODO add user info stuff -->
 			</paper-toolbar>
 			<div class="sidebar-items">
 				<paper-button><iron-icon icon="dashboard"></iron-icon> Home </paper-button>

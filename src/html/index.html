@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html manifest="/manifest.appcache">
 	<head>
 		<meta charset="UTF-8"/>
 		<!-- jQuery -->
@@ -8,17 +8,14 @@
 		<!-- Polymer imports -->
 		<script src="webcomponentsjs/webcomponents-lite.js"></script>
 		
-		<!-- Our CSS -->
-		<link rel="stylesheet" href="css/transitions.css"/>
-		
 		<!-- Our JS -->
-		<script src="js/class.js"></script>
-		<script src="js/loader.js"></script>
-		<script src="js/stdobjs.js"></script>
-		<script src="js/studentobjs.js"></script>
-		<script src="js/touch.js"></script>
-		<script src="js/transitions.js"></script>
-		<script src="js/index.js"></script>
+		<script src="js/class.js" async defer></script>
+		<script src="js/loader.js" async defer></script>
+		<script src="js/stdobjs.js" async defer></script>
+		<script src="js/studentobjs.js" async defer></script>
+		<script src="js/touch.js" async defer></script>
+		<script src="js/transitions.js" async defer></script>
+		<script src="js/index.js" async defer></script>
 		
 		<!-- Components -->
 		<link rel="import" href="components/pc/pc-loader.html"/>
@@ -32,4 +29,6 @@
 	<body unresolved>
 		<pc-stage></pc-stage>
 	</body>
+	<!-- Our CSS -->
+	<link rel="stylesheet" href="css/transitions.css"/>
 </html>

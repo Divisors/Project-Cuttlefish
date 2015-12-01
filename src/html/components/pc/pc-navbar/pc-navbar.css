@@ -1,28 +1,27 @@
 :host {
 	background-color: rgb(0, 150, 136);
-	display: block;
-	width: 100%;
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
 	border: 0;
-	min-height: 44px;
-	margin-bottom: 20px;
-	-webkit-tap-highlight-color: transparent;
 	box-sizing: border-box;
+	display: block;
 	font-family: RobotoDraft, Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-weight: 300;
-	font-size: 14px;
+	font-size: 24px;
+	left: 0;
 	line-height: 1.428;
+	margin-bottom: 20px;
+	/*min-height: 44px;*/
+	min-height: 50px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 100%;
+	-webkit-tap-highlight-color: transparent;
 	-webkit-touch-callout: none;
 	/*Disallow user selection (annoying) */
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
-	user-select: none;
-	font-size: 24px;
 }
 :host::before {
 	display: table;
@@ -30,12 +29,11 @@
 	box-sizing: border-box;
 }
 .navbar-container {
-	padding-right: 15px;
-	padding-left: 15px;
+	display: block;
 	margin-right: auto;
 	margin-left: auto;
-	display: block;
-	height: 100%;
+	padding-right: 15px;
+	padding-left: 15px;
 }
 .navbar-header {
 	display: block;
@@ -53,16 +51,20 @@
 	padding: 15px;
 }
 :host paper-button { 
+	border-radius: 0;
+	color: #FFF;
 	display: block;
 	font-weight: 300 !important;
-	color: #FFF;
-	text-align: center;
+	margin: 0;
 	padding: 4px;
+	padding-top: calc(height/2);
+	text-align: center;
 	text-decoration: none;
 	text-transform: none !important;
-	margin: 0;
-	padding-top: calc(height/2);
-	border-radius: 0;
+	transition: 1s ease all;
+}
+paper-button.hash-active, paper-button:target {
+	background-color: #40B0A6;
 }
 :host paper-toolbar {
 	--paper-toolbar-background: #009688;
@@ -117,4 +119,44 @@
 	display: inline-block;
 	margin: none;
 	padding: 5px 10px;
+}
+
+@media all and (min-width: 768px) {
+	#navbar-itemlist {
+		float: left;
+		height: 100%;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+	#navbar-itemlist>* {
+		display: inline-block;
+	}
+	#navbar-itemlist paper-button {
+		font-size: 14px;
+		line-height: 20px;
+		padding: 20px 15px 20px 15px;
+		position: relative;
+	}
+	#navbar-itemlist paper-button:not(:first-of-type) {
+		margin-left: -6px;
+	}
+	.navbar-menu-button, #titlebar {
+		display: none;
+	}
+}
+@media all and (max-width: 768px) {
+	#navbar-itemlist, .navbar-brand {
+		display: none;
+	}
+	#titlebar {
+		color: white;
+		text-align: center;
+		width: 100%;
+	}
+	#titlebar span {
+		display: inline-block;
+		margin: none;
+		padding: 5px 10px;
+	}
 }
