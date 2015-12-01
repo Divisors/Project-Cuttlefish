@@ -47,7 +47,7 @@ paper-toolbar {
 	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
 	border: 0;
 }
-:host[mobile]:not([open]) > #drawer {
+:host[mobile]:not([open]) > #drawer, :host:not([mobile]) > #drawer {
 	-webkit-transform: translateX(-100%);
 	transform: translateX(-100%);
 }

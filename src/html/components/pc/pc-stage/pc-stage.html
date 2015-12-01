@@ -10,7 +10,7 @@
 		<div id="mainWrapper">
 			<paper-header-panel id="main">
 				<pc-navbar brand$="{{brand}}" title$="{{title}}" mobile$="[[mobile]]" class="paper-toolbar">
-					<paper-icon-button class="navbar-header-item" icon="menu" style="color: white;" paper-drawer-toggle></paper-icon-button>
+					<paper-icon-button class="navbar-header-item" icon="menu" style="color: white;" pc-stage-toggle></paper-icon-button>
 				</pc-navbar>
 				<div main>
 					<pc-login-view title$={{title}}></pc-login-view>
@@ -61,7 +61,10 @@
 					reflectToAttribute: true
 				}
 			},
-			
+			listeners: {
+				tap: '_onTap',
+				click: '_onTap'
+			},
 			ready: function() {
 				window.bar = this;
 			},
@@ -71,6 +74,12 @@
 			},
 			_getDrawerStyle: function(drawerWidth) {
 				return "width: "+drawerWidth;
+			},
+			_onTap: function(e) {
+				if ($(e.target).is('[pc-stage-toggle] *'))
+					this.open = !this.open;
+				if ($(e.target).is('#scrim'))
+					this.open=false;
 			}
 		});
 	</script>
