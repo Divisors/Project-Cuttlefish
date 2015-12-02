@@ -1,0 +1,19 @@
+.pager {
+	width: 100%;
+	margin: 20px 0;
+	list-style-type: none;
+	padding: 0;
+	text-align: center;
+}
+.pager .prev {
+	float: left;
+}
+.pager .center {
+	font-size: 30px;
+}
+.pager .next {
+	float: right;
+}
+.pager li {
+	display: inline;
+}

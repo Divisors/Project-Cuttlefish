@@ -1,0 +1,60 @@
+.page-header {
+	margin-left: 15px;
+    font-weight: 400;
+	font-size: 36px;
+	margin-top: 50px;
+	line-height: 1.1;
+	margin-bottom: 40px;
+	color: #333;
+}
+.container {
+	border-width: 1px;
+	border-color: #ddd;
+	padding: 19px;
+	margin-bottom: 20px;
+	box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
+	border-radius: 2px;
+	border-top-width: 0;
+	margin-left: 15px;
+	margin-right: 15px;
+	background-color: white;
+}
+.table {
+	width: 100%;
+	max-width: 100%;
+	margin-bottom: 20px;
+	border-spacing: 0;
+	border-collapse: collapse;
+	border-color: #ddd;
+}
+.table thead {
+	display: table-header-group;
+	vertical-align: middle;
+	border-color: inherit;
+	border-spacing: 2px;
+}
+.table tr {
+	display: table-row;
+	vertical-align: inherit;
+	border-color: inherit;
+}
+.table thead tr {
+	border-bottom-style: solid;
+	border-bottom-width: 2px;
+}
+.table.table-hover tbody tr:hover{
+	background-color: #ddd;
+}
+.table th {
+	font-weight: bold;
+	text-align: left;
+}
+.table tbody {
+}
+.table td {
+	padding: 8px;
+}
+.table tbody tr {
+	border-top-style: solid;
+	border-top-width: 1px;
+}

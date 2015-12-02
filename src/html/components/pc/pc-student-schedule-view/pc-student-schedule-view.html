@@ -2,46 +2,95 @@
 <pc-loader target='["paper-input"]'></pc-loader>
 <dom-module id="pc-student-schedule-view">
 	<link rel="import" type="css" href="pc-student-schedule-view.css"/>
+	<link rel="import" type="css" href="/css/table.css"/>
+	<link rel="import" type="css" href="/css/pager.css"/>
 	<template>
+		<h1 class="page-header">Schedule</h1>
 		<div class="container">
-			<table>
+			<ul class="pager">
+				<li class="prev" on-click="_prevDay">←</li>
+				<li class="center">{{_prettifyDate(date)}}</li>
+				<li class="next" on-click="_nextDay">→</li>
+			</ul>
+			<table class="table table-hover">
 				<thead>
 					<tr>
+						<th class="col-block">Block</th>
 						<th class="sortable col-time">Time<iron-icon icon="expand-less"></iron-icon></th>
-						<th>Block</th>
-						<th>Class</th>
-						<th>Teacher</th>
+						<th class="col-classname">Class</th>
+						<th class="col-teacher">Teacher</th>
+						<th class="col-attendance">Attendance</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td>8-9</td>
 						<td>1</td>
-						<td>Algebra 1</td>
+						<td><span class="starttime">8:00</span><span class="separator"> - </span><span class="endtime">9:00</span></td>
+						<td><a href="#classpage/1234" class="flat">Class 1</a></td>
 						<td><a href="mailto:foo@example.com">Ms. Smith</a></td>
+						<td class="attendance future"><span>--</span></td>
 					</tr>
 					<tr>
-						<td>9-10</td>
 						<td>2</td>
-						<td>Class 2</td>
+						<td><span class="starttime">9:00</span><span class="separator"> - </span><span class="endtime">10:00</span></td>
+						<td><a href="#classpage/5678" class="flat">Class 2</a></td>
 						<td><a href="mailto:bar@example.com">Mr. Jones</a></td>
+						<td class="attendance inexcused"><span>Inexcused</span></td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td><span class="starttime">10:00</span><span class="separator"> - </span><span class="endtime">11:00</span></td>
+						<td><a href="#classpage/5678" class="flat">Class 3</a></td>
+						<td><a href="mailto:bar@example.com">Teacher</a></td>
+						<td class="attendance excused"><span>Excused</span></td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td><span class="starttime">11:00</span><span class="separator"> - </span><span class="endtime">12:00</span></td>
+						<td><a href="#classpage/5678" class="flat">Class 4</a></td>
+						<td><a href="mailto:bar@example.com">Teacher</a></td>
+						<td class="attendance attended"><span>Attended</span></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</template>
 	<script>
+		var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+		var dayPrefixes = ['Sun','Mon','Tues','Wedness','Thurs','Fri','Satur'];
 		Polymer({
 			is: 'pc-student-schedule-view',
 			properties: {
 				mobile: {
 					type: Boolean,
-					readOnly: true
+					readOnly: true,
+					reflectToAttribute: true
 				},
+				date: {
+					type: Number,
+					notify: true,
+					observer: '_scheduleWriter',
+					value: -1
+				}
 			},
 			ready: function() {
 				if (window.location.hash=='#schedule')
 					$(this).attr('active','');
+				if (this.date == -1)
+					this.date = Date.now();
+			},
+			_nextDay: function() {
+				this.date = this.date + 84600000 ;
+			},
+			_prevDay: function() {
+				this.date = this.date - 84600000 ;
+			},
+			_scheduleWriter: function(ts) {
+				
+			},
+			_prettifyDate: function(ts) {
+				var date = new Date(ts);
+				return dayPrefixes[date.getDay()] + 'day, ' + months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
 			}
 		});
 	</script>

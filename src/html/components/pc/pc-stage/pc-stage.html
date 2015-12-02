@@ -8,13 +8,13 @@
 			<pc-sidebar class$="[[_getDrawerClasses(drawerPeeking, mobile)]]" style$="[[_getDrawerStyle(drawerWidth)]]" open$="{{open}}"></pc-sidebar>
 		</div>
 		<div id="mainWrapper">
-			<paper-header-panel id="main">
+			<paper-header-panel id="main" mode="waterfall">
 				<pc-navbar brand$="{{brand}}" title$="{{title}}" mobile$="[[mobile]]" class="paper-toolbar">
 					<paper-icon-button class="navbar-header-item" icon="menu" style="color: white;" on-tap="toggleDrawer"></paper-icon-button>
 				</pc-navbar>
 				<div main>
-					<pc-login-view class="xview" id="login"></pc-login-view>
-					<pc-student-schedule-view class="xview" id="schedule"></pc-student-schedule-view>
+					<pc-login-view class="xview stage-mobile-observer" id="login"></pc-login-view>
+					<pc-student-schedule-view class="xview stage-mobile-observer" id="schedule"></pc-student-schedule-view>
 				</div>
 			</paper-header-panel>
 			<div id="scrim" on-tap="closeDrawer"></div>
@@ -28,7 +28,7 @@
 			properties: {
 				brand: {
 					type: String,
-					value: 'Project Cuttlefish',
+					value: 'Project Cuttlefish | Student',
 				},
 				drawerPeeking: {
 					type: Boolean,
