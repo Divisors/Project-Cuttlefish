@@ -1,0 +1,59 @@
+input {
+	background-color: transparent;
+	background-image: linear-gradient(#009688,#009688),linear-gradient(#d2d2d2,#d2d2d2);
+	background-position: center bottom,center calc(100% - 1px);
+	background-repeat: no-repeat;
+	background-size: 0 2px,100% 1px;
+	border-radius: 0;
+	border-color: #66afe9;
+	border-style: none;
+	box-shadow: none;
+	box-sizing: border-box;
+	color: #555;
+	cursor: auto;
+	display: block;
+	float: none;
+	font-size: var(--pc-input-font,14px);
+	height: var(--pc-input-height,34px);
+	line-height: 1.428;
+	margin: 0;
+	padding: 0;
+	transition: background 0s ease-out;
+	text-transform: none;
+	text-indent: 0px;
+	text-shadow: none;
+	text-align: start;
+	transition-duration: .3s;
+	width: 100%;
+	-webkit-appearance: textfield;
+	-webkit-user-select: text;
+	word-spacing: normal;
+}
+input:focus,input:not(.empty) {
+	outline: none;
+	background-size: 100% 2px,100% 1px;
+}
+#floatingLabel {
+	color: #777;
+	display: block;
+	font-size: var(--pc-input-big-label-font,18px);
+	left: 0;
+	position: absolute;
+	top: 5px;
+	transition: 0.3s ease all;
+}
+input:focus+#floatingLabel,input:not(.empty)+#floatingLabel {
+	color: #009688;
+	font-size: var(--pc-input-small-label-font,10px);
+	top: var(--pc-input-label-offset,-5px);
+}
+:host {
+	display: block;
+	position: relative;
+	font-family: RobotoDraft, Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+:host paper-button {
+	--paper-button: {
+		color: white;
+	}
+}

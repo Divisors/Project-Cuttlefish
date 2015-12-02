@@ -43,7 +43,8 @@
 				mobile: {
 					tyle: Boolean,
 					notify: true,
-					reflectToAttribute: true
+					reflectToAttribute: true,
+					observer: '_mobileUpdate'
 				},
 				narrow: {
 					type: Boolean,
@@ -66,6 +67,10 @@
 			},
 			ready: function() {
 				window.bar = this;
+				/* Get dom-bind to work, to facilitate runtime loading of views */
+				$(this.$.views).on('dom-change', function(e) {
+					console.log('dom bind working!',e);
+				});
 			},
 			
 			_getDrawerClasses: function(drawerPeeking, mobile) {
@@ -79,6 +84,28 @@
 			},
 			closeDrawer() {
 				this.open = false;
+			},
+			loadView(name, element) {
+				//$('head').append($('<link/>').attr({rel:'import',href:element}));
+				$(this)
+					.find('div[main]')
+					.append($('<'+element+'/>')
+						.addClass('xview stage-mobile-observer')
+						.attr({'id':name}));
+			},
+			showView(name) {
+				var $views = $(this).find('.xview');
+				$views.filter('[active]:not(#'+name+')').removeAttr('active');//TODO fix for possible injection
+				$views.filter('#'+name).attr('active','');
+				//TODO transition code
+			},
+			_mobileUpdate(is,was) {
+				var observers = $('.stage-mobile-observer');
+				if (is) {
+					observers.attr('mobile','');
+				} else {
+					observers.removeAttr('mobile');
+				}
 			}
 		});
 	</script>
