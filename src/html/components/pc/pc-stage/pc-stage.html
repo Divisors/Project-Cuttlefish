@@ -1,5 +1,5 @@
 <link rel="import" href="/components/polymer/polymer.html">
-<pc-loader target='["iron-media-query","paper-header-panel","pc-sidebar","pc-navbar","pc-login-view","pc-student-schedule-view"]'></pc-loader>
+<pc-loader target='["iron-media-query","paper-header-panel","pc-sidebar","pc-navbar","pc-login-view","pc-student-schedule-view","pc-student-assignments-view"]'></pc-loader>
 <dom-module id="pc-stage">
 	<link rel="import" type="css" href="pc-stage.css"/>
 	<template>
@@ -15,6 +15,7 @@
 				<div main>
 					<pc-login-view class="xview stage-mobile-observer" id="login"></pc-login-view>
 					<pc-student-schedule-view class="xview stage-mobile-observer" id="schedule"></pc-student-schedule-view>
+					<pc-student-assignments-view class="xview stage-mobile-observer" id="assignments"></pc-student-assignments-view>
 				</div>
 			</paper-header-panel>
 			<div id="scrim" on-tap="closeDrawer"></div>
@@ -66,11 +67,9 @@
 			listeners: {
 			},
 			ready: function() {
-				window.bar = this;
-				/* Get dom-bind to work, to facilitate runtime loading of views */
-				$(this.$.views).on('dom-change', function(e) {
-					console.log('dom bind working!',e);
-				});
+				window.stage = this;
+				if ('_page' in window.location)
+					this.showView(window.location._page);
 			},
 			
 			_getDrawerClasses: function(drawerPeeking, mobile) {

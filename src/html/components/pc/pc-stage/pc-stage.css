@@ -2,24 +2,24 @@ paper-toolbar {
 	--paper-toolbar-background: #009688;
 }
 :host {
+	background-color: #EEE;
 	display: block;
 	height: 100%;
-	width: 100%;
-	position: absolute;
-	top: 0;
 	left: 0;
 	overflow: hidden;
-	background-color: #EEE;
+	position: absolute;
+	top: 0;
+	width: 100%;
 }
 
 :host > #drawer {
+	-moz-box-sizing: border-box;
+	background-color: white;
+	box-sizing: border-box;
+	height: 100%;
+	left: 0;
 	position: absolute;
 	top: 0;
-	left: 0;
-	height: 100%;
-	background-color: white;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
 	z-index: 10;
 }
 :host > #drawer > pc-sidebar {
@@ -55,15 +55,15 @@ paper-toolbar {
 	padding: 0;
 }
 :host > #mainWrapper > #scrim {
-	position: absolute;
-	top: 0;
-	right: 0;
+	background-color: rgba(0, 0, 0, 0.3);
 	bottom: 0;
 	left: 0;
-	visibility: hidden;
 	opacity: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
 	transition: opacity ease-in-out 0.38s, visibility ease-in-out 0.38s;
-	background-color: rgba(0, 0, 0, 0.3);
+	visibility: hidden;
 }
 :host[mobile][open] > #mainWrapper > #scrim,
 :host.dragging > #mainWrapper > #scrim { /* TODO test that this actually works */
@@ -71,12 +71,12 @@ paper-toolbar {
 	opacity: 1;
 }
 :host[mobile] > #mainWrapper > * {
-	margin: 0;
-	min-height: 100%;
-	left: 0;
-	right: 0;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+	left: 0;
+	margin: 0;
+	min-height: 100%;
+	right: 0;
 }
 :host:not([mobile]) > #mainWrapper > #main [paper-drawer-toggle] {
 	display: none;

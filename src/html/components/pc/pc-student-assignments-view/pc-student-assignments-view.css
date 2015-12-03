@@ -1,0 +1,53 @@
+:host {
+	background-color: #EEEEEE;
+	display: block;
+	font-family: RobotoDraft,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+	height: 100%;
+	padding-top: 50px;
+	width: 100%;
+}
+:host .status {
+	text-align: center;
+}
+:host .status span{
+	border-radius: 10px;
+	color: white;
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+:host .status.assigned > span {
+	background-color: #2980b9;
+}
+:host .status.overdue > span {
+	background-color: #c0392b; /*maybe use 0xF00?*/
+}
+:host .status.completed > span, :host .status.graded {
+	background-color: #27AE60;
+}
+:host .status.assigned > span:after {
+	content: "Assigned";
+}
+:host .status.overdue > span:after {
+	content: "Overdue";
+}
+:host .status.completed > span:after {
+	content: "Completed";
+}
+:host .status.graded > span:after {
+	content: "Graded";
+}
+:host th.col-type {
+	width: 10%;
+}
+:host a {
+	color: #5252ff;
+	text-decoration: none;
+}
+:host a:hover {
+	text-decoration: underline;
+}
+:host tr.urgent > td.status > span {
+	border-color: #c0292b;
+	border-style: solid;
+}

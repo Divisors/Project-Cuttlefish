@@ -1,17 +1,13 @@
 :host {
-	width: 100%;
-	height: 100%;
-	display: block;
-	padding-top: 50px;
 	background-color: #EEEEEE;
+	display: block;
 	font-family: RobotoDraft,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+	height: 100%;
+	padding-top: 50px;
+	width: 100%;
 }
 :host:not([active]) {
 	display: none;
-}
-.col-time {
-}
-.col-block {
 }
 .col-classname {
 	width: 40%;
@@ -19,37 +15,54 @@
 .col-teacher {
 	width: 20%;
 }
-:host[mobile] .container {
-	margin-top: 50px;
-}
-:host a.flat {
-	color: black;
+:host a {
+	color: #5252ff;
 	text-decoration: none;
+}
+:host a:hover {
+	text-decoration: underline;
 }
 .attendance {
 	text-align: center;
 }
-.attendance span {
+.attendance > span {
 	width: 100%;
 	display: block;
 	border-radius: 10px;
 	height: 100%;
 }
-:host[mobile] td.attendance {
-	padding-top: 0px;
-	padding-bottom: 0px;
-}
 .attendance:not(.future) span {
 	color: white;
 }
-.attendance.attended span {
+.attendance.attended > span, :host[mobile] .attendance.attended {
 	background-color: #27ae60;
 }
-.attendance.excused span{
+.attendance.excused > span, :host[mobile] .attendance.excused {
 	background-color: #2980b9;
 }
-.attendance.inexcused span{
+.attendance.inexcused > span, :host[mobile] .attendance.inexcused {
 	background-color: #c0392b;
+}
+.attendance.future  > span:after {
+	content: "--";
+}
+.attendance.attended > span:after {
+	content: "Attended";
+}
+.attendance.inexcused > span:after {
+	content: "Inexcused";
+}
+.attendance.excused > span:after {
+	content: "Excused";
+}
+:host td>span.separator:after {
+	content: " - ";
+}
+:host[mobile] .attendance {
+	border-radius: 10px;
+}
+:host[mobile] .container {
+	margin-top: 50px;
 }
 :host[mobile] .separator {
 	display: none;

@@ -1,11 +1,11 @@
 <link rel="import" href="/components/polymer/polymer.html"/>
 <pc-loader target='["paper-input"]'></pc-loader>
-<dom-module id="pc-student-schedule-view">
-	<link rel="import" type="css" href="pc-student-schedule-view.css"/>
+<dom-module id="pc-student-assignments-view">
+	<link rel="import" type="css" href="pc-student-assignments-view.css"/>
 	<link rel="import" type="css" href="/css/table.css"/>
 	<link rel="import" type="css" href="/css/pager.css"/>
 	<template>
-		<h1 class="page-header">Schedule</h1>
+		<h1 class="page-header">Assignments</h1>
 		<div class="container">
 			<ul class="pager">
 				<li class="prev" on-click="_prevDay">←</li>
@@ -15,41 +15,46 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th class="col-block">Block</th>
-						<th class="sortable col-time">Time<iron-icon icon="expand-less"></iron-icon></th>
-						<th class="col-classname">Class</th>
-						<th class="col-teacher">Teacher</th>
-						<th class="col-attendance">Attendance</th>
+						<th class="col-type sortable">Type</th>
+						<th class="col-classname sortable">Class</th>
+						<th class="col-title sortable">Title</th>
+						<th class="col-assigned sortable">Assigned</th>
+						<th class="col-due sortable">Due</th>
+						<th class="col-status sortable">Status</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>1</td>
-						<td><span class="starttime">8:00</span><span class="separator"></span><span class="endtime">9:00</span></td>
-						<td><a href="#classpage/1234">Class 1</a></td>
-						<td><a href="mailto:foo@example.com">Ms. Smith</a></td>
-						<td class="attendance future"><span></span></td>
+					<tr class="urgent">
+						<td>Test</td>
+						<td><a href="#classpage/1">History</a></td>
+						<td><a href="#assignment/1/1">Unit Test 1</a></td>
+						<td>Jan. 05</td>
+						<td>Jan. 13</td>
+						<td class="status assigned"><span></span></td>
+					</tr>
+					<tr class="urgent">
+						<td>Homework</td>
+						<td><a href="#classpage/2">Math</a></td>
+						<td><a href="#assignment/2/1">P. 11-15 #5-9</td>
+						<td>Jan. 12</td>
+						<td>Jan. 13</td>
+						<td class="status completed"><span></span></td>
 					</tr>
 					<tr>
-						<td>2</td>
-						<td><span class="starttime">9:00</span><span class="separator"></span><span class="endtime">10:00</span></td>
-						<td><a href="#classpage/5678">Class 2</a></td>
-						<td><a href="mailto:bar@example.com">Mr. Jones</a></td>
-						<td class="attendance inexcused"><span></span></td>
+						<td>Homework</td>
+						<td><a href="#classpage/3">English</a></td>
+						<td><a href="#assignment/3/1">Short Paragraph on Nautili</td>
+						<td>Jan. 11</td>
+						<td>Jan. 12</td>
+						<td class="status assigned file-upload"><span></span></td>
 					</tr>
 					<tr>
-						<td>3</td>
-						<td><span class="starttime">10:00</span><span class="separator"></span><span class="endtime">11:00</span></td>
-						<td><a href="#classpage/5678">Class 3</a></td>
-						<td><a href="mailto:bar@example.com">Teacher</a></td>
-						<td class="attendance excused"><span></span></td>
-					</tr>
-					<tr>
-						<td>4</td>
-						<td><span class="starttime">11:00</span><span class="separator"></span><span class="endtime">12:00</span></td>
-						<td><a href="#classpage/5678">Class 4</a></td>
-						<td><a href="mailto:bar@example.com">Teacher</a></td>
-						<td class="attendance attended"><span></span></td>
+						<td>Project</td>
+						<td><a href="#classpage/1">History</a></td>
+						<td><a href="#assignment/1/2">Presentation on Bees</a></td>
+						<td>Dec. 5</td>
+						<td>Jan. 3</td>
+						<td class="status overdue"><span></span></td>
 					</tr>
 				</tbody>
 			</table>
@@ -59,7 +64,7 @@
 		var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 		var dayPrefixes = ['Sun','Mon','Tues','Wedness','Thurs','Fri','Satur'];
 		Polymer({
-			is: 'pc-student-schedule-view',
+			is: 'pc-student-assignments-view',
 			properties: {
 				mobile: {
 					type: Boolean,
@@ -74,6 +79,8 @@
 				}
 			},
 			ready: function() {
+				if (window.location.hash=='#schedule')
+					$(this).attr('active','');
 				if (this.date == -1)
 					this.date = Date.now();
 				this.scopeSubtree(this.$$('tbody'), true);
