@@ -13,9 +13,9 @@
 					<paper-icon-button class="navbar-header-item" icon="menu" style="color: white;" on-tap="toggleDrawer"></paper-icon-button>
 				</pc-navbar>
 				<div main>
-					<pc-login-view class="xview stage-mobile-observer" id="login"></pc-login-view>
-					<pc-student-schedule-view class="xview stage-mobile-observer" id="schedule"></pc-student-schedule-view>
-					<pc-student-assignments-view class="xview stage-mobile-observer" id="assignments"></pc-student-assignments-view>
+					<pc-login-view class="pc-view stage-mobile-observer pc-default-view" id="login"></pc-login-view>
+					<pc-student-schedule-view class="pc-view stage-mobile-observer" id="schedule"></pc-student-schedule-view>
+					<pc-student-assignments-view class="pc-view stage-mobile-observer" id="assignments"></pc-student-assignments-view>
 				</div>
 			</paper-header-panel>
 			<div id="scrim" on-tap="closeDrawer"></div>
@@ -99,13 +99,31 @@
 				$(this)
 					.find('div[main]')
 					.append($('<'+element+'/>')
-						.addClass('xview stage-mobile-observer')
+						.addClass('pc-view stage-mobile-observer')
 						.attr({'id':name}));
 			},
-			showView(name) {
-				var $views = $(this).find('.xview');
-				$views.filter('[active]:not(#'+name+')').removeAttr('active');//TODO fix for possible injection
-				$views.filter('#'+name).attr('active','');
+			showView(name, args) {
+				var target = name;
+				var $views = $(this).find('.pc-view');
+				if (target == null)
+					target = $views.filter('.pc-default-view').attr('id');
+				var activeView = $views.filter('[active]');
+				if (activeView.length > 0 && activeView.attr('id') == name)
+					return;
+				else
+					activeView.removeAttr('active');
+				
+				var tview = $views.filter('#'+target);//TODO fix for possible injection
+				
+				var event = $.Event('pc-view-preshow');
+				event.preload=true;
+				event.args=args;
+				event.target = tview;
+				tview.trigger(event);
+				if (event.isDefaultPrevented())
+					return;
+				tview.attr('active','');
+				tview.trigger('pc-show-postshow',{args:args});
 				//TODO transition code
 			},
 			_mobileUpdate(is,was) {

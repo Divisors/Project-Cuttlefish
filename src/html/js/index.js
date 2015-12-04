@@ -27,45 +27,6 @@ var assignments = [
 	}
 ];
 $(function() {
-	//setup navbar
-	$('.navbar-page-button-schedule').on('pointer.short',function(e) {
-		try {
-			window.history.replaceState(null, null, $(this).attr('href'));
-		}catch(e){
-			//fallback if it doesn't support the History API
-			window.location = $(this).attr('href');
-		}
-	}).on('pointer.long', function(e){
-		var $this = $(this)
-		$this
-			.attr('aria-expanded','true')
-			.focus()
-			.removeClass('open dropdown-item-selected')
-			.focus(function() {
-				$this.removeClass('open');
-			}).blur(function(e) {
-				if (e.relatedTarget !== null && $(e.relatedTarget).is('.navbar-page-button-schedule [data-nofocus="true"], .navbar-page-button-schedule [data-nofocus="true"] *')) {
-					//cancel close because a child element not an item was focused
-					$this.addClass('open');//force open (cancel close from blur)
-					$(e.relatedTarget).one('focus', function() {//when the child is focused, switch focus back to me
-						$this.focus();
-					});
-				} else if (e.relatedTarget !== null && $(e.relatedTarget).is('.navbar-page-button-schedule *')) {
-					//close because one of the items was clicked
-					$this.addClass('dropdown-item-selected').removeClass('open');
-				} else {
-					//close because something was clicked outside of the dropdown
-					$this.removeClass('open dropdown-item-selected');
-				}
-			});
-	});
-	$('.navbar.navbar-default .navbar-collapse').on('pointer.short', function(e) {
-		console.log(e.target);
-		if ($(window).width()<768)
-			setTimeout(function() {
-				$('.navbar-toggle:not(.collapsed)').click();
-			}, 500);
-	});
 	var scheduleView = new StudentScheduleView(schedule);
 	var assignmentsView = new StudentAssignmentView(assignments);
 	var loginView = new LoginView();
@@ -84,16 +45,5 @@ $(function() {
 		if ('stage' in window)
 			stage.showView(hash);
 		window.location._page = hash;
-		switch(hash) {
-			case "schedule":
-				scheduleView.init().then(function(){scheduleView.enable();});
-				break;
-			case "assignments":
-				assignmentsView.init().then(function(){assignmentsView.enable();});
-				break;
-			case "login":
-			case null:
-				loginView.init().then(function(){loginView.enable();});
-		}
 	}).trigger('popstate');//to initialize w/ current hash
 });
