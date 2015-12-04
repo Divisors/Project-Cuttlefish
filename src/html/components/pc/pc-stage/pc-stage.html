@@ -9,7 +9,7 @@
 		</div>
 		<div id="mainWrapper">
 			<paper-header-panel id="main" mode="waterfall">
-				<pc-navbar brand$="{{brand}}" title$="{{title}}" mobile$="[[mobile]]" class="paper-toolbar">
+				<pc-navbar brand$="{{brand}}" title$="{{title}}" mobile$="[[mobile]]" class="paper-toolbar" shadow$="{{shadow}}">
 					<paper-icon-button class="navbar-header-item" icon="menu" style="color: white;" on-tap="toggleDrawer"></paper-icon-button>
 				</pc-navbar>
 				<div main>
@@ -62,6 +62,11 @@
 					value: false,
 					notify: true,
 					reflectToAttribute: true
+				},
+				shadow: {
+					type: Boolean,
+					value: false,
+					notify: true
 				}
 			},
 			listeners: {
@@ -70,6 +75,11 @@
 				window.stage = this;
 				if ('_page' in window.location)
 					this.showView(window.location._page);
+				var $this = $(this), self = this;
+				$this.find('[main]').scroll(function() {
+					var st = $this.find('[main]')[0].scrollTop;
+					self.shadow = st!=0;
+				});
 			},
 			
 			_getDrawerClasses: function(drawerPeeking, mobile) {

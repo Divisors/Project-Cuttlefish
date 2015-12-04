@@ -37,6 +37,11 @@ paper-toolbar {
 	bottom: 0;
 	right: 0;
 }
+:host > #mainWrapper [main] {
+	overflow-y: scroll;
+	height: calc(100vh - 60px);
+	margin-top: 60px;
+}
 .transition > #mainWrapper {
 	transition: left ease-in-out 0.3s, padding ease-in-out 0.3s;
 }

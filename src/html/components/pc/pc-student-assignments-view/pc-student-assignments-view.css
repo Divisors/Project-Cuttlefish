@@ -3,7 +3,6 @@
 	display: block;
 	font-family: RobotoDraft,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
 	height: 100%;
-	padding-top: 50px;
 	width: 100%;
 }
 :host .status {
@@ -15,6 +14,7 @@
 	width: 100%;
 	height: 100%;
 	display: block;
+	line-height: 24px;
 }
 :host .status.assigned > span {
 	background-color: #2980b9;
@@ -22,20 +22,28 @@
 :host .status.overdue > span {
 	background-color: #c0392b; /*maybe use 0xF00?*/
 }
-:host .status.completed > span, :host .status.graded {
+:host .status.completed > span, :host .status.graded > span {
 	background-color: #27AE60;
 }
-:host .status.assigned > span:after {
+:host .status.assigned > span:before {
 	content: "Assigned";
 }
-:host .status.overdue > span:after {
+:host .status.overdue > span:before {
 	content: "Overdue";
 }
-:host .status.completed > span:after {
+:host .status.completed > span:before {
 	content: "Completed";
 }
-:host .status.graded > span:after {
+:host .status.graded > span:before {
 	content: "Graded";
+}
+:host .status > span > iron-icon {
+	float: right;
+	margin-right: 10px;
+}
+:host .status.icon > span:before {
+	position: relative;
+	left: 17px;
 }
 :host th.col-type {
 	width: 10%;
@@ -47,7 +55,7 @@
 :host a:hover {
 	text-decoration: underline;
 }
-:host tr.urgent > td.status > span {
-	border-color: #c0292b;
+:host tr.urgent > td.status:not(.graded):not(.completed) > span {
+	border-color: rgba(255,0,0,.75);
 	border-style: solid;
 }

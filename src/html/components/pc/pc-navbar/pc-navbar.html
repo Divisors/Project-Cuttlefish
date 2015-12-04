@@ -3,21 +3,20 @@
 <dom-module id="pc-navbar">
 	<link rel="import" type="css" href="pc-navbar.css"/>
 	<template>
-		<div class="navbar-container mh50">
-			<div class="navbar-header mh50">
-				<span class="navbar-menu-button mh50"><content select=".navbar-header-item"></content></span>
-				<paper-button class="navbar-brand mh50" href="#">{{brand}}</paper-button>
-			</div>
-			<div class="navbar-titlebar">
-				<span>{{title}}</span>
-			</div>
-			<ul class="navbar-itemlist">
-				<paper-button href="#schedule" id="schedule">Schedule</paper-button>
-				<paper-button href="#assignments" id="assignments">Assignments</paper-button>
-				<paper-button href="#clubs" id="clubs">Clubs</paper-button>
-				<paper-button href="#grades" id="grades">Grades</paper-button>
-			</ul>
+		<div class="navbar-header mh50">
+			<span class="navbar-menu-button mh50"><content select=".navbar-header-item"></content></span>
+			<paper-button class="navbar-brand mh50" href="#">{{brand}}</paper-button>
 		</div>
+		<div class="navbar-titlebar">
+			<span>{{title}}</span>
+		</div>
+		<ul class="navbar-itemlist">
+			<paper-button href="#schedule" id="schedule">Schedule</paper-button>
+			<paper-button href="#assignments" id="assignments">Assignments</paper-button>
+			<paper-button href="#clubs" id="clubs">Clubs</paper-button>
+			<paper-button href="#grades" id="grades">Grades</paper-button>
+		</ul>
+		<div id="shadow"></div>
 	</template>
 	<script>
 		Polymer({

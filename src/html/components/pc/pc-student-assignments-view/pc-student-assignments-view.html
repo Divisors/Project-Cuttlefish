@@ -1,5 +1,5 @@
 <link rel="import" href="/components/polymer/polymer.html"/>
-<pc-loader target='["paper-input"]'></pc-loader>
+<pc-loader target='["pc-icons"]'></pc-loader>
 <dom-module id="pc-student-assignments-view">
 	<link rel="import" type="css" href="pc-student-assignments-view.css"/>
 	<link rel="import" type="css" href="/css/table.css"/>
@@ -56,6 +56,14 @@
 						<td>Jan. 3</td>
 						<td class="status overdue"><span></span></td>
 					</tr>
+					<tr>
+						<td>Essay</td>
+						<td><a href="#classpage/1">English</a></td>
+						<td><a href="#assignment/1/2">Cuttlefish Interview</a></td>
+						<td>Dec. 5</td>
+						<td>Jan. 3</td>
+						<td class="status graded icon"><span><iron-icon icon="pc:attach-doc"></iron-icon></span></td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -79,8 +87,6 @@
 				}
 			},
 			ready: function() {
-				if (window.location.hash=='#schedule')
-					$(this).attr('active','');
 				if (this.date == -1)
 					this.date = Date.now();
 				this.scopeSubtree(this.$$('tbody'), true);
