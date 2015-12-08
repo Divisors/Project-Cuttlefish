@@ -2,8 +2,6 @@
 	background-color: #EEEEEE;
 	display: block;
 	font-family: RobotoDraft,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
-	height: 100%;
-	padding-top: 50px;
 	width: 100%;
 }
 :host:not([active]) {
@@ -14,13 +12,6 @@
 }
 .col-teacher {
 	width: 20%;
-}
-:host a {
-	color: #5252ff;
-	text-decoration: none;
-}
-:host a:hover {
-	text-decoration: underline;
 }
 .attendance {
 	text-align: center;

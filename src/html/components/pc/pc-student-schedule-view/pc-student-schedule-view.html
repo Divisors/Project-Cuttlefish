@@ -2,6 +2,7 @@
 <pc-loader target='["paper-input"]'></pc-loader>
 <dom-module id="pc-student-schedule-view">
 	<link rel="import" type="css" href="pc-student-schedule-view.css"/>
+	<link rel="import" type="css" href="/css/components.css"/>
 	<link rel="import" type="css" href="/css/table.css"/>
 	<link rel="import" type="css" href="/css/pager.css"/>
 	<template>
@@ -26,28 +27,28 @@
 					<tr>
 						<td>1</td>
 						<td><span class="starttime">8:00</span><span class="separator"></span><span class="endtime">9:00</span></td>
-						<td><a href="#classpage/1234">Class 1</a></td>
+						<td><a href="#class/1234">Class 1</a></td>
 						<td><a href="mailto:foo@example.com">Ms. Smith</a></td>
 						<td class="attendance future"><span></span></td>
 					</tr>
 					<tr>
 						<td>2</td>
 						<td><span class="starttime">9:00</span><span class="separator"></span><span class="endtime">10:00</span></td>
-						<td><a href="#classpage/5678">Class 2</a></td>
+						<td><a href="#class/5678">Class 2</a></td>
 						<td><a href="mailto:bar@example.com">Mr. Jones</a></td>
 						<td class="attendance inexcused"><span></span></td>
 					</tr>
 					<tr>
 						<td>3</td>
 						<td><span class="starttime">10:00</span><span class="separator"></span><span class="endtime">11:00</span></td>
-						<td><a href="#classpage/5678">Class 3</a></td>
+						<td><a href="#class/5678">Class 3</a></td>
 						<td><a href="mailto:bar@example.com">Teacher</a></td>
 						<td class="attendance excused"><span></span></td>
 					</tr>
 					<tr>
 						<td>4</td>
 						<td><span class="starttime">11:00</span><span class="separator"></span><span class="endtime">12:00</span></td>
-						<td><a href="#classpage/5678">Class 4</a></td>
+						<td><a href="#class/5678">Class 4</a></td>
 						<td><a href="mailto:bar@example.com">Teacher</a></td>
 						<td class="attendance attended"><span></span></td>
 					</tr>
@@ -77,6 +78,9 @@
 				if (this.date == -1)
 					this.date = Date.now();
 				this.scopeSubtree(this.$$('tbody'), true);
+				$(this).on('pc-view-preshow',function(e) {
+					window.navbar.setActiveButton('schedule');
+				});
 			},
 			_nextDay: function() {
 				this.date = this.date + 84600000 ;
@@ -104,7 +108,7 @@
 								.html(clazz.end)))
 						.append($('<td>')
 							.append($('<a>')
-								.attr('href','#classpage/'+clazz.id)
+								.attr('href','#class/'+clazz.id)
 								.html(clazz.name)))
 						.append($('<td>')
 							.append($('<a>')

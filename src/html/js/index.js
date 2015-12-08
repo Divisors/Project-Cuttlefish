@@ -27,23 +27,20 @@ var assignments = [
 	}
 ];
 $(function() {
-	var scheduleView = new StudentScheduleView(schedule);
-	var assignmentsView = new StudentAssignmentView(assignments);
-	var loginView = new LoginView();
-	window.views = [loginView, scheduleView, assignmentsView];
 	$(window).on('popstate',function() {
-		var hash = window.location.hash;
+		var hash = window.location.hash, page='', args=[];
 		console.log('popstate',hash);
 		if (hash.length <= 1) {
-			hash = null;
+			page = hash = null;
 		} else {
-			hash = hash.substring(1);
+			page = hash = hash.substring(1);
+			if (hash.indexOf('/')>0) {
+				page = hash.substring(0,hash.indexOf('/'));
+				args = hash.split('/').slice(1);
+			}
 		}
-		views.forEach(function(view) {
-			view.disable();
-		});
 		if ('stage' in window)
-			stage.showView(hash);
-		window.location._page = hash;
-	}).trigger('popstate');//to initialize w/ current hash
+			stage.showView(page,args);
+	});
+	$('pc-stage').on('ready',function(){$(window).trigger('popstate');});//to initialize w/ current hash
 });

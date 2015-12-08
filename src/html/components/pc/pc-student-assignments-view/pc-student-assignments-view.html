@@ -2,6 +2,7 @@
 <pc-loader target='["pc-icons"]'></pc-loader>
 <dom-module id="pc-student-assignments-view">
 	<link rel="import" type="css" href="pc-student-assignments-view.css"/>
+	<link rel="import" type="css" href="/css/components.css"/>
 	<link rel="import" type="css" href="/css/table.css"/>
 	<link rel="import" type="css" href="/css/pager.css"/>
 	<template>
@@ -26,7 +27,7 @@
 				<tbody>
 					<tr class="urgent">
 						<td>Test</td>
-						<td><a href="#classpage/1">History</a></td>
+						<td><a href="#class/1">History</a></td>
 						<td><a href="#assignment/1/1">Unit Test 1</a></td>
 						<td>Jan. 05</td>
 						<td>Jan. 13</td>
@@ -34,7 +35,7 @@
 					</tr>
 					<tr class="urgent">
 						<td>Homework</td>
-						<td><a href="#classpage/2">Math</a></td>
+						<td><a href="#class/2">Math</a></td>
 						<td><a href="#assignment/2/1">P. 11-15 #5-9</td>
 						<td>Jan. 12</td>
 						<td>Jan. 13</td>
@@ -42,7 +43,7 @@
 					</tr>
 					<tr>
 						<td>Homework</td>
-						<td><a href="#classpage/3">English</a></td>
+						<td><a href="#class/3">English</a></td>
 						<td><a href="#assignment/3/1">Short Paragraph on Nautili</td>
 						<td>Jan. 11</td>
 						<td>Jan. 12</td>
@@ -50,7 +51,7 @@
 					</tr>
 					<tr>
 						<td>Project</td>
-						<td><a href="#classpage/1">History</a></td>
+						<td><a href="#class/1">History</a></td>
 						<td><a href="#assignment/1/2">Presentation on Bees</a></td>
 						<td>Dec. 5</td>
 						<td>Jan. 3</td>
@@ -58,7 +59,7 @@
 					</tr>
 					<tr>
 						<td>Essay</td>
-						<td><a href="#classpage/1">English</a></td>
+						<td><a href="#class/1">English</a></td>
 						<td><a href="#assignment/1/2">Cuttlefish Interview</a></td>
 						<td>Dec. 5</td>
 						<td>Jan. 3</td>
@@ -90,6 +91,9 @@
 				if (this.date == -1)
 					this.date = Date.now();
 				this.scopeSubtree(this.$$('tbody'), true);
+				$(this).on('pc-view-preshow',function(e) {
+					window.navbar.setActiveButton('assignments');
+				});
 			},
 			_nextDay: function() {
 				this.date = this.date + 84600000 ;
@@ -103,34 +107,11 @@
 			buildSchedule(info, comparator) {
 				var container = $(this).find('tbody').empty();
 				var classes = info.sort(comparator);
-				for (var i in classes) {
-					var clazz = classes[i];
-					container.append($('<tr>')
-						.append($('<td>').html(clazz.block))
-						.append($('<td>')
-							.append($('<span>')
-								.addClass('starttime')
-								.html(clazz.start))
-							.append($('<span>').addClass('separator'))
-							.append($('<span>')
-								.addClass('endtime')
-								.html(clazz.end)))
-						.append($('<td>')
-							.append($('<a>')
-								.attr('href','#classpage/'+clazz.id)
-								.html(clazz.name)))
-						.append($('<td>')
-							.append($('<a>')
-								.attr('href','mailto:'+clazz.temail)
-								.html(clazz.tfname)))
-						.append($('<td>')
-							.addClass('attendance')
-							.addClass(clazz.attendance)
-							.append($('<span>'))));
-					}
+				//TODO finish
 			},
 			_prettifyDate: function(ts) {
 				var date = new Date(ts);
+				//TODO add i18n?
 				return dayPrefixes[date.getDay()] + 'day, ' + months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
 			}
 		});

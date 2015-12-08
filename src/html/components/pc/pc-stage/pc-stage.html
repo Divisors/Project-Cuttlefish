@@ -1,5 +1,5 @@
 <link rel="import" href="/components/polymer/polymer.html">
-<pc-loader target='["iron-media-query","paper-header-panel","pc-sidebar","pc-navbar","pc-login-view","pc-student-schedule-view","pc-student-assignments-view"]'></pc-loader>
+<pc-loader target='["iron-media-query","paper-header-panel","pc-sidebar","pc-navbar","pc-login-view","pc-student-schedule-view","pc-student-assignments-view","pc-student-classpage-view","pc-student-assignment-view"]'></pc-loader>
 <dom-module id="pc-stage">
 	<link rel="import" type="css" href="pc-stage.css"/>
 	<template>
@@ -16,6 +16,8 @@
 					<pc-login-view class="pc-view stage-mobile-observer pc-default-view" id="login"></pc-login-view>
 					<pc-student-schedule-view class="pc-view stage-mobile-observer" id="schedule"></pc-student-schedule-view>
 					<pc-student-assignments-view class="pc-view stage-mobile-observer" id="assignments"></pc-student-assignments-view>
+					<pc-student-classpage-view class="pc-view stage-mobile-observer" id="class"></pc-student-classpage-view>
+					<pc-student-assignment-view class="pc-view stage-mobile-observer" id="assignment"></pc-student-assignment-view>
 				</div>
 			</paper-header-panel>
 			<div id="scrim" on-tap="closeDrawer"></div>
@@ -73,15 +75,16 @@
 			},
 			ready: function() {
 				window.stage = this;
-				if ('_page' in window.location)
-					this.showView(window.location._page);
 				var $this = $(this), self = this;
 				$this.find('[main]').scroll(function() {
 					var st = $this.find('[main]')[0].scrollTop;
 					self.shadow = st!=0;
 				});
 			},
-			
+			attached: function() {
+				console.log('ready');
+				$(this).trigger('ready');
+			},
 			_getDrawerClasses: function(drawerPeeking, mobile) {
 				return (mobile?"mobile ":"") + (drawerPeeking?"peeking":"");
 			},
@@ -103,6 +106,7 @@
 						.attr({'id':name}));
 			},
 			showView(name, args) {
+				console.log(name, args);
 				var target = name;
 				var $views = $(this).find('.pc-view');
 				if (target == null)
@@ -115,6 +119,9 @@
 				
 				var tview = $views.filter('#'+target);//TODO fix for possible injection
 				
+				if ($('pc-navbar').find('paper-button:target').length == 0)
+					$('pc-navbar').find('paper-button.bf').attr('id',name);
+				window.navbar.setActiveButton(name);
 				var event = $.Event('pc-view-preshow');
 				event.preload=true;
 				event.args=args;
@@ -123,7 +130,7 @@
 				if (event.isDefaultPrevented())
 					return;
 				tview.attr('active','');
-				tview.trigger('pc-show-postshow',{args:args});
+				tview.trigger('pc-view-postshow',{args:args});
 				//TODO transition code
 			},
 			_mobileUpdate(is,was) {

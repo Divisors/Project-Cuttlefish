@@ -38,7 +38,7 @@ paper-toolbar {
 	right: 0;
 }
 :host > #mainWrapper [main] {
-	overflow-y: scroll;
+	overflow-y: auto;
 	height: calc(100vh - 60px);
 	margin-top: 60px;
 }
@@ -85,6 +85,9 @@ paper-toolbar {
 }
 :host:not([mobile]) > #mainWrapper > #main [paper-drawer-toggle] {
 	display: none;
+}
+:host .pc-view {
+	padding-top: 0px;
 }
 :host .pc-view:not([active]){
 	display: none;

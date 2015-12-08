@@ -100,7 +100,7 @@
 	text-transform: none !important;
 	transition: 1s ease all;
 }
-:host paper-button.hash-active, :host paper-button:target {
+:host paper-button.hash-active {
 	background-color: #40B0A6;
 	transition-duration: .1s;
 }

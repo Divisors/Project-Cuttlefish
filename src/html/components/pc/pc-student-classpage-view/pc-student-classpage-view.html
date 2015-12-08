@@ -1,0 +1,32 @@
+<link rel="import" href="/components/polymer/polymer.html"/>
+<pc-loader target='["pc-icons"]'></pc-loader>
+<dom-module id="pc-student-classpage-view">
+	<link rel="import" type="css" href="pc-student-classpage-view.css"/>
+	<link rel="import" type="css" href="/css/components.css"/>
+	<template>
+		<h1 class="page-header">Class Name</h1>
+		<div class="container">
+			<p>Welcome to [classname]!</p>
+			<p>This is an introduction to our class.</p>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'pc-student-classpage-view',
+			properties: {
+				mobile: {
+					type: Boolean,
+					readOnly: true,
+					reflectToAttribute: true
+				},
+				tab: {
+					type: String,
+					notify: true,
+					reflectToAttribute: true
+				}
+			},
+			ready: function() {
+			}
+		});
+	</script>
+</dom-module>

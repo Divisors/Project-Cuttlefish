@@ -11,10 +11,10 @@
 			<span>{{title}}</span>
 		</div>
 		<ul class="navbar-itemlist">
-			<paper-button href="#schedule" id="schedule">Schedule</paper-button>
-			<paper-button href="#assignments" id="assignments">Assignments</paper-button>
-			<paper-button href="#clubs" id="clubs">Clubs</paper-button>
-			<paper-button href="#grades" id="grades">Grades</paper-button>
+			<paper-button href="#schedule" name="schedule">Schedule</paper-button>
+			<paper-button href="#assignments" name="assignments">Assignments</paper-button>
+			<paper-button href="#clubs" name="clubs">Clubs</paper-button>
+			<paper-button href="#grades" name="grades">Grades</paper-button>
 		</ul>
 		<div id="shadow"></div>
 	</template>
@@ -35,14 +35,17 @@
 			},
 			ready: function() {
 				window.navbar=this;
-				console.log('hi!');
+				this.scopeSubtree(this.$$('.navbar-itemlist'), true);
+				var self = this;
 				$(this).find('paper-button[href]').on('click',function(e) {
-				
-//					if ('pushState' in history)
-	//					history.pushState({origin:'navbar'},'title',$(e.target).attr('href'));
-		//			else
-						window.location = $(e.target).attr('href');
-				})
+					window.location = $(e.target).attr('href');
+					self.setActiveButton($(e.target).attr('name'));
+				});
+			},
+			setActiveButton: function(name) {
+				var buttons = $(this).find('.navbar-itemlist > paper-button');
+				buttons.filter('.hash-active').removeClass('hash-active');
+				buttons.filter('[name='+name+']').addClass('hash-active');
 			}
 		});
 	</script>
