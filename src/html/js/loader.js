@@ -49,3 +49,53 @@ var ComponentLoader = Class.extend({
 });
 ComponentLoader.instance = new ComponentLoader();
 ComponentLoader.getInstance = ()=>(ComponentLoader.instance);
+var ResourceLoader = Class.extend({
+	construct: function() {
+		this._cache = {};
+	},
+	save: function() {
+		window.localstorage['resourcecache']=JSON.stringify(this._cache);
+		return this;
+	},
+	load: function() {
+		this._cache = JSON.parse(window.localstorage['resourcecache']);
+		return this;
+	},
+	cache: function(name, expiration, data) {
+		this._cache[name] = {name: name, expry: expiration, data: data};
+	},
+	clean: function() {
+		var time = Date.now();
+		for (var i in this._cache)
+			if (i.expry < time) {
+				console.log('deleting '+i);
+				delete cache[i];
+			}
+		return this;
+	},
+	getImmediate: function(name) {
+		if (name in this._cache)
+			return this._cache[name].data;
+		return undefined;
+	},
+	require: function(name) {
+		if (name in this._cache && this.cache[name].expry >= Date.now())
+			return Promise.resolve(this._cache[name].data);
+		var self = this;
+		return new Promise(function(yay, nay) {
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '/data/'+name+'.json', true);
+			xhr.onload=function(e) {
+				var result = JSON.parse(xhr.responseText);
+				self.cache(name, Date.now()+60000, result);
+				yay(result);
+			};
+			xhr.onerror = function(e) {
+				console.warn(xhr, e);
+				nay(e);
+			};
+			xhr.send();
+		});
+	}
+});
+ResourceLoader.instance = new ResourceLoader();

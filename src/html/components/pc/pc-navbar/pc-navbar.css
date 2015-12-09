@@ -66,11 +66,7 @@
 	color: white;
 	text-align: center;
 	width: 100%;
-}
-.navbar-titlebar>span {
-	display: inline-block;
-	margin: none;
-	padding: 5px 10px;
+	padding-top: 8px;
 }
 .navbar-itemlist {
 	float: left;

@@ -1,0 +1,20 @@
+{
+	"name":"Presentation on Bees",
+	"class": "History",
+	"details":"You need to make a 15-slide presentation about bees.",
+	"status": "assigned",
+	"assigned": "1/5",
+	"due": "1/13",
+	"files": [{
+		"name": "Presentation",
+		"type": "ppt",
+		"upload-types": [
+			"link/prezi",
+			"link/google-slides",
+			"upload/pdf",
+			"upload/ppt"
+		],
+		"required": true,
+		"attached": false
+	}]
+}

@@ -1,0 +1,15 @@
+:host {
+	background-color: #EEEEEE;
+	display: block;
+	font-family: RobotoDraft,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+	width: 100%;
+}
+:host:not([active]) {
+	display: none;
+}
+:host p {
+	text-align: center;
+	font-size: 36px;
+	position: relative;
+	top: 50px;
+}

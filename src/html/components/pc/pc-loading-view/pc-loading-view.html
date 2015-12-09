@@ -1,0 +1,17 @@
+<link rel="import" href="/components/polymer/polymer.html"/>
+<dom-module id="pc-loading-view">
+	<link rel="import" type="css" href="pc-loading-view.css"/>
+	<template>
+		<p>Loading...</p>
+	</template>
+	<script>
+		Polymer({
+			is: 'pc-loading-view',
+			properties: {},
+			ready: function() {
+				window.sidebar=this;
+				console.log('hi!');
+			}
+		});
+	</script>
+</dom-module>

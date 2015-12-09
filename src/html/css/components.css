@@ -25,3 +25,11 @@
 :host a:hover {
 	text-decoration: underline;
 }
+:host[mobile] .container {
+	width: calc(100% - 38px);
+	border-radius: 0;
+	margin: 0;
+}
+:host[mobile] .page-header {
+	display: none;
+}

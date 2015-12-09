@@ -7,3 +7,122 @@
 :host:not([active]) {
 	display: none;
 }
+.container {
+	display: inline-block;
+}
+:host[mobile] .container {
+	display: block;
+}
+:host[mobile] .container#details {
+	height: calc(100% - 50px);
+}
+:host:not([mobile]) .container#details {
+	width: calc(80% - 98px);
+}
+
+/* Right Panel */
+:host .container.rightpanel {
+	list-style-type: none;
+	position: absolute;
+	padding-left: 0;
+	padding-right: 0;
+}
+:host .container.rightpanel > li {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+:host:not([mobile]) .container.rightpanel {
+	right: 10px;
+	width: 20%;
+	margin-top: 0;
+}
+:host[mobile] .container.rightpanel {
+	margin: 0;
+	border-top: none;
+	box-shadow: none;
+	bottom: 0;
+}
+
+/* Status */
+.container.rightpanel > li.status {
+	text-align: center;
+}
+:host .status span{
+	border-radius: 10px;
+	color: white;
+	width: 100%;
+	height: 100%;
+	display: block;
+	line-height: 24px;
+}
+:host .status.assigned > span {
+	background-color: #2980b9;
+}
+:host .status.overdue > span {
+	background-color: #c0392b;
+}
+:host .status.completed > span, :host .status.graded > span {
+	background-color: #27AE60;
+}
+:host .status.assigned > span:before {
+	content: "Assigned";
+}
+:host .status.overdue > span:before {
+	content: "Overdue";
+}
+:host .status.completed > span:before {
+	content: "Completed";
+}
+:host .status.graded > span:before {
+	content: "Graded";
+}
+
+/* Dates */
+:host .dates {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+:host .dates table {
+	margin-top: 20px;
+	border: none;
+	width: 100%;
+	text-align: center;
+}
+:host .dates tbody {
+	font-size: 36px;
+}
+:host .dates .due {
+	float: right;
+}
+:host .dates th {
+	font-weight: 200;
+}
+:host .dates th:not(.assigned) {
+	width: 100%;
+}
+
+/* Files */
+:host .rightpanel > li.files {
+	padding: 0;
+}
+:host .files > ul {
+	list-style-type: none;
+	padding-left: 0;
+}
+:host .files h2 {
+	margin-bottom: 0;
+	padding-left: 15px;
+	border-bottom-style: solid;
+	border-color: #eee;
+	border-width: 1px;
+}
+:host .files li:not(:last-of-type) {
+	border-bottom-style: solid;
+	border-color: #eee;
+	border-width: 1px;
+}
+:host .files li {
+	padding-left: 15px;
+	height: 30px;
+	line-height: 30px;
+}
