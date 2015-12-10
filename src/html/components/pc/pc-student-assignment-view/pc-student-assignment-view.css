@@ -3,6 +3,8 @@
 	display: block;
 	font-family: RobotoDraft,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
 	width: 100%;
+	padding-bottom: 20px;
+	box-sizing: border-box;
 }
 :host:not([active]) {
 	display: none;
@@ -17,13 +19,13 @@
 	height: calc(100% - 50px);
 }
 :host:not([mobile]) .container#details {
-	width: calc(80% - 98px);
+	width: calc(80% - 60px);
+	height: 100%;
 }
 
 /* Right Panel */
 :host .container.rightpanel {
 	list-style-type: none;
-	position: absolute;
 	padding-left: 0;
 	padding-right: 0;
 }
@@ -32,7 +34,7 @@
 	padding-right: 15px;
 }
 :host:not([mobile]) .container.rightpanel {
-	right: 10px;
+	float: right;
 	width: 20%;
 	margin-top: 0;
 }
@@ -40,6 +42,7 @@
 	margin: 0;
 	border-top: none;
 	box-shadow: none;
+	position: absolute;
 	bottom: 0;
 }
 
