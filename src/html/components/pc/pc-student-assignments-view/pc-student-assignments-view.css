@@ -36,6 +36,10 @@
 :host .status.graded > span:before {
 	content: "Graded";
 }
+:host .status.future > span:before {
+	content: "———";
+	color: black;
+}
 :host .status > span > iron-icon {
 	float: right;
 	margin-right: 10px;
@@ -47,12 +51,11 @@
 :host th.col-type {
 	width: 10%;
 }
+:host th.col-classname {
+	max-width: 15%;
+}
 :host a {
 	color: #5252ff;
-	text-decoration: none;
-}
-:host a:hover {
-	text-decoration: underline;
 }
 :host tr.urgent > td.status:not(.graded):not(.completed) > span {
 	border-color: rgba(255,0,0,.75);

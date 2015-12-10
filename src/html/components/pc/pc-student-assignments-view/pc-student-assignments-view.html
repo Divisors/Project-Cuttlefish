@@ -25,52 +25,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="urgent">
-						<td>Test</td>
-						<td><a href="#class/1">History</a></td>
-						<td><a href="#assignment/1/1">Unit Test 1</a></td>
-						<td>Jan. 05</td>
-						<td>Jan. 13</td>
-						<td class="status assigned"><span></span></td>
-					</tr>
-					<tr class="urgent">
-						<td>Homework</td>
-						<td><a href="#class/2">Math</a></td>
-						<td><a href="#assignment/2/1">P. 11-15 #5-9</td>
-						<td>Jan. 12</td>
-						<td>Jan. 13</td>
-						<td class="status completed"><span></span></td>
-					</tr>
-					<tr>
-						<td>Homework</td>
-						<td><a href="#class/3">English</a></td>
-						<td><a href="#assignment/3/1">Short Paragraph on Nautili</td>
-						<td>Jan. 11</td>
-						<td>Jan. 12</td>
-						<td class="status assigned file-upload"><span></span></td>
-					</tr>
-					<tr>
-						<td>Project</td>
-						<td><a href="#class/1">History</a></td>
-						<td><a href="#assignment/1/2">Presentation on Bees</a></td>
-						<td>Dec. 5</td>
-						<td>Jan. 3</td>
-						<td class="status overdue"><span></span></td>
-					</tr>
-					<tr>
-						<td>Essay</td>
-						<td><a href="#class/1">English</a></td>
-						<td><a href="#assignment/3/2">Cuttlefish Interview</a></td>
-						<td>Dec. 5</td>
-						<td>Jan. 3</td>
-						<td class="status graded icon"><span><iron-icon icon="pc:attach-doc"></iron-icon></span></td>
-					</tr>
 				</tbody>
 			</table>
 		</div>
 	</template>
 	<script>
 		var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+		var monthShort = ['Jan.','Feb.','March','Apr.','May','June','July','Aug.','Sept.','Oct.','Nov.','Dec.'];
 		var dayPrefixes = ['Sun','Mon','Tues','Wedness','Thurs','Fri','Satur'];
 		Polymer({
 			is: 'pc-student-assignments-view',
@@ -91,7 +52,28 @@
 				if (this.date == -1)
 					this.date = Date.now();
 				this.scopeSubtree(this.$$('tbody'), true);
-				$(this).on('pc-view-preshow',function(e) {
+				$(this).on('pc-view-preshow', function(e) {
+					var value = ResourceLoader.instance.getImmediate('assignments');
+					if (value === undefined) {
+						e.preventDefault();
+						window.stage.showView('loading');
+						ResourceLoader.instance.require('assignments').then(
+							function(assignments) {
+								for (var i in assignments) {
+									var assignment = assignments[i];
+									assignment.assigned = new Date(assignment.assigned);
+									assignment.due = new Date(assignment.due);
+								}
+								if (window.location.hash.startsWith('#assignments'))
+									window.stage.showView('assignments',e.args);
+							}.bind(this),
+							function(error) {
+								console.warn(error);
+							});
+					} else {
+						this.buildList(value,function(a,b){return a.due - b.due});
+					}
+				}).on('pc-view-postshow', function(e) {
 					window.navbar.setActiveButton('assignments');
 				});
 			},
@@ -104,15 +86,37 @@
 			_scheduleWriter: function(ts) {
 				
 			},
-			buildSchedule(info, comparator) {
+			buildList(info, comparator) {
 				var container = $(this).find('tbody').empty();
-				var classes = info.sort(comparator);
-				//TODO finish
+				var assignments = info.sort(comparator);
+				var ce=function(x){return document.createElement(x)};
+				for (var i in assignments) {
+					var assignment = assignments[i];
+					container.append($(ce('tr'))
+						.append($(ce('td')).html(assignment.type))
+						.append($(ce('td'))
+							.append($(ce('a'))
+								.attr('href','#class/'+assignment.classID)
+								.html(assignment.class)))
+						.append($(ce('td'))
+							.append($(ce('a'))
+								.attr('href','#assignment/'+assignment.classID+'/'+assignment.id)
+								.html(assignment.name)))
+						.append($(ce('td')).html(this.prettyDateShort(assignment.assigned)))
+						.append($(ce('td')).html(this.prettyDateShort(assignment.due)))
+						.append($(ce('td'))
+							.addClass('status')
+							.addClass(assignment.status)
+							.append($(ce('span')))));
+				}
 			},
 			_prettifyDate: function(ts) {
 				var date = new Date(ts);
 				//TODO add i18n?
 				return dayPrefixes[date.getDay()] + 'day, ' + months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+			},
+			prettyDateShort: function(date) {
+				return monthShort[date.getMonth()] + ' ' + date.getDate();
 			}
 		});
 	</script>

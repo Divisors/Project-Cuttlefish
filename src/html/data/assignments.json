@@ -1,0 +1,52 @@
+[
+	{
+		"class": "20<sup>th</sup> Century H",
+		"classID": 1,
+		"id": 1,
+		"type": "Test",
+		"name": "Unit Test 1",
+		"assigned": "2015-12-9",
+		"due": "2015-12-11",
+		"status": "assigned"
+	},
+	{
+		"class": "Pre-Calculus H",
+		"classID": 2,
+		"id": 1,
+		"type": "Homework",
+		"name": "P. 11-15 # 5-9",
+		"assigned": "2015-12-10",
+		"due": "2015-12-11",
+		"status": "completed"
+	},
+	{
+		"class": "English 11",
+		"classID": 3,
+		"id": 1,
+		"type": "Homework",
+		"name": "Short Paragraph on Nautili",
+		"assigned": "2015-12-15",
+		"due": "2015-12-17",
+		"status": "future"
+	},
+	{
+		"class": "20<sup>th</sup> Century H",
+		"classID": 1,
+		"id": 2,
+		"type": "Project",
+		"name": "Presentation on Bees",
+		"assigned": "2015-12-5",
+		"due": "2015-12-9",
+		"status": "overdue"
+	},
+	{
+		"class": "English 11",
+		"classID": 3,
+		"id": 2,
+		"type": "Essay",
+		"name": "Cuttlefish Interview",
+		"assigned": "2015-12-2",
+		"due": "2015-12-9",
+		"status": "graded"
+	}
+]

@@ -71,6 +71,8 @@
 					} else {
 						this.buildWith(value);
 					}
+				}).on('pc-view-postshow', function(e) {
+					window.navbar.setActiveButton('assignments');
 				});
 			},
 			buildWith: function(assignment) {
