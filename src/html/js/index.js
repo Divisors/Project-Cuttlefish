@@ -26,6 +26,7 @@ var assignments = [
 		status: 'Overdue'
 	}
 ];
+window.ce = function(x){return document.createElement(x)};
 $(function() {
 	$(window).on('popstate',function() {
 		var hash = window.location.hash, page='', args=[];

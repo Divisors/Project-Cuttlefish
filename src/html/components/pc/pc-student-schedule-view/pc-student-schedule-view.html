@@ -96,28 +96,28 @@
 				var classes = info.sort(comparator);
 				for (var i in classes) {
 					var clazz = classes[i];
-					container.append($('<tr>')
-						.append($('<td>').html(clazz.block))
-						.append($('<td>')
-							.append($('<span>')
+					container.append($(ce('tr'))
+						.append($(ce('td')).html(clazz.block))
+						.append($(ce('td'))
+							.append($(ce('span'))
 								.addClass('starttime')
 								.html(clazz.start))
-							.append($('<span>').addClass('separator'))
-							.append($('<span>')
+							.append($(ce('span')).addClass('separator'))
+							.append($(ce('span'))
 								.addClass('endtime')
 								.html(clazz.end)))
-						.append($('<td>')
-							.append($('<a>')
+						.append($(ce('td'))
+							.append($(ce('a'))
 								.attr('href','#class/'+clazz.id)
 								.html(clazz.name)))
-						.append($('<td>')
-							.append($('<a>')
+						.append($(ce('td'))
+							.append($(ce('a'))
 								.attr('href','mailto:'+clazz.temail)
 								.html(clazz.tfname)))
-						.append($('<td>')
+						.append($(ce('td'))
 							.addClass('attendance')
 							.addClass(clazz.attendance)
-							.append($('<span>'))));
+							.append($(ce('span')))));
 					}
 			},
 			_prettifyDate: function(ts) {

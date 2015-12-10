@@ -13,3 +13,6 @@ hs_err_pid*
 src/html/components/sortable-table.html
 
 *.exe
+
+txt.txt
+favicon.ico

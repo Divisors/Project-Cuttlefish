@@ -7,13 +7,16 @@
 			is: 'pc-loader',
 			// Element Lifecycle
 			ready: function(e) {
+				console.log('pc-loader init');
 				var $this = $(this);
 				var toLoad = $this.attr('target');
 				if (toLoad.charAt(0)=='[')
 					toLoad = JSON.parse(toLoad);
-				ComponentLoader.getInstance()
+				ComponentLoader.instance
 					.require(toLoad)
-					.then(() => ($this.trigger('load')));
+					.then(function() {
+						$this.trigger('load');
+					});
 				$(this).remove();
 			}
 		});
