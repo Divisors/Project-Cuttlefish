@@ -7,3 +7,10 @@
 :host:not([active]) {
 	display: none;
 }
+:host paper-tabs {
+	position: relative;
+	background-color: #FFF;
+	margin-left: 15px;
+	margin-right: 15px;
+	--paper-tabs-selection-bar-color: #009688;
+}

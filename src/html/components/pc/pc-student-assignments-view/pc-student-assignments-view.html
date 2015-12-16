@@ -115,7 +115,8 @@
 				//TODO add i18n?
 				return dayPrefixes[date.getDay()] + 'day, ' + months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
 			},
-			prettyDateShort: function(date) {
+			prettyDateShort: function(arg) {
+				var date = (arg instanceof Date) ? arg : new Date(arg);
 				return monthShort[date.getMonth()] + ' ' + date.getDate();
 			}
 		});

@@ -65,14 +65,18 @@
 								if (window.location.hash.startsWith('#assignment/'))
 									window.stage.showView('assignment',e.args);
 							}.bind(this),
-							function(error) {
-								console.warn(error);
+							function(error, xhr) {
+								console.error(error);
+								if (window.location.hash.startsWith('#assignment/'))
+									alert('Failed to load \'' + resourceName + '.json\'');
 							});
 					} else {
 						this.buildWith(value);
 					}
 				}).on('pc-view-postshow', function(e) {
 					window.navbar.setActiveButton('assignments');
+				}).on('pc-view-preload', function(e) {
+					ResourceLoader.instance.require('assignment/'+e.args[0]+'/'+e.args[1]);
 				});
 			},
 			buildWith: function(assignment) {

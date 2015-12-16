@@ -58,17 +58,21 @@ ComponentLoader.instance = new ComponentLoader();
 window.ResourceLoader = Class.extend({
 	construct: function() {
 		this._cache = {};
+		this.loading = [];
+		if ('resourcecache' in window.localStorage)
+			this._cache = JSON.parse(window.localStorage['resourcecache']);
 	},
 	save: function() {
-		window.localstorage['resourcecache']=JSON.stringify(this._cache);
+		window.localStorage['resourcecache']=JSON.stringify(this._cache);
 		return this;
 	},
 	load: function() {
-		this._cache = JSON.parse(window.localstorage['resourcecache']);
+		this._cache = JSON.parse(window.localStorage['resourcecache']);
 		return this;
 	},
 	cache: function(name, expiration, data) {
 		this._cache[name] = {name: name, expry: expiration, data: data};
+		this.save();
 	},
 	clean: function() {
 		var time = Date.now();
@@ -77,6 +81,7 @@ window.ResourceLoader = Class.extend({
 				console.log('deleting '+i);
 				delete cache[i];
 			}
+		this.save();
 		return this;
 	},
 	getImmediate: function(name) {
@@ -92,13 +97,17 @@ window.ResourceLoader = Class.extend({
 			var xhr = new XMLHttpRequest();
 			xhr.open('GET', '/data/'+name+'.json', true);
 			xhr.onload=function(e) {
-				var result = JSON.parse(xhr.responseText);
-				self.cache(name, Date.now()+60000, result);
-				yay(result);
+				if (xhr.status == 200) {
+					var result = JSON.parse(xhr.responseText);
+					self.cache(name, Date.now()+60000, result);
+					yay(result, xhr);
+				} else {
+					nay(e, xhr);
+				}
 			};
 			xhr.onerror = function(e) {
 				console.warn(xhr, e);
-				nay(e);
+				nay(e, xhr);
 			};
 			xhr.send();
 		});

@@ -1,0 +1,11 @@
+{
+	"name": "20<sup>th</sup> Century H",
+	"classID": 1,
+	"teacher": "J. Smith",
+	"abstract": "Welcome to history! I'm sure that we'll have a great time together!",
+	"topics": [
+		"WW1",
+		"Imperialism",
+		"WW2"
+	]
+}
