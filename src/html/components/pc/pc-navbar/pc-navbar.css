@@ -1,5 +1,5 @@
 :host {
-	background-color: rgb(0, 150, 136);
+	background: linear-gradient(to bottom,black,rgb(0, 150, 136) 90%,black);
 	border: 0;
 	box-sizing: border-box;
 	display: block;
@@ -101,7 +101,7 @@
 	transition-duration: .1s;
 }
 :host paper-toolbar {
-	--paper-toolbar-background: #009688;
+	--paper-toolbar-background: #FFF000;
 }
 :host paper-toolbar * {
 	margin: 4px;
