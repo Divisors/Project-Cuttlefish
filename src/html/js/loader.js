@@ -53,17 +53,6 @@ var ResourceLoader = Class.extend({
 	construct: function() {
 		this._cache = {};
 	},
-	save: function() {
-		window.localstorage['resourcecache']=JSON.stringify(this._cache);
-		return this;
-	},
-	load: function() {
-		this._cache = JSON.parse(window.localstorage['resourcecache']);
-		return this;
-	},
-	cache: function(name, expiration, data) {
-		this._cache[name] = {name: name, expry: expiration, data: data};
-	},
 	clean: function() {
 		var time = Date.now();
 		for (var i in this._cache)
@@ -73,29 +62,41 @@ var ResourceLoader = Class.extend({
 			}
 		return this;
 	},
-	getImmediate: function(name) {
-		if (name in this._cache)
-			return this._cache[name].data;
-		return undefined;
+	preload: function(options) {
+		return Promise.reject('not supported');
 	},
-	require: function(name) {
-		if (name in this._cache && this.cache[name].expry >= Date.now())
-			return Promise.resolve(this._cache[name].data);
-		var self = this;
-		return new Promise(function(yay, nay) {
-			var xhr = new XMLHttpRequest();
-			xhr.open('GET', '/data/'+name+'.json', true);
-			xhr.onload=function(e) {
-				var result = JSON.parse(xhr.responseText);
-				self.cache(name, Date.now()+60000, result);
-				yay(result);
+	require: function(options) {
+		if (!('url' in options))
+			options.url = '/data/'+options.name+'.json';
+		if (!('method' in options))
+			options.method = ('post' in options) ? 'POST' : 'GET';
+		var xhr = new XMLHttpRequest();
+		xhr.open(options.method, options.url, true);
+		var result = new Promise(function(yay, nay) {
+			xhr.onload = function() {
+				if (xhr.status < 600 && xhr.status >= 400)
+					nay(xhr.statusText, xhr, options);
+				if ('parser' in options)
+					yay(options.parser(xhr.responseText), xhr, options);
+				else
+					yay(xhr.responseText, xhr, options);
 			};
 			xhr.onerror = function(e) {
-				console.warn(xhr, e);
-				nay(e);
+				nay(e, xhr, options);
 			};
-			xhr.send();
+			//send request
+			if ('post' in options)
+				xhr.send(options.post);
+			else
+				xhr.send();
 		});
+		result.cancel = function() {
+			if (xhr.readyState == 4)
+				return false;
+			xhr.abort();
+			return true;
+		};
+		return result;
 	}
 });
 ResourceLoader.instance = new ResourceLoader();

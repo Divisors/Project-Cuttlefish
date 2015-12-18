@@ -52,13 +52,12 @@
 				<div class="sidebar-user"><iron-icon icon="social:person-outline"></iron-icon>[Username]</div> <!-- TODO add user info stuff -->
 			</paper-toolbar>
 			<div class="sidebar-items">
-				<paper-button><iron-icon icon="dashboard"></iron-icon> Home </paper-button>
-				<paper-button><iron-icon icon="schedule"></iron-icon> Schedule </paper-button>
-				<paper-button><iron-icon icon="class"></iron-icon> Assignments </paper-button>
-				<paper-button><iron-icon icon="perm-contact-calendar"></iron-icon> Calendar </paper-button>
-				<paper-button><iron-icon icon="grade"></iron-icon> Grades </paper-button>
-				<paper-button><iron-icon icon="dns"></iron-icon> Settings </paper-button>
-				<paper-button><iron-icon icon="code"></iron-icon> Source </paper-button>
+				<paper-button href="#"><iron-icon icon="dashboard"></iron-icon> Home </paper-button>
+				<paper-button href="#schedule"><iron-icon icon="schedule"></iron-icon> Schedule </paper-button>
+				<paper-button href="#assignments"><iron-icon icon="class"></iron-icon> Assignments </paper-button>
+				<paper-button href="#calendar"><iron-icon icon="perm-contact-calendar"></iron-icon> Calendar </paper-button>
+				<paper-button href="#grades"><iron-icon icon="grade"></iron-icon> Grades </paper-button>
+				<paper-button href="#settings"><iron-icon icon="dns"></iron-icon> Settings </paper-button>
 			</div>
 		</paper-scroll-header-panel>
 	</template>
@@ -68,7 +67,7 @@
 			properties: {},
 			ready: function() {
 				window.sidebar=this;
-				console.log('hi!');
+				$(this).find('.sidebar-items>paper-button').click(function(e) {window.location = $(e.target).attr('href')})
 			}
 		});
 	</script>

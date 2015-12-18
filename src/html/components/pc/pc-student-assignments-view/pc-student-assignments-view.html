@@ -6,6 +6,7 @@
 	<link rel="import" type="css" href="/css/table.css"/>
 	<link rel="import" type="css" href="/css/pager.css"/>
 	<template>
+		<div id="loading-overlay"></div>
 		<h1 class="page-header">Assignments</h1>
 		<div class="container">
 			<ul class="pager">
@@ -53,26 +54,28 @@
 					this.date = Date.now();
 				this.scopeSubtree(this.$$('tbody'), true);
 				$(this).on('pc-view-preshow', function(e) {
-					var value = ResourceLoader.instance.getImmediate('assignments');
-					if (value === undefined) {
-						e.preventDefault();
-						window.stage.showView('loading');
-						ResourceLoader.instance.require('assignments').then(
-							function(assignments) {
-								for (var i in assignments) {
-									var assignment = assignments[i];
-									assignment.assigned = new Date(assignment.assigned);
-									assignment.due = new Date(assignment.due);
-								}
-								if (window.location.hash.startsWith('#assignments'))
-									window.stage.showView('assignments',e.args);
-							}.bind(this),
-							function(error) {
-								console.warn(error);
+					console.count();
+					ResourceLoader.instance.require({
+						name:'assignments',
+						cache: 300,
+						parser: x=>JSON.parse(x)
+					}).then(
+						(assignments) => {
+							console.count();
+							assignments.forEach(assignment => {
+								assignment.assigned = new Date(assignment.assigned);
+								assignment.due = new Date(assignment.due);
 							});
-					} else {
-						this.buildList(value,function(a,b){return a.due - b.due});
-					}
+							console.count();
+							if (window.location.hash.startsWith('#assignments')) {
+								console.count();
+								$(this).find('#loading-overlay').css({opacity:'0',visibility:'hidden'});
+								$(this).find('#loading-overlay').css({opacity:'0',visibility:'hidden'});
+								this.buildList(assignments,(a,b) => (a.due - b.due));
+								console.count()
+							}
+						},
+						(error, xhr, options) => (console.error('xhr failed: ', error, xhr, options)));
 				}).on('pc-view-postshow', function(e) {
 					window.navbar.setActiveButton('assignments');
 				});
@@ -85,6 +88,8 @@
 			},
 			_scheduleWriter: function(ts) {
 				
+			},
+			initView: function() {
 			},
 			buildList(info, comparator) {
 				var container = $(this).find('tbody').empty();
@@ -109,6 +114,7 @@
 							.addClass(assignment.status)
 							.append($(ce('span')))));
 				}
+				console.count('bl')
 			},
 			_prettifyDate: function(ts) {
 				var date = new Date(ts);
