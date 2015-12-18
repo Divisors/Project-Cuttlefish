@@ -1,5 +1,6 @@
 paper-toolbar {
 	--paper-toolbar-background: #009688;
+	--pc-highlight-color: #009688;
 }
 :host {
 	background-color: #EEE;

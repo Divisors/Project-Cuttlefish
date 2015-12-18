@@ -41,8 +41,13 @@ input:focus,input:not(.empty) {
 	position: absolute;
 	top: 5px;
 	transition: 0.3s ease all;
+	user-select: none;
+	-moz-user-select: none;
+	-ms-user-select:none;
+	-webkit-user-select: none;
+	-o-user-select: none;
 }
-input:focus+#floatingLabel,input:not(.empty)+#floatingLabel {
+input:focus+#floatingLabel, input:not(.empty)+#floatingLabel {
 	color: #009688;
 	font-size: var(--pc-input-small-label-font,10px);
 	top: var(--pc-input-label-offset,-5px);

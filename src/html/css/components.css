@@ -17,6 +17,7 @@
 	margin-left: 15px;
 	margin-right: 15px;
 	background-color: white;
+	box-sizing: border-box;
 }
 :host a {
 	color: #5252ff;
@@ -25,8 +26,8 @@
 :host a:hover {
 	text-decoration: underline;
 }
-:host[mobile] .container {
-	width: calc(100% - 38px);
+:host[mobile] .container.container-big {
+	width: 100%;
 	border-radius: 0;
 	margin: 0;
 }

@@ -1,13 +1,16 @@
 <link rel="import" href="/components/polymer/polymer.html"/>
-<pc-loader target='["pc-icons"]'></pc-loader>
+<pc-loader target='["pc-icons","paper-tabs"]'></pc-loader>
 <dom-module id="pc-student-classpage-view">
 	<link rel="import" type="css" href="pc-student-classpage-view.css"/>
 	<link rel="import" type="css" href="/css/components.css"/>
 	<template>
-		<h1 class="page-header">Class Name</h1>
+		<h1 class="page-header" id="header">Class Name</h1>
+		<paper-tabs selected="0" noink>
+			<paper-tab>Home</paper-tab>
+			<paper-tab>Resources</paper-tab>
+		</paper-tabs>
 		<div class="container">
-			<p>Welcome to [classname]!</p>
-			<p>This is an introduction to our class.</p>
+			<p id="body">Welcome to [classname]!</p>
 		</div>
 	</template>
 	<script>
@@ -26,6 +29,35 @@
 				}
 			},
 			ready: function() {
+				$(this).on('pc-view-preshow', function(e) {
+					var resourceName = 'class/'+e.args[0]+'/home';
+					var value = ResourceLoader.instance.getImmediate(resourceName);
+					if (value === undefined) {
+						e.preventDefault();
+						window.stage.showView('loading');
+						ResourceLoader.instance.require(resourceName).then(
+							function(assignment) {
+								if (window.location.hash.startsWith('#class/'))
+									window.stage.showView('class',e.args);
+							}.bind(this),
+							function(error, xhr) {
+								console.error(error);
+								if (window.location.hash.startsWith('#class/'))
+									alert('Failed to load \'' + resourceName + '.json\'');
+							});
+					} else {
+						this.buildWith(value, e.args[1]);
+					}
+				}).on('pc-view-postshow', function(e) {
+					window.navbar.setActiveButton('assignments');
+				}).on('pc-view-preload', function(e) {
+					ResourceLoader.instance.require('class/'+e.args[0]+'/home');
+				});
+			},
+			buildWith(data, pd) {
+				var page = pd || 'home';
+				$(this.$$.header).html(data.title);
+				$(this.$$.body).html(data.abstract);
 			}
 		});
 	</script>

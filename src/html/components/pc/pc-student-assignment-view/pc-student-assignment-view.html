@@ -65,14 +65,18 @@
 								if (window.location.hash.startsWith('#assignment/'))
 									window.stage.showView('assignment',e.args);
 							}.bind(this),
-							function(error) {
-								console.warn(error);
+							function(error, xhr) {
+								console.error(error);
+								if (window.location.hash.startsWith('#assignment/'))
+									alert('Failed to load \'' + resourceName + '.json\'');
 							});
 					} else {
 						this.buildWith(value);
 					}
 				}).on('pc-view-postshow', function(e) {
 					window.navbar.setActiveButton('assignments');
+				}).on('pc-view-preload', function(e) {
+					ResourceLoader.instance.require('assignment/'+e.args[0]+'/'+e.args[1]);
 				});
 			},
 			buildWith: function(assignment) {
@@ -84,21 +88,22 @@
 				var lines = assignment.details.split('\n');
 				$(this.$.details).empty();
 				for (var i in lines)
-					$(this.$.details).append($('<p>').html(lines[i]));
+					$(this.$.details).append($(ce('p')).html(lines[i]));
 				
 				$this.find('.dates tbody .assigned').html(assignment.assigned);
 				$this.find('.dates tbody .due').html(assignment.due);
 				
 				$this.find('.status').removeClass('future assigned graded completed overdue').addClass(assignment.status);
 				
-				var filelist = $this.find('.files>ul');
-				filelist.empty();
+				var fileRow = $this.find('.files');
 				if (assignment.files.length == 0) {
-					$this.find('.files').css({display:'none'});
+					fileRow.css({display:'none'});
 				} else {
+					fileRow.css({display:'list-item'});
+					var filelist = fileRow.find('ul').empty();
 					for (var i in assignment.files) {
 						var file = assignment.files[i];
-						var entry = $('<li>').html(file.name);
+						var entry = $(ce('li')).html(file.name);
 						filelist.append(entry);
 					}
 				}

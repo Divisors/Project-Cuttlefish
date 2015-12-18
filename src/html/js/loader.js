@@ -1,4 +1,5 @@
-var ComponentLoader = Class.extend({
+window.ComponentLoader = Class.extend({
+	loaded: {},
 	has: function(name) {
 		if (typeof name !== 'string') {
 			for (var i in name)
@@ -6,34 +7,40 @@ var ComponentLoader = Class.extend({
 					return false;
 			return true;
 		}
-		return $('link[rel="import"][href="'+name+'"]').length > 0;
+		return $('link[rel="import"][href="'+name+'"]').length > 0 || (name in this.loaded);
 	},
 	requirePath: function(name) {
+		var self = this;
 		if (this.has(name))
 			return Promise.resolve('was already loaded');
 		if (typeof name !== 'string')
-			return new Promise((yay, nay) => {
+			return new Promise(function(yay, nay) {
 				var head = $('head');
 				var loaded = 0;
 				for (var i in name)
-					head.append($('<link/>')
+					head.append($(ce('link'))
 					.attr('rel','import')
 					.attr('href',name[i])
-					.one('load',() => {
+					.one('load',function() {
+						for (var j in name)
+							self.loaded[j] = true;
 						loaded++;
 						if (loaded == name.length)
 							yay();
 					}).one('error',nay));
 			});
-		return new Promise((yay, nay) => {
-			$('head').append($('<link/>')
+		return new Promise(function(yay, nay) {
+			$('head').append($(ce('link'))
 				.attr('rel','import')
 				.attr('href',name)
-				.one('load',yay)
-				.one('error',nay));
+				.one('load',function() {
+					self.loaded[name] = true;
+					yay.apply(yay, arguments);
+				}).one('error',nay));
 		});
 	},
 	require: function(name) {
+		console.log('loading',name);
 		if (typeof name !== 'string') {
 			var mapped = [];
 			for (var i in name)
@@ -48,10 +55,12 @@ var ComponentLoader = Class.extend({
 	}
 });
 ComponentLoader.instance = new ComponentLoader();
-ComponentLoader.getInstance = ()=>(ComponentLoader.instance);
-var ResourceLoader = Class.extend({
+window.ResourceLoader = Class.extend({
 	construct: function() {
 		this._cache = {};
+		this.loading = [];
+		if ('resourcecache' in window.localStorage)
+			this._cache = JSON.parse(window.localStorage['resourcecache']);
 	},
 	clean: function() {
 		var time = Date.now();
@@ -60,6 +69,7 @@ var ResourceLoader = Class.extend({
 				console.log('deleting '+i);
 				delete cache[i];
 			}
+		this.save();
 		return this;
 	},
 	preload: function(options) {

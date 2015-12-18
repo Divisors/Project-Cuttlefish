@@ -99,10 +99,10 @@
 				this.open = false;
 			},
 			loadView(name, element) {
-				//$('head').append($('<link/>').attr({rel:'import',href:element}));
+				//$('head').append($(ce('link')).attr({rel:'import',href:element}));
 				$(this)
 					.find('div[main]')
-					.append($('<'+element+'/>')
+					.append($(ce(element))
 						.addClass('pc-view stage-mobile-observer')
 						.attr({'id':name}));
 			},
@@ -122,7 +122,8 @@
 				
 				if ($('pc-navbar').find('paper-button:target').length == 0)
 					$('pc-navbar').find('paper-button.bf').attr('id',name);
-				window.navbar.setActiveButton(name);
+				if ('navbar' in window)
+					window.navbar.setActiveButton(name);
 				var event = $.Event('pc-view-preshow');
 				event.preload=true;
 				event.args=args;
