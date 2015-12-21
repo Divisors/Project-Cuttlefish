@@ -7,17 +7,13 @@
 	color: #333;
 }
 .container {
-	border-width: 1px;
-	border-color: #ddd;
-	padding: 19px;
-	margin-bottom: 20px;
+	background-color: white;
 	box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
-	border-radius: 2px;
-	border-top-width: 0;
+	box-sizing: border-box;
+	margin-bottom: 20px;
 	margin-left: 15px;
 	margin-right: 15px;
-	background-color: white;
-	box-sizing: border-box;
+	padding: 19px;
 }
 :host a {
 	color: #5252ff;

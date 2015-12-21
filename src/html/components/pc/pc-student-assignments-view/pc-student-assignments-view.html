@@ -54,25 +54,20 @@
 					this.date = Date.now();
 				this.scopeSubtree(this.$$('tbody'), true);
 				$(this).on('pc-view-preshow', function(e) {
-					console.count();
 					ResourceLoader.instance.require({
 						name:'assignments',
 						cache: 300,
-						parser: x=>JSON.parse(x)
+						type: 'JSON'
 					}).then(
 						(assignments) => {
-							console.count();
 							assignments.forEach(assignment => {
 								assignment.assigned = new Date(assignment.assigned);
 								assignment.due = new Date(assignment.due);
 							});
-							console.count();
 							if (window.location.hash.startsWith('#assignments')) {
-								console.count();
 								$(this).find('#loading-overlay').css({opacity:'0',visibility:'hidden'});
 								$(this).find('#loading-overlay').css({opacity:'0',visibility:'hidden'});
 								this.buildList(assignments,(a,b) => (a.due - b.due));
-								console.count()
 							}
 						},
 						(error, xhr, options) => (console.error('xhr failed: ', error, xhr, options)));
@@ -114,7 +109,6 @@
 							.addClass(assignment.status)
 							.append($(ce('span')))));
 				}
-				console.count('bl')
 			},
 			_prettifyDate: function(ts) {
 				var date = new Date(ts);

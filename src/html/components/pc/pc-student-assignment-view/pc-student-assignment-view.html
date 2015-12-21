@@ -56,7 +56,11 @@
 				this.scopeSubtree(this.$$('.files>ul'), true);
 				$(this).on('pc-view-preshow', function(e) {
 					var resourceName = 'assignment/'+e.args[0]+'/'+e.args[1];
-					var value = ResourceLoader.instance.getImmediate(resourceName);
+					var value = ResourceLoader.getInstance().require({
+						name: resourceName,
+						cache: 300,
+						type: 'JSON'
+					}).then();//TODO finish
 					if (value === undefined) {
 						e.preventDefault();
 						window.stage.showView('loading');

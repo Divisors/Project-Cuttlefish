@@ -55,58 +55,70 @@ window.ComponentLoader = Class.extend({
 	}
 });
 ComponentLoader.instance = new ComponentLoader();
-window.ResourceLoader = Class.extend({
-	construct: function() {
-		this._cache = {};
-		this.loading = [];
-		if ('resourcecache' in window.localStorage)
-			this._cache = JSON.parse(window.localStorage['resourcecache']);
-	},
-	clean: function() {
-		var time = Date.now();
-		for (var i in this._cache)
-			if (i.expry < time) {
-				console.log('deleting '+i);
-				delete cache[i];
+(function() {
+	var clientAuthToken;
+	window.ResourceLoader = Class.extend({
+		construct: function() {
+			this._cache = {};
+			this.loading = [];
+			if ('resourcecache' in window.localStorage)
+				this._cache = JSON.parse(window.localStorage['resourcecache']);
+		},
+		clean: function() {
+			var time = Date.now();
+			for (var i in this._cache)
+				if (i.expry < time) {
+					console.log('deleting '+i);
+					delete cache[i];
+				}
+			this.save();
+			return this;
+		},
+		preload: function(options) {
+			return Promise.reject('not supported');
+		},
+		require: function(options) {
+			if (!('url' in options))
+				options.url = '/data/'+options.name+'.json';
+			if (!('method' in options))
+				options.method = ('post' in options) ? 'POST' : 'GET';
+			var xhr = new XMLHttpRequest();
+			if ('type' in options) {
+				xhr.responseType = options.type;
+				if (options.type.toUpperCase() == 'JSON')
+					xhr.parser = (text)=>(JSON.parse(text));
 			}
-		this.save();
-		return this;
-	},
-	preload: function(options) {
-		return Promise.reject('not supported');
-	},
-	require: function(options) {
-		if (!('url' in options))
-			options.url = '/data/'+options.name+'.json';
-		if (!('method' in options))
-			options.method = ('post' in options) ? 'POST' : 'GET';
-		var xhr = new XMLHttpRequest();
-		xhr.open(options.method, options.url, true);
-		var result = new Promise(function(yay, nay) {
-			xhr.onload = function() {
-				if (xhr.status < 600 && xhr.status >= 400)
-					nay(xhr.statusText, xhr, options);
-				if ('parser' in options)
-					yay(options.parser(xhr.responseText), xhr, options);
+			xhr.open(options.method, options.url, true);
+			var result = new Promise(function(yay, nay) {
+				xhr.onload = function() {
+					if (xhr.status < 600 && xhr.status >= 400)
+						nay(xhr.statusText, xhr, options);
+					if ('parser' in options)
+						yay(options.parser(xhr.responseText), xhr, options);
+					else
+						yay(xhr.responseText, xhr, options);
+				};
+				xhr.onerror = function(e) {
+					nay(e, xhr, options);
+				};
+				//send request
+				if ('post' in options)
+					xhr.send(options.post);
 				else
-					yay(xhr.responseText, xhr, options);
+					xhr.send();
+			});
+			result.cancel = function() {
+				if (xhr.readyState == 4)
+					return false;
+				xhr.abort();
+				return true;
 			};
-			xhr.onerror = function(e) {
-				nay(e, xhr, options);
-			};
-			//send request
-			if ('post' in options)
-				xhr.send(options.post);
-			else
-				xhr.send();
-		});
-		result.cancel = function() {
-			if (xhr.readyState == 4)
-				return false;
-			xhr.abort();
-			return true;
-		};
-		return result;
-	}
-});
-ResourceLoader.instance = new ResourceLoader();
+			return result;
+		},
+		login: function(options) {
+			var opts = {method:'GET',url:'login.json',
+			}
+		}
+	});
+	ResourceLoader.instance = new ResourceLoader();
+})();

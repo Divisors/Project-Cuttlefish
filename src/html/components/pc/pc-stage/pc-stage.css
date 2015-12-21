@@ -92,6 +92,8 @@ paper-toolbar {
 }
 :host .pc-view {
 	padding-top: 0px;
+	top: 60px;
+	position: absolute;
 }
 :host .pc-view:not([active]){
 	display: none;

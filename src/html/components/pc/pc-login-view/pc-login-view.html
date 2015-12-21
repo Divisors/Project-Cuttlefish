@@ -2,13 +2,14 @@
 <pc-loader target='["pc-input","paper-button"]'></pc-loader>
 <dom-module id="pc-login-view">
 	<link rel="import" type="css" href="pc-login-view.css" inline/>
+	<link rel="import" type="css" href="/css/components.css"/>
 	<template>
-		<form onsubmit="return false" method="POST">
+		<form class="container" id="loginform" onsubmit="return false" method="POST">
 			<div class="form-group">
-				<pc-input label="Username" name="username"></pc-input>
+				<pc-input label="Username" name="username" id="usernameInput"></pc-input>
 			</div>
 			<div class="form-group">
-				<pc-input label="Password" type="password" name="password"></pc-input>
+				<pc-input label="Password" type="password" name="password" id="passwordInput"></pc-input>
 			</div>
 			<paper-button dialog-confirm>Sign In</paper-button>
 		</form>
@@ -24,9 +25,11 @@
 				},
 			},
 			ready: function() {
-				
+				$(this).find('#loginform').click(this.login.bind(this));
 			},
 			login: function() {
+				var username = $(this).find("usernameInput").val();
+				var password = $(this).find("passwordInput").val();
 				
 			}
 		});
