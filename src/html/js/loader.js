@@ -77,26 +77,29 @@ ComponentLoader.instance = new ComponentLoader();
 		preload: function(options) {
 			return Promise.reject('not supported');
 		},
+		srt:['','json','arraybuffer','blob','document','text'],
 		require: function(options) {
 			if (!('url' in options))
 				options.url = '/data/'+options.name+'.json';
 			if (!('method' in options))
 				options.method = ('post' in options) ? 'POST' : 'GET';
 			var xhr = new XMLHttpRequest();
-			if ('type' in options) {
-				xhr.responseType = options.type;
-				if (options.type.toUpperCase() == 'JSON')
-					xhr.parser = (text)=>(JSON.parse(text));
-			}
 			xhr.open(options.method, options.url, true);
+			if ('type' in options) {
+				var type = options.type.toLowerCase();
+				if (this.srt.indexOf(type)>-1)
+					xhr.responseType = type;
+				else if(options.type.toUpperCase() == 'JSON')
+					options.parser = (text)=>(JSON.parse(text));
+			}
 			var result = new Promise(function(yay, nay) {
 				xhr.onload = function() {
 					if (xhr.status < 600 && xhr.status >= 400)
 						nay(xhr.statusText, xhr, options);
 					if ('parser' in options)
-						yay(options.parser(xhr.responseText), xhr, options);
+						yay(options.parser(xhr.response), xhr, options);
 					else
-						yay(xhr.responseText, xhr, options);
+						yay(xhr.response, xhr, options);
 				};
 				xhr.onerror = function(e) {
 					nay(e, xhr, options);

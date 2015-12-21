@@ -4,7 +4,7 @@
 	<link rel="import" type="css" href="pc-login-view.css" inline/>
 	<link rel="import" type="css" href="/css/components.css"/>
 	<template>
-		<form class="container" id="loginform" onsubmit="return false" method="POST">
+		<form class="container transitions s-in" id="loginform" method="POST">
 			<div class="form-group">
 				<pc-input label="Username" name="username" id="usernameInput"></pc-input>
 			</div>
@@ -13,6 +13,7 @@
 			</div>
 			<paper-button dialog-confirm>Sign In</paper-button>
 		</form>
+		<div class="transitions s-out slow" id="loginText">Logging in...</div>
 	</template>
 	<script>
 		Polymer({
@@ -25,12 +26,18 @@
 				},
 			},
 			ready: function() {
-				$(this).find('#loginform').click(this.login.bind(this));
+				$(this).find('#loginform > paper-button').on('click',this.login.bind(this));
 			},
 			login: function() {
-				var username = $(this).find("usernameInput").val();
-				var password = $(this).find("passwordInput").val();
-				
+				console.log('boop');
+				var form = $(this).find('#loginform');
+				var username = form.find("#usernameInput").val();
+				var password = form.find("#passwordInput").val();
+				form.removeClass('in').addClass('out');
+				$(this).find('#loginText').removeClass('out').delay(5000).addClass('in');
+				ResourceLoader.instance.login({
+					username: username,
+					password: password});
 			}
 		});
 	</script>

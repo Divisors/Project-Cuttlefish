@@ -106,7 +106,7 @@
 						.addClass('pc-view stage-mobile-observer')
 						.attr({'id':name}));
 			},
-			showView(name, args) {
+			showView(name, args, cancellable) {
 				console.log(name, args);
 				var target = name;
 				var $views = $(this).find('.pc-view');
@@ -115,23 +115,28 @@
 				var activeView = $views.filter('[active]');
 				if (activeView.length > 0 && activeView.attr('id') == name)
 					return;
-				else
-					activeView.removeAttr('active');
-				
+				else {
+					var event = $.Event('pc-view-prehide');
+					activeView.trigger(event);
+					if (cancellable && event.isDefaultPrevented())
+						return;
+					activeView.removeAttr('active')
+						.trigger('pc-view-posthide',{});
+				}
 				var tview = $views.filter('#'+target);//TODO fix for possible injection
 				
 				if ($('pc-navbar').find('paper-button:target').length == 0)
 					$('pc-navbar').find('paper-button.bf').attr('id',name);
 				if ('navbar' in window)
 					window.navbar.setActiveButton(name);
-				var event = $.Event('pc-view-preshow');
-				event.preload=true;
-				event.args=args;
-				event.target = tview;
-				tview.trigger(event);
-				if (event.isDefaultPrevented())
+				var psevent = $.Event('pc-view-preshow');
+				psevent.preload=true;
+				psevent.args=args;
+				psevent.target = tview;
+				tview.trigger(psevent);
+				if (psevent.isDefaultPrevented())
 					return;
-				
+				//add active attr
 				tview.attr('active','');
 				tview.trigger('pc-view-postshow',{args:args});
 				//TODO transition code

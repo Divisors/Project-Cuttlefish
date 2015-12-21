@@ -1,13 +1,12 @@
 <link rel="import" href="/components/polymer/polymer.html"/>
-<pc-loader target='["pc-icons"]'></pc-loader>
 <dom-module id="pc-student-assignment-view">
 	<link rel="import" type="css" href="pc-student-assignment-view.css"/>
 	<link rel="import" type="css" href="/css/components.css"/>
 	<template>
 		<h1 class="page-header">Assignment Name</h1>
-		<div class="container" id="details">
+		<div class="container transitions s-out" id="details">
 		</div>
-		<ul class="container rightpanel">
+		<ul class="container transitions rightpanel s-out">
 			<li class="status assigned"><span></span></li>
 			<li class="dates">
 				<table>
@@ -54,29 +53,26 @@
 			},
 			ready: function() {
 				this.scopeSubtree(this.$$('.files>ul'), true);
-				$(this).on('pc-view-preshow', function(e) {
+				var $this = $(this);
+				$this.on('pc-view-preshow', function(e) {
+					$(this).find('.container').removeClass('in out');
 					var resourceName = 'assignment/'+e.args[0]+'/'+e.args[1];
-					var value = ResourceLoader.getInstance().require({
+					var value = ResourceLoader.instance.require({
 						name: resourceName,
 						cache: 300,
 						type: 'JSON'
-					}).then();//TODO finish
-					if (value === undefined) {
-						e.preventDefault();
-						window.stage.showView('loading');
-						ResourceLoader.instance.require(resourceName).then(
-							function(assignment) {
-								if (window.location.hash.startsWith('#assignment/'))
-									window.stage.showView('assignment',e.args);
-							}.bind(this),
-							function(error, xhr) {
-								console.error(error);
-								if (window.location.hash.startsWith('#assignment/'))
-									alert('Failed to load \'' + resourceName + '.json\'');
-							});
-					} else {
-						this.buildWith(value);
-					}
+					}).then(
+						(assignment) => {
+							if (window.location.hash.startsWith('#assignment/')) {
+								this.buildWith(assignment);
+								this.transitionIn();
+							}
+						},
+						(error, xhr) => {
+							console.error(error);
+							if (window.location.hash.startsWith('#assignment/'))
+								alert('Failed to load \'' + resourceName + '.json\'');
+						});
 				}).on('pc-view-postshow', function(e) {
 					window.navbar.setActiveButton('assignments');
 				}).on('pc-view-preload', function(e) {
@@ -84,7 +80,6 @@
 				});
 			},
 			buildWith: function(assignment) {
-				console.info(assignment);
 				if (window.stage.mobile)
 					window.stage.title = assignment.name;
 				var $this = $(this);
@@ -111,6 +106,12 @@
 						filelist.append(entry);
 					}
 				}
+			},
+			transitionIn: function() {
+				$(this).find('.container').addClass('in').removeClass('out');
+			},
+			transitionOut: function() {
+				$(this).find('.container').addClass('out').removeClass('in');
 			}
 		});
 	</script>

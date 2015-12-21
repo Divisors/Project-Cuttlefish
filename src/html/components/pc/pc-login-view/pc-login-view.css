@@ -3,6 +3,7 @@
 	width: 100%;
 	background-color: #009688;
 	height: calc(100% - 60px);
+	font-family: RobotoDraft, Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 :host:not([active]) {
 	display: none;
@@ -30,13 +31,10 @@
 	text-decoration: none;
 	text-transform: none !important;
 	width: 100%;
-	font-family: RobotoDraft, Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	margin: 0;
 }
 :host:not([mobile]) > #loginform {
-	box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
-		0  6px 30px 5px rgba(0, 0, 0, 0.12),
-		0  8px 10px -5px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0  6px 30px 5px rgba(0, 0, 0, 0.12), 0  8px 10px -5px rgba(0, 0, 0, 0.4);
 	width: 380px;
 }
 :host[mobile] > #loginform {
@@ -50,4 +48,13 @@
 }
 :host[mobile] paper-button {
 	font-size: 18px;
+}
+#loginText {
+	position: absolute;
+	left: 0;
+	right: 0;
+	text-align: center;
+	font-size: 24px;
+	top: 50%;
+	color: white;
 }

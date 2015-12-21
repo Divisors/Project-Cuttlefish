@@ -1,5 +1,4 @@
 <link rel="import" href="/components/polymer/polymer.html"/>
-<pc-loader target='["pc-icons"]'></pc-loader>
 <dom-module id="pc-student-assignments-view">
 	<link rel="import" type="css" href="pc-student-assignments-view.css"/>
 	<link rel="import" type="css" href="/css/components.css"/>
@@ -8,7 +7,7 @@
 	<template>
 		<div id="loading-overlay"></div>
 		<h1 class="page-header">Assignments</h1>
-		<div class="container">
+		<div class="container transitions">
 			<ul class="pager">
 				<li class="prev" on-click="_prevDay">←</li>
 				<li class="center">{{_prettifyDate(date)}}</li>
@@ -54,6 +53,7 @@
 					this.date = Date.now();
 				this.scopeSubtree(this.$$('tbody'), true);
 				$(this).on('pc-view-preshow', function(e) {
+					this.transitionOut();
 					ResourceLoader.instance.require({
 						name:'assignments',
 						cache: 300,
@@ -68,11 +68,14 @@
 								$(this).find('#loading-overlay').css({opacity:'0',visibility:'hidden'});
 								$(this).find('#loading-overlay').css({opacity:'0',visibility:'hidden'});
 								this.buildList(assignments,(a,b) => (a.due - b.due));
+								this.transitionIn();
 							}
 						},
 						(error, xhr, options) => (console.error('xhr failed: ', error, xhr, options)));
 				}).on('pc-view-postshow', function(e) {
 					window.navbar.setActiveButton('assignments');
+				}).on('pc-view-prehide', function(e) {
+					this.transitionOut();
 				});
 			},
 			_nextDay: function() {
@@ -118,6 +121,12 @@
 			prettyDateShort: function(arg) {
 				var date = (arg instanceof Date) ? arg : new Date(arg);
 				return monthShort[date.getMonth()] + ' ' + date.getDate();
+			},
+			transitionIn: function() {
+				$(this).find('.container').addClass('in');
+			},
+			transitionOut: function() {
+				$(this).find('.container').removeClass('in');
 			}
 		});
 	</script>
