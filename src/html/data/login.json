@@ -1,5 +1,5 @@
 {
 	"username": "foo",
-	"timeout": "31-Dec-2015-12:00",
+	"expires": "31-Dec-2015-12:00",
 	"success": true
 }

@@ -1,6 +1,7 @@
 <link rel="import" href="/components/polymer/polymer.html">
 <pc-loader target='["iron-media-query","paper-header-panel","pc-sidebar","pc-navbar","pc-login-view","pc-student-schedule-view","pc-loading-view","pc-student-assignments-view","pc-student-classpage-view","pc-student-assignment-view"]'></pc-loader>
 <dom-module id="pc-stage">
+	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<link rel="import" type="css" href="pc-stage.css"/>
 	<template>
 		<iron-media-query query="(max-width: 768px)" query-matches="{{mobile}}"></iron-media-query>
@@ -117,11 +118,11 @@
 					return;
 				else {
 					var event = $.Event('pc-view-prehide');
-					console.info('pc-view-prehide');
+					console.info('pc-view-prehide',activeView.attr('id'));
 					activeView.trigger(event);
 					if (cancellable && event.isDefaultPrevented())
 						return;
-					console.info('pc-view-posthide');
+					console.info('pc-view-posthide',activeView.attr('id'));
 					activeView.removeAttr('active')
 						.trigger('pc-view-posthide',{});
 				}
@@ -134,13 +135,13 @@
 				psevent.preload=true;
 				psevent.args=args;
 				psevent.target = tview;
-				console.info('pc-view-preshow');
+				console.info('pc-view-preshow',tview.attr('id'));
 				tview.trigger(psevent);
 				if (psevent.isDefaultPrevented())
 					return;
 				//add active attr
 				tview.attr('active','');
-				console.info('pc-view-postshow');
+				console.info('pc-view-postshow',tview.attr('id'));
 				tview.trigger('pc-view-postshow',{args:args});
 				//TODO transition code
 			},

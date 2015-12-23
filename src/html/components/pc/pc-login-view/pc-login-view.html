@@ -5,7 +5,7 @@
 	<link rel="import" type="css" href="/css/components.css"/>
 	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<template>
-		<form class="container transitions s-in" id="loginform" method="POST">
+		<form class="container transitions fade-out" id="loginform" method="POST">
 			<div class="form-group">
 				<pc-input label="Username" name="username" id="usernameInput"></pc-input>
 			</div>
@@ -14,7 +14,7 @@
 			</div>
 			<paper-button dialog-confirm>Sign In</paper-button>
 		</form>
-		<div class="transitions s-out slow" id="loginText">Logging in...</div>
+		<div class="transitions fade-in" id="loginText">Logging in...</div>
 	</template>
 	<script>
 		Polymer({
@@ -27,18 +27,28 @@
 				},
 			},
 			ready: function() {
-				$(this).find('#loginform > paper-button').on('click',this.login.bind(this));
+				var $this = $(this);
+				$this.find('#loginform > paper-button').on('click',this.login.bind(this));
+				$this.addClass('transitions slide-up');
+				//reset animations
+				$this.on('pc-view-preshow',function() {
+					$this.find('#loginform, #loginText').removeClass('transitioning');
+					$this.removeClass('transitioning');
+				});
 			},
 			login: function() {
-				console.log('boop');
-				var form = $(this).find('#loginform');
-				var username = form.find("#usernameInput").val();
-				var password = form.find("#passwordInput").val();
-				form.removeClass('in').addClass('out');
-				$(this).find('#loginText').removeClass('out').addClass('in');
-				ResourceLoader.instance.login({
-					username: username,
-					password: password});
+				var $this = $(this);
+				var form = $this.find('#loginform');
+				form.addClass('transitioning');
+				setTimeout(function(){$this.find('#loginText').addClass('transitioning');},400);
+				UAC.login({username: form.find("#usernameInput").val(),password: form.find("#passwordInput").val()}).then(
+					function() {
+						$this.addClass('transitioning');
+						setTimeout(function(){window.stage.showView('assignments',[]);},500);
+					},
+					function() {
+						form.removeClass('transitioning');
+					});
 			}
 		});
 	</script>

@@ -1,22 +1,51 @@
-.transitions.s-out.in {
+.transitions.fade-out {
 	opacity: 1;
-	pointer-events: auto;
+	animation: containerIn .5s both ease-in;
 }
-.transitions.s-in.out {
+.transitions.fade-out.transitioning {
+	animation: containerOut .5s both ease-in;
+}
+.transitions.fade-in {
 	opacity: 0;
-	pointer-events: none;
+	animation: containerOut .5s in ease-in;
 }
-.transitions.s-out {
-	opacity: 0;
-	pointer-events: none;
+.transitions.fade-in.transitioning {
+	animation: containerIn .5s both ease-in;
 }
-.transitions.s-in {
-	opacity: 1;
-	pointer-events: auto;
+.transitions.slide-up.transitioning {
+	animation: slideUp .5s both ease-in;
 }
-.transitions.s-out.in, .transitions.s-in.out {
-	transition: opacity 1s;
+@keyframes containerOut {
+	0% {
+		opacity: 1;
+	}
+	30% {
+		box-shadow: none;
+		opacity: .7;
+	}
+	100% {opacity: 0;display: none;}
 }
-.transitions.slow.s-out.in, .transitions.slow.s-in.out {
-	transition: opacity 4s;
+@keyframes containerIn {
+	0% {
+		opacity: 0;
+		display: none;
+		box-shadow: none;
+	}
+	50% {
+		opacity: 0;
+		display: none;
+	}
+	80% {
+		opacity: 1;
+		box-shadow: none;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes slideUp {
+	from {}
+	to {
+		height: 0;
+	}
 }

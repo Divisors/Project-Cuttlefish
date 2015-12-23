@@ -56,7 +56,6 @@ window.ComponentLoader = Class.extend({
 });
 ComponentLoader.instance = new ComponentLoader();
 (function() {
-	var clientAuthToken;
 	window.ResourceLoader = Class.extend({
 		construct: function() {
 			this._cache = {};
@@ -117,23 +116,31 @@ ComponentLoader.instance = new ComponentLoader();
 				return true;
 			};
 			return result;
-		},
+		}
+	});
+	ResourceLoader.instance = new ResourceLoader();
+	window.UAC = {
 		login: function(options) {
-			return this.require({
+			return ResourceLoader.instance.require({
 				method:'POST',
 				url:'/data/login.json',
 				type:'json',
 				post:JSON.stringify({username:options.username,password:options.password})
 			}).then(function(result) {
-				console.log(arguments);
-				if (result.success != true)
+				if (result.success == true) {
+					UAC.username = result.username;
+					UAC.expires = new Date(result.expires);
+					UAC.save();
 					return Promise.resolve(result);
+				}
 				return Promise.reject(result.msg);
-			},function(problem) {
-				console.error(arguments);
-				return Promise.reject(problem);
 			});
+		},
+		auth: function() {
+			//TODO finish
+		},
+		save: function() {
+			window.localStorage['uac'] = JSON.stringify({username:UAC.username,expires:UAC.expires});
 		}
-	});
-	ResourceLoader.instance = new ResourceLoader();
+	};
 })();
