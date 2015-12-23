@@ -15,24 +15,6 @@
 	margin-right: 15px;
 	padding: 19px;
 }
-.transitions.in {
-	opacity: 1 !important;
-}
-.transitions.out {
-	opacity: 0 !important;
-}
-.transitions.s-out {
-	opacity: 0;
-}
-.transitions.s-in {
-	opacity: 1;
-}
-.transitions.in, .transitions.out {
-	transition: opacity 1s;
-}
-.transitions.slow.in, .transitions.slow.out {
-	transition: opacity 4s;
-}
 :host a {
 	color: #5252ff;
 	text-decoration: none;

@@ -119,8 +119,20 @@ ComponentLoader.instance = new ComponentLoader();
 			return result;
 		},
 		login: function(options) {
-			var opts = {method:'GET',url:'login.json',
-			}
+			return this.require({
+				method:'POST',
+				url:'/data/login.json',
+				type:'json',
+				post:JSON.stringify({username:options.username,password:options.password})
+			}).then(function(result) {
+				console.log(arguments);
+				if (result.success != true)
+					return Promise.resolve(result);
+				return Promise.reject(result.msg);
+			},function(problem) {
+				console.error(arguments);
+				return Promise.reject(problem);
+			});
 		}
 	});
 	ResourceLoader.instance = new ResourceLoader();

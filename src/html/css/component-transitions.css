@@ -1,0 +1,22 @@
+.transitions.s-out.in {
+	opacity: 1;
+	pointer-events: auto;
+}
+.transitions.s-in.out {
+	opacity: 0;
+	pointer-events: none;
+}
+.transitions.s-out {
+	opacity: 0;
+	pointer-events: none;
+}
+.transitions.s-in {
+	opacity: 1;
+	pointer-events: auto;
+}
+.transitions.s-out.in, .transitions.s-in.out {
+	transition: opacity 1s;
+}
+.transitions.slow.s-out.in, .transitions.slow.s-in.out {
+	transition: opacity 4s;
+}

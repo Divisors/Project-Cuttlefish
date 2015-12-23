@@ -3,6 +3,7 @@
 <dom-module id="pc-login-view">
 	<link rel="import" type="css" href="pc-login-view.css" inline/>
 	<link rel="import" type="css" href="/css/components.css"/>
+	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<template>
 		<form class="container transitions s-in" id="loginform" method="POST">
 			<div class="form-group">
@@ -34,7 +35,7 @@
 				var username = form.find("#usernameInput").val();
 				var password = form.find("#passwordInput").val();
 				form.removeClass('in').addClass('out');
-				$(this).find('#loginText').removeClass('out').delay(5000).addClass('in');
+				$(this).find('#loginText').removeClass('out').addClass('in');
 				ResourceLoader.instance.login({
 					username: username,
 					password: password});

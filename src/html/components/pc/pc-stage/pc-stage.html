@@ -110,20 +110,21 @@
 				console.log(name, args);
 				var target = name;
 				var $views = $(this).find('.pc-view');
-				if (target == null)
-					target = $views.filter('.pc-default-view').attr('id');
+				//get target view
+				var tview = $views.filter((target)?('#'+target):('.pc-default-view'));//TODO fix for possible injection
 				var activeView = $views.filter('[active]');
-				if (activeView.length > 0 && activeView.attr('id') == name)
+				if (activeView.length > 0 && activeView == tview)
 					return;
 				else {
 					var event = $.Event('pc-view-prehide');
+					console.info('pc-view-prehide');
 					activeView.trigger(event);
 					if (cancellable && event.isDefaultPrevented())
 						return;
+					console.info('pc-view-posthide');
 					activeView.removeAttr('active')
 						.trigger('pc-view-posthide',{});
 				}
-				var tview = $views.filter('#'+target);//TODO fix for possible injection
 				
 				if ($('pc-navbar').find('paper-button:target').length == 0)
 					$('pc-navbar').find('paper-button.bf').attr('id',name);
@@ -133,11 +134,13 @@
 				psevent.preload=true;
 				psevent.args=args;
 				psevent.target = tview;
+				console.info('pc-view-preshow');
 				tview.trigger(psevent);
 				if (psevent.isDefaultPrevented())
 					return;
 				//add active attr
 				tview.attr('active','');
+				console.info('pc-view-postshow');
 				tview.trigger('pc-view-postshow',{args:args});
 				//TODO transition code
 			},
