@@ -1,3 +1,12 @@
+/*
+ * File /css/table.css
+ * 
+ * This provides nice css formatting for tables. Support for sorting and hovering is contained.
+ * TODO: add transitions/animations
+ */
+/**
+ * Main table class. Must be added to <table> element for any formatting.
+ */
 .table {
 	width: 100%;
 	max-width: 100%;
@@ -21,7 +30,13 @@
 	border-bottom-style: solid;
 	border-bottom-width: 2px;
 }
-.table.table-hover tbody tr:hover {
+/**
+ * Adding `.table-hover` to <table> elements enables a hover effect
+ * on individual items.
+ *
+ * This effect can be disabled on individual elements by adding `.disabled` or `.disable-hover` to them.
+ */
+.table.table-hover tbody tr:not(.disabled):not(.disable-hover):hover {
 	background-color: #ddd;
 }
 .table th {
@@ -36,6 +51,10 @@
 	border-top-style: solid;
 	border-top-width: 1px;
 }
+/**
+ * TODO: finish
+ * Adding `.sortable` to a <th> element allows for sorting
+ */
 .table th.sortable:hover {
 	background-repeat: no-repeat;
 	background-position: center right;
