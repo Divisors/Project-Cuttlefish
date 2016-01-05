@@ -3,13 +3,14 @@
 <dom-module id="pc-student-classpage-view">
 	<link rel="import" type="css" href="pc-student-classpage-view.css"/>
 	<link rel="import" type="css" href="/css/components.css"/>
+	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<template>
 		<h1 class="page-header" id="header">Class Name</h1>
 		<paper-tabs selected="0" noink>
 			<paper-tab>Home</paper-tab>
 			<paper-tab>Resources</paper-tab>
 		</paper-tabs>
-		<div class="container">
+		<div class="container transitions fade-in">
 			<p id="body">Welcome to [classname]!</p>
 		</div>
 	</template>
@@ -31,33 +32,42 @@
 			ready: function() {
 				$(this).on('pc-view-preshow', function(e) {
 					var resourceName = 'class/'+e.args[0]+'/home';
-					var value = ResourceLoader.instance.getImmediate(resourceName);
-					if (value === undefined) {
-						e.preventDefault();
-						window.stage.showView('loading');
-						ResourceLoader.instance.require(resourceName).then(
-							function(assignment) {
-								if (window.location.hash.startsWith('#class/'))
-									window.stage.showView('class',e.args);
-							}.bind(this),
-							function(error, xhr) {
-								console.error(error);
-								if (window.location.hash.startsWith('#class/'))
-									alert('Failed to load \'' + resourceName + '.json\'');
-							});
-					} else {
-						this.buildWith(value, e.args[1]);
-					}
+					var value = ResourceLoader.instance.require({
+						name: resourceName,
+						cache: 300,
+						type: 'JSON'
+					}).then(
+						(assignment) => {
+							if (window.location.hash.startsWith('#assignment/')) {
+								this.buildWith(assignment);
+								this.transitionIn();
+							}
+						},
+						(error, xhr) => {
+							console.error(error);
+							if (window.location.hash.startsWith('#assignment/')) {
+								alert('Failed to load \'' + resourceName + '.json\'');
+								e.preventDefault();
+							}
+						});
 				}).on('pc-view-postshow', function(e) {
-					window.navbar.setActiveButton('assignments');
+					window.navbar.setActiveButton('schedule');
 				}).on('pc-view-preload', function(e) {
 					ResourceLoader.instance.require('class/'+e.args[0]+'/home');
+				}).on('pc-view-prehide', function(e) {
+					this.transitionOut();
 				});
 			},
 			buildWith(data, pd) {
 				var page = pd || 'home';
 				$(this.$$.header).html(data.title);
 				$(this.$$.body).html(data.abstract);
+			},
+			transitionIn() {
+				$(this).find('.container').addClass('transitioning');
+			},
+			transitionOut() {
+				$(this).find('.container').removeClass('transitioning');
 			}
 		});
 	</script>

@@ -56,7 +56,6 @@
 				this.scopeSubtree(this.$$('.files>ul'), true);
 				var $this = $(this);
 				$this.on('pc-view-preshow', function(e) {
-					$(this).find('.container').removeClass('in out');
 					var resourceName = 'assignment/'+e.args[0]+'/'+e.args[1];
 					var value = ResourceLoader.instance.require({
 						name: resourceName,

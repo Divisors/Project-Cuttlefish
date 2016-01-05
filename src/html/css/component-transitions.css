@@ -7,47 +7,38 @@
 }
 .transitions.fade-in {
 	opacity: 0;
-	animation: containerOut 1s in ease-in;
+	animation: containerOut .25s in ease-in;
 }
 .transitions.fade-in.transitioning {
-	animation: containerIn 1s both ease-in;
+	animation: containerIn .25s both ease-in;
 }
 .transitions.slide-up.transitioning {
 	animation: slideUp .5s both ease-in;
 }
 @keyframes containerOut {
-	0% {
+	from {
 		opacity: 1;
 	}
-	50% {
-		box-shadow: none;
-		opacity: .7;
-	}
-	100% {
+	to {
 		opacity: 0;
-		display: none;
+		-webkit-transform: scale(.95);
+		transform: scale(.95);
 	}
 }
 /** TODO: finish (maybe slide up slightly)*/
 @keyframes containerIn {
-	0% {
+	from {
 		opacity: 0;
-		display: none;
-		box-shadow: none;
+		-webkit-transform: scale(.95);
+		transform: scale(.95);
 	}
-	20% {
-		box-shadow: none;
-	}
-	60% {
-		opacity: 1;
-	}
-	100% {
+	to {
 		opacity: 1;
 	}
 }
 @keyframes slideUp {
 	from {}
 	to {
-		height: 0;
+		transform: translateY(-100%);
 	}
 }

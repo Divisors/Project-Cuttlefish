@@ -2,7 +2,8 @@
 	display: block;
 	width: 100%;
 	background-color: #009688;
-	height: calc(100% - 60px);
+	top: 0 !important;
+	height: calc(100%);
 	font-family: RobotoDraft, Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 :host:not([active]) {
@@ -57,7 +58,4 @@
 	font-size: 24px;
 	top: 50%;
 	color: white;
-}
-:host.transitioning * {
-	display: none;
 }
