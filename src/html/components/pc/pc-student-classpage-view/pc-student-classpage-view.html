@@ -38,14 +38,14 @@
 						type: 'JSON'
 					}).then(
 						(assignment) => {
-							if (window.location.hash.startsWith('#assignment/')) {
+							if (window.location.hash.startsWith('#class/')) {
 								this.buildWith(assignment);
 								this.transitionIn();
 							}
 						},
 						(error, xhr) => {
 							console.error(error);
-							if (window.location.hash.startsWith('#assignment/')) {
+							if (window.location.hash.startsWith('#class/')) {
 								alert('Failed to load \'' + resourceName + '.json\'');
 								e.preventDefault();
 							}
