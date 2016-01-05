@@ -2,11 +2,12 @@
 <dom-module id="pc-student-assignment-view">
 	<link rel="import" type="css" href="pc-student-assignment-view.css"/>
 	<link rel="import" type="css" href="/css/components.css"/>
+	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<template>
 		<h1 class="page-header">Assignment Name</h1>
-		<div class="container transitions s-out" id="details">
+		<div class="container transitions fade-in" id="details">
 		</div>
-		<ul class="container transitions rightpanel s-out">
+		<ul class="container transitions rightpanel fade-in">
 			<li class="status assigned"><span></span></li>
 			<li class="dates">
 				<table>
@@ -70,13 +71,17 @@
 						},
 						(error, xhr) => {
 							console.error(error);
-							if (window.location.hash.startsWith('#assignment/'))
+							if (window.location.hash.startsWith('#assignment/')) {
 								alert('Failed to load \'' + resourceName + '.json\'');
+								e.preventDefault();
+							}
 						});
 				}).on('pc-view-postshow', function(e) {
 					window.navbar.setActiveButton('assignments');
 				}).on('pc-view-preload', function(e) {
 					ResourceLoader.instance.require('assignment/'+e.args[0]+'/'+e.args[1]);
+				}).on('pc-view-prehide', function(e) {
+					this.transitionOut();
 				});
 			},
 			buildWith: function(assignment) {
@@ -108,10 +113,11 @@
 				}
 			},
 			transitionIn: function() {
-				$(this).find('.container').addClass('in').removeClass('out');
+				$(this).find('.container').addClass('transitioning');
 			},
 			transitionOut: function() {
-				$(this).find('.container').addClass('out').removeClass('in');
+			console.log('out');
+				$(this).find('.container').removeClass('transitioning');
 			}
 		});
 	</script>

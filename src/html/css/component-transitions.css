@@ -7,10 +7,10 @@
 }
 .transitions.fade-in {
 	opacity: 0;
-	animation: containerOut .5s in ease-in;
+	animation: containerOut 1s in ease-in;
 }
 .transitions.fade-in.transitioning {
-	animation: containerIn .5s both ease-in;
+	animation: containerIn 1s both ease-in;
 }
 .transitions.slide-up.transitioning {
 	animation: slideUp .5s both ease-in;
@@ -19,25 +19,27 @@
 	0% {
 		opacity: 1;
 	}
-	30% {
+	50% {
 		box-shadow: none;
 		opacity: .7;
 	}
-	100% {opacity: 0;display: none;}
+	100% {
+		opacity: 0;
+		display: none;
+	}
 }
+/** TODO: finish (maybe slide up slightly)*/
 @keyframes containerIn {
 	0% {
 		opacity: 0;
 		display: none;
 		box-shadow: none;
 	}
-	50% {
-		opacity: 0;
-		display: none;
-	}
-	80% {
-		opacity: 1;
+	20% {
 		box-shadow: none;
+	}
+	60% {
+		opacity: 1;
 	}
 	100% {
 		opacity: 1;

@@ -2,12 +2,13 @@
 <dom-module id="pc-student-assignments-view">
 	<link rel="import" type="css" href="pc-student-assignments-view.css"/>
 	<link rel="import" type="css" href="/css/components.css"/>
+	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<link rel="import" type="css" href="/css/table.css"/>
 	<link rel="import" type="css" href="/css/pager.css"/>
 	<template>
 		<div id="loading-overlay"></div>
 		<h1 class="page-header">Assignments</h1>
-		<div class="container transitions">
+		<div class="container transitions fade-in">
 			<ul class="pager">
 				<li class="prev" on-click="_prevDay">←</li>
 				<li class="center">{{_prettifyDate(date)}}</li>
@@ -87,8 +88,6 @@
 			_scheduleWriter: function(ts) {
 				
 			},
-			initView: function() {
-			},
 			buildList(info, comparator) {
 				var container = $(this).find('tbody').empty();
 				var assignments = info.sort(comparator);
@@ -123,10 +122,10 @@
 				return monthShort[date.getMonth()] + ' ' + date.getDate();
 			},
 			transitionIn: function() {
-				$(this).find('.container').addClass('in');
+				$(this).find('.container').addClass('transitioning');
 			},
 			transitionOut: function() {
-				$(this).find('.container').removeClass('in');
+				$(this).find('.container').removeClass('transitioning');
 			}
 		});
 	</script>

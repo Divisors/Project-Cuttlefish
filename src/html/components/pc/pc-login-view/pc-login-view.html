@@ -44,7 +44,7 @@
 				UAC.login({username: form.find("#usernameInput").val(),password: form.find("#passwordInput").val()}).then(
 					function() {
 						$this.addClass('transitioning');
-						setTimeout(function(){window.stage.showView('assignments',[]);},500);
+						setTimeout(function(){window.stage.showView('assignments',[], false, 2)},500);
 					},
 					function() {
 						form.removeClass('transitioning');

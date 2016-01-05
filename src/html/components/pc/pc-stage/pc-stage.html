@@ -107,8 +107,16 @@
 						.addClass('pc-view stage-mobile-observer')
 						.attr({'id':name}));
 			},
-			showView(name, args, cancellable) {
+			showView(name, args, cancellable, navigate) {
 				console.log(name, args);
+				if (navigate) {
+					var hash = '#' + [name].concat(args).join('/');
+					if (navigate == 2) {
+						window.history.replaceState(null, null, hash);
+					} else {
+						window.history.pushState(null,null, hash);
+					}
+				}
 				var target = name;
 				var $views = $(this).find('.pc-view');
 				//get target view
