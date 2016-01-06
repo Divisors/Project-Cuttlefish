@@ -5,7 +5,7 @@
 	<link rel="import" type="css" href="/css/components.css"/>
 	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<template>
-		<form class="container transitions fade-out" id="loginform" method="POST">
+		<form class="container transitions fade-in" id="loginform" method="POST">
 			<div class="form-group">
 				<pc-input label="Username" name="username" id="usernameInput"></pc-input>
 			</div>
@@ -32,22 +32,35 @@
 				$this.addClass('transitions slide-up');
 				//reset animations
 				$this.on('pc-view-preshow',function() {
+					if ('navbar' in window)
+						window.navbar.disable();
 					$this.find('#loginform, #loginText').removeClass('transitioning');
 					$this.removeClass('transitioning');
+				}).on('pc-view-postshow', function() {
+					$this.find('#loginform').addClass('transitioning');
+				}).on('pc-view-prehide', function() {
+					$this.find('#loginform').removeClass('transitioning');
 				});
 			},
 			login: function() {
 				var $this = $(this);
+				console.log('logging in');
 				var form = $this.find('#loginform');
-				form.addClass('transitioning');
-				setTimeout(function(){$this.find('#loginText').addClass('transitioning');},400);
+				form.removeClass('transitioning');
+				setTimeout(function(){$this.find('#loginText').removeClass('transitioning');},400);
 				UAC.login({username: form.find("#usernameInput").val(),password: form.find("#passwordInput").val()}).then(
 					function() {
+						console.log('yay');
 						$this.addClass('transitioning');
-						setTimeout(function(){window.stage.showView('assignments',[], false, 2)},500);
+						setTimeout(function(){
+							console.log('boop');
+							window.stage.showView('assignments',[], false, 2);
+							navbar.enable();
+						},500);
 					},
 					function() {
-						form.removeClass('transitioning');
+						console.log('oj');
+						form.addClass('transitioning');
 					});
 			}
 		});

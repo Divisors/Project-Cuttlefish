@@ -2,6 +2,7 @@
 <pc-loader target='["paper-toolbar","paper-ripple","paper-button","paper-icon-button"]'></pc-loader>
 <dom-module id="pc-navbar">
 	<link rel="import" type="css" href="pc-navbar.css"/>
+	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<template>
 		<div class="navbar-header mh50">
 			<span class="navbar-menu-button mh50"><content select=".navbar-header-item"></content></span>
@@ -37,15 +38,36 @@
 				window.navbar=this;
 				this.scopeSubtree(this.$$('.navbar-itemlist'), true);
 				var self = this;
-				$(this).find('paper-button[href]').on('click',function(e) {
-					window.location = $(e.target).attr('href');
-					self.setActiveButton($(e.target).attr('name'));
-				});
+				$(this).find('paper-button[href]')
+					.addClass('transitions slide-up')
+					.on('click',function(e) {
+						window.location = $(e.target).attr('href');
+						self.setActiveButton($(e.target).attr('name'));
+					});
 			},
 			setActiveButton: function(name) {
 				var buttons = $(this).find('.navbar-itemlist > paper-button');
 				buttons.filter('.hash-active').removeClass('hash-active');
 				buttons.filter('[name='+name+']').addClass('hash-active');
+			},
+			getButtons: function() {
+				return $(this).find('.navbar-itemlist>paper-button');
+			},
+			disable: function(i) {
+				var buttons = this.getButtons();
+				var num = (i !== undefined) ? i : buttons.length;
+				if (num < 0)
+					return;
+				$(buttons[num]).addClass('transitioning');
+				setTimeout(this.disable.bind(this, num - 1), 100);
+			},
+			enable: function(i) {
+				var num = i || 0;
+				var buttons = this.getButtons();
+				if (num >= buttons.length)
+					return;
+				$(buttons[num]).removeClass('transitioning');
+				setTimeout(this.enable.bind(this, num + 1), 100);
 			}
 		});
 	</script>

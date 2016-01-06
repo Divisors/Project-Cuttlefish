@@ -7,13 +7,22 @@
 }
 .transitions.fade-in {
 	opacity: 0;
-	animation: containerOut .25s in ease-in;
+	animation: containerOut .25s both ease-in;
 }
 .transitions.fade-in.transitioning {
 	animation: containerIn .25s both ease-in;
 }
+.transitions.slide-up {
+	animation: slideDown .5s both ease-in;
+}
 .transitions.slide-up.transitioning {
 	animation: slideUp .5s both ease-in;
+}
+.transitions.slide-down {
+	animation: slideUp .5s both ease-in;
+}
+.transitions.slide-down.transitioning {
+	animation: slideDown .5s both ease-in;
 }
 @keyframes containerOut {
 	from {
@@ -29,7 +38,6 @@
 @keyframes containerIn {
 	from {
 		opacity: 0;
-		-webkit-transform: scale(.95);
 		transform: scale(.95);
 	}
 	to {
@@ -40,5 +48,12 @@
 	from {}
 	to {
 		transform: translateY(-100%);
+	}
+}
+@keyframes slideDown {
+	from {
+		transform: translateY(-100%);
+	}
+	to {
 	}
 }

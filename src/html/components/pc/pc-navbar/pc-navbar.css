@@ -96,7 +96,7 @@
 	text-transform: none !important;
 	transition: 1s ease all;
 }
-:host paper-button.hash-active {
+:host paper-button.hash-active:not(.transitioning) {
 	background-color: #40B0A6;
 	transition-duration: .1s;
 }
