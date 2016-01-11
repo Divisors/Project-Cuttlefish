@@ -11,5 +11,5 @@ function delay(fn, time) {
 	};
 }
 function delayGP(fn, time) {
-	return ()->(new Promise(delay(fn, time)));
+	return ()=>(new Promise(delay(fn, time)));
 }
