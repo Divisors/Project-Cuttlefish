@@ -40,7 +40,7 @@ window.ComponentLoader = Class.extend({
 		});
 	},
 	require: function(name) {
-		console.log('loading',name);
+		//console.log('loading',name);
 		if (typeof name !== 'string') {
 			var mapped = [];
 			for (var i in name)
@@ -67,7 +67,7 @@ ComponentLoader.instance = new ComponentLoader();
 			var time = Date.now();
 			for (var i in this._cache)
 				if (i.expry < time) {
-					console.log('deleting '+i);
+					console.log('Loader: deleting resource '+i);
 					delete cache[i];
 				}
 			this.save();

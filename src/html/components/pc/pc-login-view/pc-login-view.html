@@ -5,7 +5,7 @@
 	<link rel="import" type="css" href="/css/components.css"/>
 	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<template>
-		<form class="container transitions fade-in" id="loginform" method="POST">
+		<form class="container transitions in-fade-in out-fade-out" id="loginform" method="POST">
 			<div class="form-group">
 				<pc-input label="Username" name="username" id="usernameInput"></pc-input>
 			</div>
@@ -14,7 +14,8 @@
 			</div>
 			<paper-button dialog-confirm>Sign In</paper-button>
 		</form>
-		<div class="transitions fade-in" id="loginText">Logging in...</div>
+		<div class="transitions in-fade-in out-fade-out centertext" id="loginText">Logging in...</div>
+		<div class="transitions in-fade-in out-fade-out centertext" id="welcomeText">Welcome</div>
 	</template>
 	<script>
 		Polymer({
@@ -29,12 +30,12 @@
 			ready: function() {
 				var $this = $(this);
 				$this.find('#loginform > paper-button').on('click',this.login.bind(this));
-				$this.addClass('transitions slide-up');
+				$this.addClass('transitions out-slide-down in-slide-up');
 				//reset animations
 				$this.on('pc-view-preshow',function() {
 					if ('navbar' in window)
-						window.navbar.disable();
-					$this.find('#loginform, #loginText').removeClass('transitioning');
+						window.navbar.disableFast();
+					$this.find('#loginform, #loginText, #welcomeText').removeClass('transitioning');
 					$this.removeClass('transitioning');
 				}).on('pc-view-postshow', function() {
 					$this.find('#loginform').addClass('transitioning');
@@ -44,22 +45,38 @@
 			},
 			login: function() {
 				var $this = $(this);
-				console.log('logging in');
 				var form = $this.find('#loginform');
+				var loginText = $this.find('#loginText');
 				form.removeClass('transitioning');
-				setTimeout(function(){$this.find('#loginText').removeClass('transitioning');},400);
-				UAC.login({username: form.find("#usernameInput").val(),password: form.find("#passwordInput").val()}).then(
-					function() {
-						console.log('yay');
-						$this.addClass('transitioning');
-						setTimeout(function(){
-							console.log('boop');
-							window.stage.showView('assignments',[], false, 2);
-							navbar.enable();
-						},500);
+				var showLoginText = setTimeout(function(){loginText.addClass('transitioning');},100);
+				UAC.login({
+					username: form.find("#usernameInput").val(),
+					password: form.find("#passwordInput").val()
+				}).then(
+					function(params) {
+						clearTimeout(showLoginText);
+						if (params.first) {
+							new Promise(delay(function() {
+								loginText.removeClass('transitioning');
+							}, 250)).then(delayGP(function() {
+								$this.find('#welcomeText').addClass('transitioning');
+							}, 250)).then(delayGP(function() {
+								$this.addClass('transitioning');
+							}, 2000)).then(delayGP(function() {
+								window.stage.showView('assignments',[], false, 2);
+								navbar.enable();
+							}, 500));
+						} else {
+							setTimeout(function() {
+								$this.addClass('transitioning');
+								setTimeout(function(){
+									window.stage.showView('assignments',[], false, 2);
+									navbar.enable();
+								},500);
+							}, params.slow?750:0);
+						}
 					},
 					function() {
-						console.log('oj');
 						form.addClass('transitioning');
 					});
 			}

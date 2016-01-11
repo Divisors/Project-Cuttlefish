@@ -3,11 +3,12 @@
 <dom-module id="pc-student-schedule-view">
 	<link rel="import" type="css" href="pc-student-schedule-view.css"/>
 	<link rel="import" type="css" href="/css/components.css"/>
+	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<link rel="import" type="css" href="/css/table.css"/>
 	<link rel="import" type="css" href="/css/pager.css"/>
 	<template>
 		<h1 class="page-header">Schedule</h1>
-		<div class="container">
+		<div class="container transitions in-fade-in">
 			<ul class="pager">
 				<li class="prev" on-click="_prevDay">←</li>
 				<li class="center">{{_prettifyDate(date)}}</li>
@@ -17,7 +18,7 @@
 				<thead>
 					<tr>
 						<th class="col-block">Block</th>
-						<th class="sortable col-time">Time<iron-icon icon="expand-less"></iron-icon></th>
+						<th class="sortable col-time">Time<iron-icon icon="icons:arrow-drop-down"></iron-icon></th>
 						<th class="col-classname">Class</th>
 						<th class="col-teacher">Teacher</th>
 						<th class="col-attendance">Attendance</th>
@@ -78,8 +79,13 @@
 				if (this.date == -1)
 					this.date = Date.now();
 				this.scopeSubtree(this.$$('tbody'), true);
-				$(this).on('pc-view-preshow',function(e) {
+				var $this = $(this);
+				$this.on('pc-view-preshow',function(e) {
 					window.navbar.setActiveButton('schedule');
+					$this.find('.container').removeClass('transitioning');
+				}).on('pc-view-postshow', function(e) {
+				console.log('post');
+					$this.find('.container').addClass('transitioning');
 				});
 			},
 			_nextDay: function() {

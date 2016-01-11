@@ -2,7 +2,8 @@
 	display: block;
 	width: 100%;
 	background-color: #009688;
-	height: calc(100% - 60px);
+	bottom: 0;
+	/*height: calc(100% - 60px);*/
 	font-family: RobotoDraft, Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 :host:not([active]) {
@@ -49,12 +50,18 @@
 :host[mobile] paper-button {
 	font-size: 18px;
 }
-#loginText {
+.centertext {
 	position: absolute;
 	left: 0;
 	right: 0;
 	text-align: center;
 	font-size: 24px;
 	top: 50%;
-	color: white;
+}
+#loginText {
+	color: rgba(255,255,255,.7);
+}
+#welcomeText {
+	color: #FFF;
+	font-size: 36px;
 }

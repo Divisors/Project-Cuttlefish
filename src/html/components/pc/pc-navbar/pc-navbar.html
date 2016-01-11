@@ -1,5 +1,5 @@
 <link rel="import" href="/components/polymer/polymer.html"/>
-<pc-loader target='["paper-toolbar","paper-ripple","paper-button","paper-icon-button"]'></pc-loader>
+<pc-loader target='["paper-button"]'></pc-loader>
 <dom-module id="pc-navbar">
 	<link rel="import" type="css" href="pc-navbar.css"/>
 	<link rel="import" type="css" href="/css/component-transitions.css"/>
@@ -11,11 +11,14 @@
 		<div class="navbar-titlebar">
 			{{title}}
 		</div>
-		<ul class="navbar-itemlist">
-			<paper-button href="#schedule" name="schedule">Schedule</paper-button>
+		<ul id="navbar-itemlist">
 			<paper-button href="#assignments" name="assignments">Assignments</paper-button>
+			<paper-button href="#schedule" name="schedule">Schedule</paper-button>
 			<paper-button href="#clubs" name="clubs">Clubs</paper-button>
 			<paper-button href="#grades" name="grades">Grades</paper-button>
+		</ul>
+		<ul id="navbar-right" class=" transitions in-fade-in out-fade-out">
+			<li>Username <iron-icon icon="icons:arrow-drop-down"></iron-icon></li>
 		</ul>
 		<div id="shadow"></div>
 	</template>
@@ -36,38 +39,49 @@
 			},
 			ready: function() {
 				window.navbar=this;
-				this.scopeSubtree(this.$$('.navbar-itemlist'), true);
+				this.scopeSubtree(this.$$('#navbar-itemlist'), true);
 				var self = this;
 				$(this).find('paper-button[href]')
-					.addClass('transitions slide-up')
+					.addClass('transitions out-slide-down in-slide-up')
 					.on('click',function(e) {
 						window.location = $(e.target).attr('href');
 						self.setActiveButton($(e.target).attr('name'));
 					});
 			},
 			setActiveButton: function(name) {
-				var buttons = $(this).find('.navbar-itemlist > paper-button');
+				var buttons = $(this).find('#navbar-itemlist > paper-button');
 				buttons.filter('.hash-active').removeClass('hash-active');
 				buttons.filter('[name='+name+']').addClass('hash-active');
 			},
 			getButtons: function() {
-				return $(this).find('.navbar-itemlist>paper-button');
+				return $(this).find('#navbar-itemlist>paper-button');
 			},
 			disable: function(i) {
 				var buttons = this.getButtons();
 				var num = (i !== undefined) ? i : buttons.length;
-				if (num < 0)
+				if (num < 0) {
+					$(this).find('.navbar-right').addClass('transitioning');
 					return;
+				}
 				$(buttons[num]).addClass('transitioning');
 				setTimeout(this.disable.bind(this, num - 1), 100);
+			},
+			disableFast() {
+				this.getButtons().addClass('transitioning');
+				$(this).find('#navbar-right').addClass('transitioning');
 			},
 			enable: function(i) {
 				var num = i || 0;
 				var buttons = this.getButtons();
-				if (num >= buttons.length)
+				if (num >= buttons.length) {
+					$(this).find('#navbar-right').removeClass('transitioning');
 					return;
+				}
 				$(buttons[num]).removeClass('transitioning');
 				setTimeout(this.enable.bind(this, num + 1), 100);
+			},
+			enableFast() {
+				this.getButtons().removeClass('transitioning');
 			}
 		});
 	</script>

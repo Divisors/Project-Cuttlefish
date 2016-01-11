@@ -1,5 +1,7 @@
 {
 	"username": "foo",
 	"expires": "31-Dec-2015-12:00",
-	"success": true
+	"success": true,
+	"slow": true,
+	"first": true
 }

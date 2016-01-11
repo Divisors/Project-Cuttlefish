@@ -1,27 +1,16 @@
-.transitions.fade-out {
-	opacity: 1;
-	animation: containerIn .5s both ease-in;
-}
-.transitions.fade-out.transitioning {
+.transitions.in-fade-out.transitioning, .transitions.out-fade-out:not(.transitioning) {
 	animation: containerOut .5s both ease-in;
 }
-.transitions.fade-in {
+.transitions.in-fade-in:not(.transitioning) {
 	opacity: 0;
-	animation: containerOut .25s both ease-in;
 }
-.transitions.fade-in.transitioning {
+.transitions.in-fade-in.transitioning, .transitions.out-fade-in:not(.transitioning) {
 	animation: containerIn .25s both ease-in;
 }
-.transitions.slide-up {
-	animation: slideDown .5s both ease-in;
-}
-.transitions.slide-up.transitioning {
+.transitions.in-slide-up.transitioning, .transitions.out-slide-up:not(.transitioning) {
 	animation: slideUp .5s both ease-in;
 }
-.transitions.slide-down {
-	animation: slideUp .5s both ease-in;
-}
-.transitions.slide-down.transitioning {
+.transitions.in-slide-down.transitioning, .transitions.out-slide-down:not(.transitioning){
 	animation: slideDown .5s both ease-in;
 }
 @keyframes containerOut {

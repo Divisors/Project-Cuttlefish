@@ -13,8 +13,6 @@
 	margin-right: auto;
 	/*min-height: 44px;*/
 	min-height: 50px;
-	padding-left: 15px;
-	padding-right: 15px;
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -56,7 +54,6 @@
 	min-width: 50px;
 }
 .navbar-brand {
-	margin-left: -15px;
 	text-decoration: none;
 	font-size: 18px;
 	line-height: 30px;
@@ -68,14 +65,14 @@
 	width: 100%;
 	padding-top: 8px;
 }
-.navbar-itemlist {
+#navbar-itemlist {
 	float: left;
 	height: 100%;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
-.navbar-itemlist>* {
+#navbar-itemlist>* {
 	display: inline-block;
 	margin-right: -6px;
 	font-size: 14px;
@@ -121,6 +118,19 @@
 	display: none;
 }
 /* Hide navbar in mobile mode */
-:host[mobile] .navbar-itemlist, :host[mobile] .navbar-brand {
+:host[mobile] #navbar-itemlist, :host[mobile] .navbar-brand {
 	display: none;
+}
+
+#navbar-right {
+	float: right;
+	height: 100%;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+#navbar-right > * {
+	color: white;
+	font-size: 14px;
+	padding: 18px 15px;
 }
