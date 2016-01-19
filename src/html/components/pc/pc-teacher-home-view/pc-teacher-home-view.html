@@ -1,0 +1,58 @@
+<link rel="import" href="/components/polymer/polymer.html"/>
+<dom-module id="pc-teacher-home-view">
+	<link rel="import" type="css" href="pc-teacher-home-view.css"/>
+	<link rel="import" type="css" href="/css/components.css"/>
+	<link rel="import" type="css" href="/css/component-transitions.css"/>
+	<template>
+		<h2 class="page-header">Home</h2>
+		<div class="container">
+			
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'pc-teacher-home-view',
+			properties: {
+				mobile: {
+					type: Boolean,
+					readOnly: true,
+					reflectToAttribute: true
+				},
+			},
+			ready: function() {
+				$(this).on('pc-view-preshow', function(e) {
+					var resourceName = 'home/'+e.args[0];
+					var value = ResourceLoader.instance.require({
+						name: resourceName,
+						cache: 300,
+						type: 'JSON'
+					}).then(
+						(data) => {
+							if (window.location.hash.startsWith('#home/')) {
+								this.transitionIn();
+							}
+						},
+						(error, xhr) => {
+							console.error(error);
+							if (window.location.hash.startsWith('#home/')) {
+								alert('Failed to load \'' + resourceName + '.json\'');
+								e.preventDefault();
+							}
+						});
+				}).on('pc-view-postshow', function(e) {
+					window.navbar.setActiveButton('schedule');
+				}).on('pc-view-preload', function(e) {
+					ResourceLoader.instance.require('home/'+e.args[0]+'/home');
+				}).on('pc-view-prehide', function(e) {
+					this.transitionOut();
+				});
+			},
+			transitionIn() {
+				$(this).find('.container').addClass('transitioning');
+			},
+			transitionOut() {
+				$(this).find('.container').removeClass('transitioning');
+			}
+		});
+	</script>
+</dom-module>

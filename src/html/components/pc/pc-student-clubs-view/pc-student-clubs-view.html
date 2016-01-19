@@ -1,0 +1,71 @@
+<link rel="import" href="/components/polymer/polymer.html"/>
+<dom-module id="pc-student-clubs-view">
+	<link rel="import" type="css" href="pc-student-clubs-view.css"/>
+	<link rel="import" type="css" href="/css/components.css"/>
+	<link rel="import" type="css" href="/css/component-transitions.css"/>
+	<template>
+		<h2 class="page-header">Clubs</h2>
+		<ul id="list">
+			<li tabindex="1">
+				<span class="name">Club name</span>
+				<span class="description">Here is a generic club's description...</span>
+				<span class="room">205</span>
+			</li>
+			<li tabindex="2">
+				<span class="name">Club name</span>
+				<span class="description">Here is another.</span>
+				<span class="room">205</span>
+			</li>
+		</ul>
+	</template>
+	<script>
+		Polymer({
+			is: 'pc-student-clubs-view',
+			properties: {
+				mobile: {
+					type: Boolean,
+					readOnly: true,
+					reflectToAttribute: true
+				},
+			},
+			ready: function() {
+				$(this)/*.on('pc-view-preshow', function(e) {
+					var resourceName = 'clubs';
+					var value = ResourceLoader.instance.require({
+						name: resourceName,
+						cache: 300,
+						type: 'JSON'
+					}).then(
+						(assignment) => {
+							if (window.location.hash.startsWith('#clubs/')) {
+								//this.buildWith(assignment);
+								this.transitionIn();
+							}
+						},
+						(error, xhr) => {
+							console.error(error);
+							if (window.location.hash.startsWith('#clubs/')) {
+								alert('Failed to load \'' + resourceName + '.json\'');
+								e.preventDefault();
+							}
+						});
+				})*/.on('pc-view-postshow', function(e) {
+					window.navbar.setActiveButton('schedule');
+				}).on('pc-view-preload', function(e) {
+					ResourceLoader.instance.require('clubs');
+				}).on('pc-view-prehide', function(e) {
+					this.transitionOut();
+				});
+			},
+			buildWith(data, pd) {
+				
+			},
+			transitionIn() {
+				$(this).find('.container').addClass('transitioning');
+			},
+			transitionOut() {
+				$(this).find('.container').removeClass('transitioning');
+			}
+		});
+	</script>
+</dom-module>

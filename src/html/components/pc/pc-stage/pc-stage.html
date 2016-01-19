@@ -1,5 +1,5 @@
 <link rel="import" href="/components/polymer/polymer.html">
-<pc-loader target='["iron-media-query","paper-header-panel","pc-sidebar","pc-navbar","pc-login-view","pc-student-schedule-view","pc-student-assignments-view","pc-student-classpage-view","pc-student-assignment-view"]'></pc-loader>
+<pc-loader target='["iron-media-query","paper-header-panel","pc-sidebar","pc-navbar","pc-login-view","pc-student-schedule-view","pc-student-assignments-view","pc-student-clubs-view","pc-student-classpage-view","pc-student-assignment-view"]'></pc-loader>
 <dom-module id="pc-stage">
 	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<link rel="import" type="css" href="pc-stage.css"/>
@@ -19,6 +19,7 @@
 					<pc-student-assignments-view class="pc-view stage-mobile-observer" id="assignments"></pc-student-assignments-view>
 					<pc-student-classpage-view class="pc-view stage-mobile-observer" id="class"></pc-student-classpage-view>
 					<pc-student-assignment-view class="pc-view stage-mobile-observer" id="assignment"></pc-student-assignment-view>
+					<pc-student-clubs-view class="pc-view stage-mobile-observer" id="clubs"></pc-student-clubs-view>
 				</div>
 			</paper-header-panel>
 			<div id="scrim" on-tap="closeDrawer"></div>
@@ -71,22 +72,19 @@
 					notify: true
 				}
 			},
-			listeners: {
-			},
 			ready: function() {
 				window.stage = this;
 				var $this = $(this), self = this;
-				$this.find('[main]').scroll(function() {
-					var st = $this.find('[main]')[0].scrollTop;
-					self.shadow = st!=0;
+				$(this.$$('[main]')).scroll(function() {
+					var st = self.$$('[main]').scrollTop;
+					self.shadow = st != 0;
 				});
 			},
 			attached: function() {
-				console.log('ready');
 				$(this).trigger('ready');
 			},
 			_getDrawerClasses: function(drawerPeeking, mobile) {
-				return (mobile?"mobile ":"") + (drawerPeeking?"peeking":"");
+				return (mobile ? "mobile " : "") + (drawerPeeking ? "peeking" : "");
 			},
 			_getDrawerStyle: function(drawerWidth) {
 				return "width: "+drawerWidth;
@@ -97,8 +95,9 @@
 			closeDrawer: function() {
 				this.open = false;
 			},
-			loadView: function(name, element) {
-				//$('head').append($(ce('link')).attr({rel:'import',href:element}));
+			loadView(name, element) {
+				if ($('head').find('link[rel=import][href=/components/pc/'+element+'/'+element+'.html]') == 0)
+					$('head').append($(ce('link')).attr({rel:'import',href:element}));
 				$(this)
 					.find('div[main]')
 					.append($(ce(element))

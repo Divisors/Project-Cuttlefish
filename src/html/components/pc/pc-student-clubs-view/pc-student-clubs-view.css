@@ -1,0 +1,47 @@
+:host {
+	background-color: #EEEEEE;
+	display: block;
+	font-family: RobotoDraft,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+	width: 100%;
+	padding-bottom: 20px;
+	box-sizing: border-box;
+}
+:host:not([active]) {
+	display: none;
+}
+#list {
+	padding: 0 50px;
+}
+#list > li {
+	margin-bottom: 10px;
+	background-color: white;
+	padding: 19px;
+	list-style-type: none;
+	transition: transform .5s ease-in-out;
+	transform: none;
+	font-smoothing: antialiased !important;
+	-webkit-font-smoothing: antialiased !important;
+	border-width: 1px;
+	border-color: rgba(0,0,0,0);
+	border-style: solid;
+}
+#list > li > .name {
+	font-size: 18px;
+	margin-right: 20px;
+}
+#list > li > .room {
+	float: right;
+}
+#list > li > .room:before {
+	content: "Room: ";
+}
+#list > li > .description {
+	opacity: .7;
+	font-size: 12px;
+}
+#list > li:hover {
+	transform: scale(1.05);
+}
+#list > li:focus {
+	border-color: #3498db;
+}
