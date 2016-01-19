@@ -4,12 +4,12 @@ function delay(fn, time) {
 		this.cancel = function() {
 			clearTimeout(c);
 			nay.apply(arguments);
-		}
+		};
 		c=setTimeout(function() {
 			var r=fn();
 			if(yay)yay(r);}, time);
 	};
 }
 function delayGP(fn, time) {
-	return ()=>(new Promise(delay(fn, time)));
+	return () =>(new Promise(delay(fn, time)));
 }

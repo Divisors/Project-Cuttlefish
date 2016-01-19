@@ -1,0 +1,38 @@
+[
+	{
+		"class": "20<sup>th</sup> Century H",
+		"classID": 1,
+		"block": 1,
+		"start": "8:00",
+		"end": "9:00",
+		"tfname": "Ms. Smith",
+		"attendance": "attended"
+	},
+	{
+		"class": "Pre-Calculus H",
+		"classID": 2,
+		"block": 2,
+		"start": "9:00",
+		"end": "10:00",
+		"tfname": "Mr. Jones",
+		"attendance": "inexcused"
+	},
+	{
+		"class": "English 11",
+		"classID": 3,
+		"block": 3,
+		"start": "10:00",
+		"end": "11:00",
+		"tfname": "Ms. Smith",
+		"attendance": "excused"
+	},
+	{
+		"class": "Honors Chemistry",
+		"classID": 4,
+		"block": 4,
+		"start": "12:00",
+		"end": "1:00",
+		"tfname": "Ms. Smith",
+		"attendance": null
+	}
+]

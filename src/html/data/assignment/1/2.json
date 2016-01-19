@@ -16,5 +16,14 @@
 		],
 		"required": true,
 		"attached": false
+	},
+	{
+		"name": "Notecards",
+		"type": "fcd",
+		"upload-types": [
+			"link/quizlet"
+		],
+		"required": false,
+		"attached": false
 	}]
 }

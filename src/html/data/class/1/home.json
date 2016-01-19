@@ -1,11 +1,20 @@
 {
-	"name": "20<sup>th</sup> Century H",
+	"name": "20<sup>th</sup> Century History",
 	"classID": 1,
 	"teacher": "J. Smith",
-	"abstract": "Welcome to history! I'm sure that we'll have a great time together!",
+	"abstract": "Welcome to history! I'm sure that we'll have a great time together! <p>This text is an example, a 'lorem ipsum' if you will. On this page, the teachers will store stuff.</p>",
 	"topics": [
-		"WW1",
-		"Imperialism",
-		"WW2"
+		{
+			"name": "WW1",
+			"img": "http://lorempixel.com/200/200/"
+		},
+		{
+			"name": "Imperialism",
+			"img": "http://lorempixel.com/200/200/"
+		},
+		{
+			"name": "WW2",
+			"img": "http://lorempixel.com/200/200/"
+		}
 	]
 }
