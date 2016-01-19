@@ -67,7 +67,9 @@
 			properties: {},
 			ready: function() {
 				window.sidebar=this;
-				$(this).find('.sidebar-items>paper-button').click(function(e) {window.location = $(e.target).attr('href')})
+				$(this).find('.sidebar-items>paper-button').click(function(e) {
+					window.location = $(e.target).attr('href') || $(e.target).parent('paper-button').attr('href');
+					stage.closeDrawer();})
 			}
 		});
 	</script>
