@@ -27,14 +27,14 @@
 				<tbody>
 					<tr>
 						<td>1</td>
-						<td><span class="starttime">8:00</span><span class="separator"></span><span class="endtime">9:00</span></td>
+						<td><span class="starttime">&nbsp;&nbsp;8:00</span><span class="separator"></span><span class="endtime">&nbsp;&nbsp;9:00</span></td>
 						<td><a href="#class/1234">Class 1</a></td>
 						<td><a href="mailto:foo@example.com">Ms. Smith</a></td>
 						<td class="attendance future"><span></span></td>
 					</tr>
 					<tr>
 						<td>2</td>
-						<td><span class="starttime">9:00</span><span class="separator"></span><span class="endtime">10:00</span></td>
+						<td><span class="starttime">&nbsp;&nbsp;9:00</span><span class="separator"></span><span class="endtime">10:00</span></td>
 						<td><a href="#class/5678">Class 2</a></td>
 						<td><a href="mailto:bar@example.com">Mr. Jones</a></td>
 						<td class="attendance inexcused"><span></span></td>
@@ -59,7 +59,7 @@
 	</template>
 	<script>
 		var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-		var dayPrefixes = ['Sun','Mon','Tues','Wedness','Thurs','Fri','Satur'];
+		var dayPrefixes = ['Sun','Mon','Tues','Wednes','Thurs','Fri','Satur'];
 		Polymer({
 			is: 'pc-student-schedule-view',
 			properties: {
@@ -80,12 +80,32 @@
 					this.date = Date.now();
 				this.scopeSubtree(this.$$('tbody'), true);
 				var $this = $(this);
-				$this.on('pc-view-preshow',function(e) {
-					window.navbar.setActiveButton('schedule');
+				$this.on('pc-view-preshow', function (e) {
 					$this.find('.container').removeClass('transitioning');
+					var resourceName = 'schedule/30FEB2016';//TODO fix
+					var value = ResourceLoader.instance.require({
+						name: resourceName,
+						cache: 300,
+						type: 'JSON'
+					}).then(
+						(schedule) => {
+							if (window.location.hash.startsWith('#schedule'))
+								this.buildSchedule(schedule, (a,b) => (a.block-b.block));
+						},
+						(error, xhr) => {
+							console.error(error);
+							if (window.location.hash.startsWith('#schedule')) {
+								alert('Failed to load \'' + resourceName + '.json\'');
+								e.preventDefault();
+							}
+						});
 				}).on('pc-view-postshow', function(e) {
-				console.log('post');
+					window.navbar.setActiveButton('schedule');
 					$this.find('.container').addClass('transitioning');
+				}).on('pc-view-preload', function(e) {
+					ResourceLoader.instance.require('schedule/'+e.args[0]+'/'+e.args[1]);
+				}).on('pc-view-prehide', function(e) {
+					$(this.$$('tbody')).empty();
 				});
 			},
 			_nextDay: function() {
@@ -98,6 +118,7 @@
 				
 			},
 			buildSchedule(info, comparator) {
+				console.log('building',info);
 				var container = $(this).find('tbody').empty();
 				var classes = info.sort(comparator);
 				for (var i in classes) {
@@ -107,14 +128,14 @@
 						.append($(ce('td'))
 							.append($(ce('span'))
 								.addClass('starttime')
-								.html(clazz.start))
+								.html((clazz.start.length<5?'&nbsp;&nbsp;':'') + clazz.start))
 							.append($(ce('span')).addClass('separator'))
 							.append($(ce('span'))
 								.addClass('endtime')
-								.html(clazz.end)))
+								.html((clazz.end.length<5?'&nbsp;&nbsp;':'') + clazz.end)))
 						.append($(ce('td'))
 							.append($(ce('a'))
-								.attr('href','#class/'+clazz.id)
+								.attr('href','#class/'+clazz.classID)
 								.html(clazz.name)))
 						.append($(ce('td'))
 							.append($(ce('a'))

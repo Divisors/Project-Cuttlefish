@@ -1,6 +1,6 @@
 [
 	{
-		"class": "20<sup>th</sup> Century H",
+		"name": "20<sup>th</sup> Century H",
 		"classID": 1,
 		"block": 1,
 		"start": "8:00",
@@ -9,7 +9,7 @@
 		"attendance": "attended"
 	},
 	{
-		"class": "Pre-Calculus H",
+		"name": "Pre-Calculus H",
 		"classID": 2,
 		"block": 2,
 		"start": "9:00",
@@ -18,7 +18,7 @@
 		"attendance": "inexcused"
 	},
 	{
-		"class": "English 11",
+		"name": "English 11",
 		"classID": 3,
 		"block": 3,
 		"start": "10:00",
@@ -27,7 +27,7 @@
 		"attendance": "excused"
 	},
 	{
-		"class": "Honors Chemistry",
+		"name": "Honors Chemistry",
 		"classID": 4,
 		"block": 4,
 		"start": "12:00",

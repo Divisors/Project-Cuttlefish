@@ -57,11 +57,12 @@ window.ComponentLoader = Class.extend({
 ComponentLoader.instance = new ComponentLoader();
 (function() {
 	window.ResourceLoader = Class.extend({
+		doPreload: false,
 		construct: function() {
 			this._cache = {};
 			this.loading = [];
 			if ('resourcecache' in window.localStorage)
-				this._cache = JSON.parse(window.localStorage['resourcecache']);
+				this._cache = JSON.parse(window.sessionStorage['resourcecache']);
 		},
 		clean: function() {
 			var time = Date.now();
@@ -74,34 +75,36 @@ ComponentLoader.instance = new ComponentLoader();
 			return this;
 		},
 		preload: function(options) {
-			return Promise.reject('not supported');
+			if (!this.doPreload)
+				return Promise.reject('not supported');
+			
 		},
 		srt:['','json','arraybuffer','blob','document','text'],
 		require: function(options) {
 			if (!('url' in options))
-				options.url = '/data/'+options.name+'.json';
+				options.url = '/data/' + options.name + '.json';
 			if (!('method' in options))
 				options.method = ('post' in options) ? 'POST' : 'GET';
-			var xhr = new XMLHttpRequest();
+			var xhr = new XMLHttpRequest() || new ActiveXObject("Microsoft.XMLHTTP");
 			xhr.open(options.method, options.url, true);
 			if ('type' in options) {
 				var type = options.type.toLowerCase();
 				if (this.srt.indexOf(type)>-1)
 					xhr.responseType = type;
 				else if(options.type.toUpperCase() == 'JSON')
-					options.parser = (text)=>(JSON.parse(text));
+					options.parser = (text) => (JSON.parse(text));
 			}
 			var result = new Promise(function(yay, nay) {
 				xhr.onload = function() {
-					if (xhr.status < 600 && xhr.status >= 400)
-						nay(xhr.statusText, xhr, options);
+					if (this.status < 600 && this.status >= 400)
+						nay(this.statusText, this, options);
 					if ('parser' in options)
-						yay(options.parser(xhr.response), xhr, options);
+						yay(options.parser(this.response), this, options);
 					else
-						yay(xhr.response, xhr, options);
+						yay(this.response, this, options);
 				};
 				xhr.onerror = function(e) {
-					nay(e, xhr, options);
+					nay(e, this, options);
 				};
 				//send request
 				if ('post' in options)
@@ -109,12 +112,7 @@ ComponentLoader.instance = new ComponentLoader();
 				else
 					xhr.send();
 			});
-			result.cancel = function() {
-				if (xhr.readyState == 4)
-					return false;
-				xhr.abort();
-				return true;
-			};
+			xhr = undefined;//fix memory leak
 			return result;
 		}
 	});
@@ -122,10 +120,10 @@ ComponentLoader.instance = new ComponentLoader();
 	window.UAC = {
 		login: function(options) {
 			return ResourceLoader.instance.require({
-				method:'POST',
-				url:'/data/login.json',
-				type:'json',
-				post:JSON.stringify({username:options.username,password:options.password})
+				method: 'POST',
+				url: '/data/login.json',
+				type: 'json',
+				post: JSON.stringify({username:options.username,password:options.password})
 			}).then(function(result) {
 				if (result.success == true) {
 					UAC.username = result.username;
