@@ -21,3 +21,28 @@
 #content > div {
 	margin: 19px;
 }
+:host>.main:not(.active) {
+	visibility: hidden;
+	display: none !important;
+}
+#resources {
+	flex-direction: row;
+	 justify-content: center;
+	flex-wrap: wrap;
+	display: flex;
+	padding: 19px;
+}
+#resources > div {
+	display: inline-block;
+	text-align: center;
+	transition-duration: .5s;
+	background-color: rgba(0,0,0,0);
+}
+#resources > div > img {
+	display: block;
+	margin-bottom: 5px;
+	padding: 0;
+}
+#resources > div:hover {
+	transform: scale(1.1);
+}

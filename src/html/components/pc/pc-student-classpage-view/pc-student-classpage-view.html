@@ -6,13 +6,13 @@
 	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<template>
 		<h1 class="page-header" id="header">Class Name</h1>
-		<paper-tabs selected="0" noink>
+		<paper-tabs selected="0" noink id="tabs">
 			<paper-tab>Home</paper-tab>
 			<paper-tab>Resources</paper-tab>
+			<paper-tab>Assignments</paper-tab>
 		</paper-tabs>
-		<div class="container transitions in-fade-in">
-			<p id="body">Welcome to [classname]!</p>
-		</div>
+		<div class="container main" id="home"></div>
+		<div class="main" id="resources"></div>
 	</template>
 	<script>
 		Polymer({
@@ -30,6 +30,13 @@
 				}
 			},
 			ready: function() {
+				this.scopeSubtree(this.$.resources, true);
+				var self = this;
+				$(this).find('.main').addClass('transitions in-fade-in out-fade-out');
+				$(this.$.tabs).on('iron-select', function(e) {
+					var page = ['home','resources','assignments'][e.target.selected];
+					self.switchTab(page, true);
+				});
 				$(this).on('pc-view-preshow', function(e) {
 					var resourceName = 'class/'+e.args[0]+'/home';
 					var value = ResourceLoader.instance.require({
@@ -37,10 +44,16 @@
 						cache: 300,
 						type: 'JSON'
 					}).then(
-						(assignment) => {
+						(data) => {
+							this.classID = e.args[0];
 							if (window.location.hash.startsWith('#class/')) {
-								this.buildWith(assignment);
-								this.transitionIn();
+								$(this.$.header).html(data.name);
+								stage.title=data.name;//NOTE: HTML does not render properly
+								this.build(data);
+								if(e.args.length > 1)
+									this.switchTab(e.args[1], true);
+								else
+									this.switchTab('home', false);
 							}
 						},
 						(error, xhr) => {
@@ -58,16 +71,58 @@
 					this.transitionOut();
 				});
 			},
-			buildWith(data, pd) {
-				var page = pd || 'home';
-				$(this.$$.header).html(data.title);
-				$(this.$$.body).html(data.abstract);
+			build: function(data) {
+				//set abstract
+				$(this.$.home).html(data.abstract);
+				//build resources
+				var topics = $(this.$.resources).empty();
+				for (var i in data.topics) {
+					var topic = data.topics[i];
+					topics.append($(ce('div'))
+						.addClass('')
+						.append($(ce('img'))
+							.attr('src',topic.img)
+							.addClass('container'))
+						.append(topic.name));
+				}
 			},
-			transitionIn() {
-				$(this).find('.container').addClass('transitioning');
+			switchTab: function(page, push) {
+				if (push && ('classID' in this)) {
+					var hash = '#class/' + this.classID + (page!='home'? ('/' + page) : '');
+					if (window.location.hash != hash)
+						window.history.pushState(null, null, hash);
+				}
+				var active = $(this.$$('.active'));
+				if (active.length > 0) {
+					if (page === active.attr('id'))
+						return;
+					active.removeClass('transitioning');
+					var self = this;
+					setTimeout(function() {
+						active.removeClass('active');
+						self.switchTab(page, push);
+					}, 500);
+				} else {
+					var target = $(this.$[page]);
+					target.addClass('active transitioning');
+					this.$.tabs.select(this.getTabIndex(page));
+				}
 			},
-			transitionOut() {
-				$(this).find('.container').removeClass('transitioning');
+			getTabIndex: function(page) {
+				switch (page) {
+					case 'home':
+						return 0;
+					case 'resources':
+						return 1;
+					case 'assignments':
+						return 2;
+					default:
+						return -1;
+				}
+			},
+			transitionOut: function() {
+				$(this).find('.transitioning').removeClass('transitioning');
+				$(this).find('.active').removeClass('active');
 			}
 		});
 	</script>
