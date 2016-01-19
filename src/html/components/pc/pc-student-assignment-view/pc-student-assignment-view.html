@@ -1,4 +1,5 @@
 <link rel="import" href="/components/polymer/polymer.html"/>
+<pc-loader target='["iron-icon"]'></pc-loader>
 <dom-module id="pc-student-assignment-view">
 	<link rel="import" type="css" href="pc-student-assignment-view.css"/>
 	<link rel="import" type="css" href="/css/components.css"/>
@@ -7,7 +8,7 @@
 		<h1 class="page-header">Assignment Name</h1>
 		<div class="container transitions in-fade-in" id="details">
 		</div>
-		<ul class="container transitions rightpanel in-fade-in">
+		<ul class="container transitions in-fade-in" id="rightpanel">
 			<li class="status assigned"><span></span></li>
 			<li class="dates">
 				<table>
@@ -27,12 +28,9 @@
 					</tbody>
 				</table>
 			</li>
-			<li class="files">
-				<h2>Files</h2>
+			<li id="files">
+				<h2>Uploads</h2>
 				<ul>
-					<li>File</li>
-					<li>File</li>
-					<li>File</li>
 				</ul>
 			</li>
 		</ul>
@@ -53,7 +51,7 @@
 				}
 			},
 			ready: function() {
-				this.scopeSubtree(this.$$('.files>ul'), true);
+				this.scopeSubtree(this.$$('#files>ul'), true);
 				var $this = $(this);
 				$this.on('pc-view-preshow', function(e) {
 					var resourceName = 'assignment/'+e.args[0]+'/'+e.args[1];
@@ -98,7 +96,7 @@
 				
 				$this.find('.status').removeClass('future assigned graded completed overdue').addClass(assignment.status);
 				
-				var fileRow = $this.find('.files');
+				var fileRow = $(this.$.files)
 				if (assignment.files.length == 0) {
 					fileRow.css({display:'none'});
 				} else {
@@ -106,7 +104,34 @@
 					var filelist = fileRow.find('ul').empty();
 					for (var i in assignment.files) {
 						var file = assignment.files[i];
-						var entry = $(ce('li')).html(file.name);
+						var icon = '';
+						switch (file.type) {
+							case 'ppt'://presentation
+								icon='av:airplay';//TODO: better icon
+								break;
+							case 'vid'://video
+								icon='av:movie';
+								break;
+							case 'img'://image
+								icon='image:photo';
+								break;
+							case 'doc'://document
+								icon='icons:description';
+								break;
+							case 'fcd'://flash cards
+								icon='icons:content-copy';//TODO: better icon
+								break;
+							case 'zip'://zip
+								icon='icons:folder';//TODO: better icon
+								break;
+						}
+						var entry = $(ce('li'))
+							.append($(ce('iron-icon'))
+								.attr('icon',icon))
+							.append(file.name)
+							.attr('type',file.type)
+							.attr('attached',file.attached)
+							.attr('required',file.required);
 						filelist.append(entry);
 					}
 				}
@@ -115,7 +140,6 @@
 				$(this).find('.container').addClass('transitioning');
 			},
 			transitionOut: function() {
-			console.log('out');
 				$(this).find('.container').removeClass('transitioning');
 			}
 		});

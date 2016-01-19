@@ -95,6 +95,9 @@ paper-toolbar {
 	top: 60px;
 	position: absolute;
 }
+:host[mobile] .pc-view {
+	top: 50px;
+}
 :host .pc-view:not([active]){
 	display: none;
 }

@@ -1,10 +1,9 @@
 :host {
-	display: block;
-	width: 100%;
 	background-color: #009688;
 	bottom: 0;
-	/*height: calc(100% - 60px);*/
+	display: block;
 	font-family: RobotoDraft, Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	width: 100%;
 }
 :host:not([active]) {
 	display: none;
@@ -14,25 +13,25 @@
 	border-radius: 2px;
 	border: 1px solid #EBEBEB;
 	box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
-	margin: 4em auto;
+	box-sizing: border-box;
+	margin: auto;/* Horizontally center in desktop */
 	padding-top: 48px;
 	padding: 32px;
+	/* Vertically center */
 	position: relative;
-	top: 75px;
+	top: 40vh;
+	transform: translateY(-50%);
 }
 #loginform > .form-group {
 	margin: 0;
 	margin-bottom: 45px;
 }
 :host paper-button {
-	width: 100%;
 	background-color: #00aa9a;
-	font-weight: 300 !important;
 	color: #FFF;
-	text-decoration: none;
+	font-weight: 300 !important;
 	text-transform: none !important;
 	width: 100%;
-	margin: 0;
 }
 :host:not([mobile]) > #loginform {
 	box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0  6px 30px 5px rgba(0, 0, 0, 0.12), 0  8px 10px -5px rgba(0, 0, 0, 0.4);
@@ -51,17 +50,16 @@
 	font-size: 18px;
 }
 .centertext {
-	position: absolute;
+	font-size: 36px;
 	left: 0;
+	position: absolute;
 	right: 0;
 	text-align: center;
-	font-size: 24px;
-	top: 50%;
+	top: calc(50% - .5em - 60px);
 }
 #loginText {
 	color: rgba(255,255,255,.7);
 }
 #welcomeText {
 	color: #FFF;
-	font-size: 36px;
 }

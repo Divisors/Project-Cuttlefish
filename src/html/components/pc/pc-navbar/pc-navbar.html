@@ -4,11 +4,11 @@
 	<link rel="import" type="css" href="pc-navbar.css"/>
 	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<template>
-		<div class="navbar-header mh50">
+		<div class="mh50" id="navbar-header">
 			<span class="navbar-menu-button mh50"><content select=".navbar-header-item"></content></span>
-			<paper-button class="navbar-brand mh50" href="#">{{brand}}</paper-button>
+			<paper-button id="navbar-brand" class="mh50" href="#">{{brand}}</paper-button>
 		</div>
-		<div class="navbar-titlebar">
+		<div id="navbar-titlebar" class="transitions out-fade-in in-fade-out">
 			{{title}}
 		</div>
 		<ul id="navbar-itemlist">
@@ -17,7 +17,7 @@
 			<paper-button href="#clubs" name="clubs">Clubs</paper-button>
 			<paper-button href="#grades" name="grades">Grades</paper-button>
 		</ul>
-		<ul id="navbar-right" class=" transitions in-fade-in out-fade-out">
+		<ul id="navbar-right" class="transitions out-fade-in in-fade-out">
 			<li>Username <iron-icon icon="icons:arrow-drop-down"></iron-icon></li>
 		</ul>
 		<div id="shadow"></div>
@@ -39,7 +39,7 @@
 			},
 			ready: function() {
 				window.navbar=this;
-				this.scopeSubtree(this.$$('#navbar-itemlist'), true);
+				this.scopeSubtree(this.$['navbar-itemlist'], true);
 				var self = this;
 				$(this).find('paper-button[href]')
 					.addClass('transitions out-slide-down in-slide-up')
@@ -49,7 +49,7 @@
 					});
 			},
 			setActiveButton: function(name) {
-				var buttons = $(this).find('#navbar-itemlist > paper-button');
+				var buttons = $(this.$['navbar-itemlist']).find('paper-button');
 				buttons.filter('.hash-active').removeClass('hash-active');
 				buttons.filter('[name='+name+']').addClass('hash-active');
 			},
@@ -57,31 +57,42 @@
 				return $(this).find('#navbar-itemlist>paper-button');
 			},
 			disable: function(i) {
-				var buttons = this.getButtons();
-				var num = (i !== undefined) ? i : buttons.length;
-				if (num < 0) {
-					$(this).find('.navbar-right').addClass('transitioning');
-					return;
+				$(this).find('#navbar-titlebar,#navbar-header').addClass('transitioning');
+				if (this.mobile) {
+					this.disableFast();
+				} else {
+					var buttons = this.getButtons();
+					var num = (i !== undefined) ? i : buttons.length;
+					if (num < 0) {
+						$(this).find('#navbar-right').addClass('transitioning');
+						return;
+					}
+					$(buttons[num]).addClass('transitioning');
+					setTimeout(this.disable.bind(this, num - 1), 100);
 				}
-				$(buttons[num]).addClass('transitioning');
-				setTimeout(this.disable.bind(this, num - 1), 100);
 			},
-			disableFast() {
+			disableFast: function() {
 				this.getButtons().addClass('transitioning');
-				$(this).find('#navbar-right').addClass('transitioning');
+				$(this).find('#navbar-right,#navbar-titlebar,#navbar-header').addClass('transitioning');
 			},
 			enable: function(i) {
-				var num = i || 0;
-				var buttons = this.getButtons();
-				if (num >= buttons.length) {
-					$(this).find('#navbar-right').removeClass('transitioning');
-					return;
+				$(this).find('#navbar-titlebar,#navbar-header').removeClass('transitioning');
+				if(this.mobile) {
+					this.enableFast();
+				} else {
+					var num = i || 0;
+					var buttons = this.getButtons();
+					if (num >= buttons.length) {
+						$(this).find('#navbar-right').removeClass('transitioning');
+						return;
+					}
+					$(buttons[num]).removeClass('transitioning');
+					setTimeout(this.enable.bind(this, num + 1), 100);
 				}
-				$(buttons[num]).removeClass('transitioning');
-				setTimeout(this.enable.bind(this, num + 1), 100);
 			},
-			enableFast() {
+			enableFast: function() {
 				this.getButtons().removeClass('transitioning');
+				$(this).find('#navbar-right,#navbar-titlebar,#navbar-header').removeClass('transitioning');
 			}
 		});
 	</script>

@@ -24,30 +24,30 @@
 }
 
 /* Right Panel */
-:host .container.rightpanel {
+:host #rightpanel {
 	list-style-type: none;
 	padding-left: 0;
 	padding-right: 0;
 }
-:host .container.rightpanel > li {
+:host #rightpanel > li {
 	padding-left: 15px;
 	padding-right: 15px;
 }
-:host:not([mobile]) .container.rightpanel {
+:host:not([mobile]) #rightpanel {
 	float: right;
 	width: 20%;
 	margin-top: 0;
 }
-:host[mobile] .container.rightpanel {
+:host[mobile] #rightpanel {
 	margin: 0;
 	border-top: none;
-	box-shadow: none;
-	position: absolute;
+	box-shadow: 0 -8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
+	position: fixed;
 	bottom: 0;
 }
 
 /* Status */
-.container.rightpanel > li.status {
+#rightpanel > li.status {
 	text-align: center;
 }
 :host .status span{
@@ -105,27 +105,31 @@
 }
 
 /* Files */
-:host .rightpanel > li.files {
+:host #files {
 	padding: 0;
 }
-:host .files > ul {
+:host #files > ul {
 	list-style-type: none;
 	padding-left: 0;
+	font-size: 20px;
 }
-:host .files h2 {
+:host #files h2 {
 	margin-bottom: 0;
 	padding-left: 15px;
 	border-bottom-style: solid;
-	border-color: #eee;
+	border-color: #ccc;
 	border-width: 1px;
 }
-:host .files li:not(:last-of-type) {
+:host #files li:not(:last-of-type) {
 	border-bottom-style: solid;
-	border-color: #eee;
+	border-color: #ccc;
 	border-width: 1px;
 }
-:host .files li {
-	padding-left: 15px;
+:host #files li {
+	padding-left: 30px;
 	height: 30px;
 	line-height: 30px;
+}
+:host #files li > iron-icon {
+	margin-right: 10px;
 }
