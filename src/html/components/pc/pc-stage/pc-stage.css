@@ -13,7 +13,7 @@ paper-toolbar {
 	width: 100%;
 }
 
-:host > #drawer {
+#drawer {
 	-moz-box-sizing: border-box;
 	background-color: white;
 	box-sizing: border-box;
@@ -23,12 +23,23 @@ paper-toolbar {
 	top: 0;
 	z-index: 10;
 }
-:host > #drawer > pc-sidebar {
+#drawer > pc-sidebar {
 	height: 100%;
 }
-.transition > #drawer {
+#drawer {
+	-webkit-transform: translateX(-100%);
+	transform: translateX(-100%);
+	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
+	border: 0;
+	visibility: hidden;
+}
+:host[mobile] > #drawer {
 	transition: -webkit-transform ease-in-out 0.3s, width ease-in-out 0.3s, visibility 0.3s;
 	transition: transform ease-in-out 0.3s, width ease-in-out 0.3s, visibility 0.3s;
+}
+:host[mobile][open] > #drawer {
+	transform: none;
+	visibility: visible;
 }
 :host > #mainWrapper {
 	z-index: 9;
@@ -48,17 +59,6 @@ paper-toolbar {
 }
 .transition > #mainWrapper {
 	transition: left ease-in-out 0.3s, padding ease-in-out 0.3s;
-}
-:host[mobile] > #drawer {
-	will-change: transform;
-}
-:host[mobile][open] > #drawer {
-	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
-	border: 0;
-}
-:host[mobile]:not([open]) > #drawer, :host:not([mobile]) > #drawer {
-	-webkit-transform: translateX(-100%);
-	transform: translateX(-100%);
 }
 :host[mobile] > #mainWrapper > #main > [main] {
 	padding: 0;

@@ -7,8 +7,6 @@
 	left: 0;
 	line-height: 1.428;
 	margin-bottom: 20px;
-	margin-left: auto;
-	margin-right: auto;
 	min-height: 50px;
 	position: absolute;
 	right: 0;
@@ -22,7 +20,7 @@
 	-moz-user-select: none;
 	-ms-user-select: none;
 }
-:host #shadow {
+#shadow {
 	box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
 	height: 6px;
 	left: 0;
@@ -33,19 +31,13 @@
 	transition: opacity 0.5s;
 	width: 100vw;
 }
-:host[shadow] #shadow{
+:host[shadow] #shadow {
 	opacity: 1;
-}
-:host::before {
-	box-sizing: border-box;
-	content: " ";
-	display: table;
 }
 .mh50 {
 	min-height: 50px;
 }
 #navbar-header {
-	display: block;
 	float: left;
 	height: 100%;
 	min-width: 50px;
@@ -60,8 +52,7 @@
 	text-align: center;
 	width: calc(100% - 100px);
 	padding-top: 8px;
-	margin-left: 50px;
-	margin-right: 50px;
+	float: left;
 }
 #navbar-itemlist {
 	float: left;
@@ -70,18 +61,28 @@
 	margin: 0;
 	padding: 0;
 }
-#navbar-itemlist>* {
+#navbar-itemlist > paper-button {
 	display: inline-block;
 	margin-right: -6px;
 	font-size: 14px;
 	line-height: 20px;
 	padding: 20px 15px 20px 15px;
-	position: relative;
 }
-:host paper-button { 
+#navbar-right {
+	float: right;
+	height: 100%;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+#navbar-right > li {
+	color: white;
+	font-size: 14px;
+	padding: 18px 15px;
+}
+:host paper-button {
 	border-radius: 0;
 	color: #FFF;
-	display: block;
 	font-weight: 300 !important;
 	margin: 0;
 	padding: 4px;
@@ -92,12 +93,6 @@
 :host paper-button.hash-active:not(.transitioning) {
 	background-color: #40B0A6;
 	transition-duration: .1s;
-}
-:host paper-toolbar {
-	--paper-toolbar-background: #009688;
-}
-:host paper-toolbar * {
-	margin: 4px;
 }
 :host ::content paper-icon-button {
 	height: 100%;
@@ -116,17 +111,4 @@
 /* Hide navbar in mobile mode */
 :host[mobile] #navbar-itemlist, :host[mobile] #navbar-brand, :host[mobile] #navbar-right{
 	display: none;
-}
-
-#navbar-right {
-	float: right;
-	height: 100%;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-#navbar-right > * {
-	color: white;
-	font-size: 14px;
-	padding: 18px 15px;
 }

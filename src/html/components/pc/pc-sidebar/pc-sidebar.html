@@ -1,57 +1,13 @@
 <link rel="import" href="/components/polymer/polymer.html"/>
-<pc-loader target='["iron-icon"]'></pc-loader>
+<pc-loader target='["iron-icon","paper-toolbar"]'></pc-loader>
 <dom-module id="pc-sidebar">
-	<style>
-		:host .sidebar-items {
-			display: inline-block;
-			padding-left: 0px;
-			width: 100%;
-		}
-		paper-toolbar {
-			--paper-toolbar-background: #1abc9c;
-			height: 50px;
-		}
-		:host .sidebar-items>paper-button {
-			align-items: center;
-			background-color: #FFF;
-			border-radius: 0;
-			display: flex;
-			flex-direction: row;
-			font-size: 16px;
-			font-weight: 400 !important;
-			line-height: 24px;
-			margin-left: 0;
-			min-height: 48px;
-			padding-top: 0;
-			padding-bottom: 0;
-			padding-right: 16px;
-			padding-left: 16px;
-			text-transform: none !important;
-			transition: background-color 0.5s ease;
-			width: 100%;
-		}
-		:host .sidebar-items>paper-button>iron-icon {
-			padding-right: 32px;
-		}
-		:host .sidebar-items>paper-button[selected] {
-			background-color: #CCC;
-		}
-		:host paper-scroll-header-panel {
-			height: 100%;
-		}
-		.sidebar-user {
-			font-family: RobotoDraft, Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-			font-size: 24px;
-			color: white;
-			line-height: 24px;
-		}
-	</style>
+	<link rel="import" type="css" href="pc-sidebar.css"/>
 	<template>
 		<paper-scroll-header-panel>
 			<paper-toolbar>
-				<div class="sidebar-user"><iron-icon icon="social:person-outline"></iron-icon>[Username]</div> <!-- TODO add user info stuff -->
+				<div id="sidebar-user"><iron-icon icon="social:person-outline"></iron-icon>[Username]</div> <!-- TODO add user info stuff -->
 			</paper-toolbar>
-			<div class="sidebar-items">
+			<div id="sidebar-items">
 				<paper-button href="#"><iron-icon icon="dashboard"></iron-icon> Home </paper-button>
 				<paper-button href="#schedule"><iron-icon icon="schedule"></iron-icon> Schedule </paper-button>
 				<paper-button href="#assignments"><iron-icon icon="class"></iron-icon> Assignments </paper-button>
@@ -67,9 +23,11 @@
 			properties: {},
 			ready: function() {
 				window.sidebar=this;
-				$(this).find('.sidebar-items>paper-button').click(function(e) {
+				var items = $(this.$['sidebar-items']).find('paper-button');
+				items.click(function(e) {
 					window.location = $(e.target).attr('href') || $(e.target).parent('paper-button').attr('href');
-					stage.closeDrawer();})
+					stage.closeDrawer();
+				});
 			}
 		});
 	</script>
