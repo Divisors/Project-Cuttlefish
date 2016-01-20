@@ -1,49 +1,7 @@
 $(function() {
 	var pressTime = 500, cTouches = new Array(), mouseDisabled = false;
-	/*function applyDynamic (element, action, _target) {
-		var target = $(_target || element);
-		switch (action) {
-			case 'modal':
-			case 'modal-toggle':
-				target.modal('toggle');
-				break;
-			case 'modal-show':
-				target.modal('show');
-				break;
-			case 'modal-hide':
-				target.modal('hide');
-				break;
-			case 'dropdown':
-			case 'dropdown-toggle':
-				target.dropdown('toggle');
-				break;
-			case 'dropdown-show':
-				target.dropdown('show');
-				break;
-			case 'dropdown-hide':
-				target.dropdown('hide');
-				break;
-			case 'tab':
-			case 'tab-show':
-				target.tab('show');
-				break;
-			case 'collapse':
-				target.collapse();
-				break;
-			case 'carousel-next':
-				target.carousel('next');
-				break;
-			case 'carousel-prev':
-				target.carousel('prev');
-				break;
-			case 'carousel-cycle':
-				target.carousel('cycle');
-				break;
-		}
-	}*/
 	$(document).on('touchstart',function(_e) {
 		var e = _e.originalEvent;
-		//console.log('ts',e);
 		Array.prototype.slice.call(e.changedTouches).forEach(function(touch) {
 			cTouches[touch.identifier] = {
 				id: touch.identifier,
@@ -75,7 +33,7 @@ $(function() {
 		});
 	}).on('touchmove', function(_e) {
 		var e = _e.originalEvent;
-		e.preventDefault();
+		//e.preventDefault();
 		//console.log('tm',e);
 		Array.prototype.slice.call(e.changedTouches).forEach(function(touch) {
 			if (! cTouches.hasOwnProperty(touch.identifier)) {
@@ -88,7 +46,7 @@ $(function() {
 			cp.clientX = touch.clientX;
 			cp.clientY = touch.clientY;
 		});
-		$(e.currentTarget).trigger('touch.move');
+		$(e.currentTarget).trigger('touch.move', e);
 	}).on('touchcancel', function(_e) {
 		var e = _e.originalEvent;
 		//e.preventDefault();
@@ -97,7 +55,7 @@ $(function() {
 			window.clearTimeout(cTouches[touch.identifier].timer);
 			delete cTouches[touch.identifier];
 		});
-		$(e.currentTarget).trigger('touch.off');
+		$(e.currentTarget).trigger('touch.off', e);
 	}).on('click', function(_e, a) {
 		if (mouseDisabled && (!a)) {
 			_e.originalEvent.preventDefault();
@@ -105,12 +63,12 @@ $(function() {
 			mouseDisabled=false;
 			return;
 		}
-		$(_e.target).trigger('pointer.short');
+		$(_e.target).trigger('pointer.short', _e);
 	}).on('contextmenu', function(_e) {
 		if (mouseDisabled || $(_e.target).attr('data-no-menu')=='true')
 			_e.originalEvent.preventDefault();
 		if (mouseDisabled)
 			return;
-		$(_e.target).trigger('pointer.long');
+		$(_e.target).trigger('pointer.long', e);
 	});
 });

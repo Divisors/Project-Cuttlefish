@@ -40,32 +40,41 @@
 					value: false,
 					notify: true
 				},
+				/**
+				 * Width of drawer.
+				 */
 				drawerWidth: {
 					type: String,
 					value: '250px'
 				},
+				/**
+				 * Whether to show the mobile view. Comes with sidebar, titlebar, etc.
+				 */
 				mobile: {
 					tyle: Boolean,
 					notify: true,
 					reflectToAttribute: true,
 					observer: '_mobileUpdate'
 				},
-				narrow: {
-					type: Boolean,
-					value: false,
-					notify: true,
-					reflectToAttribute: true
-				},
+				/**
+				 * String to display in the titlebar (mobile only)
+				 */
 				title: {
 					type: String,
 					value: 'Home'
 				},
+				/**
+				 * Whether the drawer is currently open. Only matters in mobile view.
+				 */
 				open: {
 					type: Boolean,
 					value: false,
 					notify: true,
 					reflectToAttribute: true
 				},
+				/**
+				 * Whether to show the shadow below the navbar.
+				 */
 				shadow: {
 					type: Boolean,
 					value: false,
@@ -150,6 +159,9 @@
 				tview.trigger('pc-view-postshow',{args:args});
 				//TODO transition code
 			},
+			/**
+			 * Update observers to the mobile update.
+			 */
 			_mobileUpdate: function(is,was) {
 				var observers = $('.stage-mobile-observer');
 				if (is) {

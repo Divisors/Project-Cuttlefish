@@ -1,22 +1,11 @@
 <link rel="import" href="/components/polymer/polymer.html"/>
+<pc-loader target='["paper-ripple"]'></pc-loader>
 <dom-module id="pc-student-clubs-view">
 	<link rel="import" type="css" href="pc-student-clubs-view.css"/>
 	<link rel="import" type="css" href="/css/components.css"/>
-	<link rel="import" type="css" href="/css/component-transitions.css"/>
 	<template>
 		<h2 class="page-header">Clubs</h2>
-		<ul id="list">
-			<li tabindex="1">
-				<span class="name">Club name</span>
-				<span class="description">Here is a generic club's description...</span>
-				<span class="room">205</span>
-			</li>
-			<li tabindex="2">
-				<span class="name">Club name</span>
-				<span class="description">Here is another.</span>
-				<span class="room">205</span>
-			</li>
-		</ul>
+		<ul id="list"></ul>
 	</template>
 	<script>
 		Polymer({
@@ -29,42 +18,84 @@
 				},
 			},
 			ready: function() {
-				$(this)/*.on('pc-view-preshow', function(e) {
+				this.scopeSubtree(this.$.list, true);
+				$(this).on('pc-view-preshow', function(e) {
 					var resourceName = 'clubs';
 					var value = ResourceLoader.instance.require({
 						name: resourceName,
 						cache: 300,
 						type: 'JSON'
 					}).then(
-						(assignment) => {
-							if (window.location.hash.startsWith('#clubs/')) {
-								//this.buildWith(assignment);
+						(clubs) => {
+							if (window.location.hash.startsWith('#clubs')) {
+								this.buildWith(clubs);
 								this.transitionIn();
 							}
 						},
 						(error, xhr) => {
 							console.error(error);
-							if (window.location.hash.startsWith('#clubs/')) {
+							if (window.location.hash.startsWith('#clubs')) {
 								alert('Failed to load \'' + resourceName + '.json\'');
 								e.preventDefault();
 							}
 						});
-				})*/.on('pc-view-postshow', function(e) {
-					window.navbar.setActiveButton('schedule');
+				}).on('pc-view-postshow', function(e) {
+					window.navbar.setActiveButton('clubs');
 				}).on('pc-view-preload', function(e) {
 					ResourceLoader.instance.require('clubs');
 				}).on('pc-view-prehide', function(e) {
 					this.transitionOut();
+					$(this.$.list).empty();
 				});
 			},
-			buildWith(data, pd) {
-				
+			buildWith(clubs) {
+				var list = $(this.$.list);
+				list.empty();
+				for (var i in clubs) {
+					var club = clubs[i];
+					list.append($(ce('li'))
+						.attr('tabindex',(i+1))
+						.attr('clubID',club.id)
+						.append($(ce('span'))
+							.addClass('name')
+							.html(club.name))
+						.append($(ce('span'))
+							.addClass('description')
+							.html(club.description))
+						.append($(ce('span'))
+							.addClass('room')
+							.html(club.room))
+						.append(ce('paper-ripple'))
+						.on('touchend touchcancel',this._itemTouchEnd)
+						.on('touchmove',this._itemTouchMove)
+						.click(this._itemClick));
+				}
 			},
 			transitionIn() {
-				$(this).find('.container').addClass('transitioning');
 			},
 			transitionOut() {
-				$(this).find('.container').removeClass('transitioning');
+			},
+			_itemTouchEnd(e) {
+				$(this).find('paper-ripple')[0].upAction();
+			},
+			_itemTouchMove(_e) {
+				var e = _e.originalEvent;
+				var $this = $(this);
+				var isSelected = false, wasSelected = $(this).attr('selected') !== undefined;
+				for (var i in e.touches) {
+					var touch = e.touches[i], selected = document.elementFromPoint(touch.pageX, touch.pageY);
+					if ((isSelected = (this == selected || $(this).has(selected)) == true)) {
+						if (!wasSelected)
+							$(this).find('paper-ripple')[0].downAction({detail:{x:touch.clientX,y:touch.clientY}});
+						break;
+					}
+				}
+				if ((!isSelected) && (wasSelected))
+					$(this).find('paper-ripple')[0].upAction();
+				$(this).attr('selected',isSelected);
+			},
+			_itemClick(e) {
+				console.log('selected club: ' + $(this).attr('clubID'));
 			}
 		});
 	</script>
