@@ -1,3 +1,3 @@
 # Project Cuttlefish
 
-A school assignment-distribution service.
+Project Cuttlefish is designed to implement the best features of MMS, Moodle, Turnitin, and ClassLink. It will 
